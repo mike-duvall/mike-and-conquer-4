@@ -3,6 +3,8 @@
 #include "Texture.h"
 
 
+const char TEXTURES_IMAGE[] = "pictures\\m1.png";  // game textures
+
 Mushroom::Mushroom(Graphics *g, int width, int height)
 {
 
@@ -28,7 +30,7 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing sprite"));
 
 
-	rect.left = width;
+	rect.left = 0;
 	rect.right = rect.left + width;
 	rect.top = 0;
 	rect.bottom = rect.top + height;
@@ -41,8 +43,8 @@ Mushroom::~Mushroom()
 
 void Mushroom::update(float frameTime)
 {
-	x += frameTime * velocity.x;
-	y += frameTime * velocity.y;
+	//x += frameTime * velocity.x;
+	//y += frameTime * velocity.y;
 
 	if ((x + mushroomNS::WIDTH) > GAME_WIDTH)              // if off right screen edge
 		velocity.x = -velocity.x;
@@ -69,7 +71,7 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 		spriteCenter = D3DXVECTOR2((float)(width / 2),
 			(float)(height / 2));
 
-		scaling = D3DXVECTOR2(1, 1);
+		scaling = D3DXVECTOR2(10, 10);
 
 
 	}
