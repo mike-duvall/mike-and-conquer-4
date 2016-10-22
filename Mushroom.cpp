@@ -71,7 +71,7 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 		spriteCenter = D3DXVECTOR2((float)(width / 2),
 			(float)(height / 2));
 
-		scaling = D3DXVECTOR2(10, 10);
+		scaling = D3DXVECTOR2(15, 15);
 
 
 	}
@@ -99,6 +99,19 @@ void Mushroom::drawSprite( COLOR_ARGB color)
 		return;
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
+
+	LPDIRECT3DDEVICE9 device3d = graphics->get3Ddevice();
+	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	device3d->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, false);
+
+	device3d->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+	device3d->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+	device3d->SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+
+	device3d->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+	device3d->SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+	device3d->SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+
 
 
 	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
