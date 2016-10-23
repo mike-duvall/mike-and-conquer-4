@@ -71,7 +71,7 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 		spriteCenter = D3DXVECTOR2((float)(width / 2),
 			(float)(height / 2));
 
-		scaling = D3DXVECTOR2(15, 15);
+		scaling = D3DXVECTOR2(0.833, 1);
 
 
 	}

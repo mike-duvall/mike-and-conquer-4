@@ -7,9 +7,12 @@
 const char CLASS_NAME[] = "Spacewar";
 const char GAME_TITLE[] = "Spacewar v1.5";
 const bool FULLSCREEN = true;              // windowed or fullscreen
-const UINT GAME_WIDTH =  1920;               // width of game in pixels
-const UINT GAME_HEIGHT = 1080;               // height of game in pixels
+//const UINT GAME_WIDTH =  1920;               // width of game in pixels
+//const UINT GAME_HEIGHT = 1080;               // height of game in pixels
  
+const UINT GAME_WIDTH = 640;               // width of game in pixels
+const UINT GAME_HEIGHT = 480;               // height of game in pixels
+
 
 const bool VSYNC = true;                    // true locks display to vertical sync rate
 const float FRAME_RATE = 240.0f;            // the target frame rate (frames/sec), ignored if VSYNC is true
