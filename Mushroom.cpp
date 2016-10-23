@@ -71,7 +71,19 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 		spriteCenter = D3DXVECTOR2((float)(width / 2),
 			(float)(height / 2));
 
-		scaling = D3DXVECTOR2(0.833, 1);
+
+		//float overallScaling = 5.0f;
+		float overallScaling = 1.0f;
+
+		// Actual resolution of 640 x 480
+		// Original C&C resolution was 640 x 400, which is what the original artwork was scaled for
+		// 400 is 83.33333 percent of 480
+		// So multiply desired scaling by 0.8333333 to get actual scaled height
+
+		float heightAdjustmentAmount = 400.0f / 480.0f;
+		float actualWidthScaling = overallScaling * heightAdjustmentAmount;
+		float actualHeightScaling = overallScaling;
+		scaling = D3DXVECTOR2(actualWidthScaling, actualHeightScaling);
 
 
 	}
