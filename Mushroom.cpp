@@ -3,7 +3,7 @@
 #include "Texture.h"
 
 
-const char TEXTURES_IMAGE[] = "pictures\\m1.png";  // game textures
+const char TEXTURES_IMAGE[] = "pictures\\m2.png";  // game textures
 
 Mushroom::Mushroom(Graphics *g, int width, int height)
 {
@@ -11,8 +11,8 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 	x = mushroomNS::X;
 	y = mushroomNS::Y;
 
-	velocity.x = 300.0;
-	velocity.y = 300.0;
+	velocity.x = 100.0;
+	velocity.y = 100.0;
 
     rect.left = 0;       
     rect.top = 0;
@@ -43,8 +43,8 @@ Mushroom::~Mushroom()
 
 void Mushroom::update(float frameTime)
 {
-	//x += frameTime * velocity.x;
-	//y += frameTime * velocity.y;
+	x += frameTime * velocity.x;
+	y += frameTime * velocity.y;
 
 	if ((x + mushroomNS::WIDTH) > GAME_WIDTH)              // if off right screen edge
 		velocity.x = -velocity.x;
@@ -73,7 +73,7 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 
 
 		//float overallScaling = 5.0f;
-		float overallScaling = 2.0f;
+		float overallScaling = 3.0f;
 
 		// Original C&C resolution was 640 x 400, which is what the original artwork was scaled for
 		// But current actual screen resolution is being set to  640 x 480

@@ -25,10 +25,6 @@ class Mushroom;
 
 namespace graphicsNS
 {
-    // Some common colors
-    // ARGB numbers range from 0 through 255
-    // A = Alpha channel (transparency where 255 is opaque)
-    // R = Red, G = Green, B = Blue
     const COLOR_ARGB WHITE   = D3DCOLOR_ARGB(255,255,255,255);
     const COLOR_ARGB MAGENTA = D3DCOLOR_ARGB(255,255,  0,255);
     const COLOR_ARGB BLACK   = D3DCOLOR_ARGB(255,  0,  0,  0);
