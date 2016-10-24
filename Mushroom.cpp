@@ -8,18 +8,18 @@ const char TEXTURES_IMAGE[] = "pictures\\m1.png";  // game textures
 Mushroom::Mushroom(Graphics *g, int width, int height)
 {
 
-	x = mushroomNS::X;              // location on screen
+	x = mushroomNS::X;
 	y = mushroomNS::Y;
 
 	velocity.x = 300.0;
 	velocity.y = 300.0;
 
-    rect.left = 0;       // used to select one frame from multi-frame image
+    rect.left = 0;       
     rect.top = 0;
     rect.right = width;
     rect.bottom = height;
 
-	graphics = g;                               // the graphics object
+	graphics = g;
 
 	this->width = width;
 	this->height = height;
@@ -73,10 +73,10 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 
 
 		//float overallScaling = 5.0f;
-		float overallScaling = 1.0f;
+		float overallScaling = 2.0f;
 
-		// Actual resolution of 640 x 480
 		// Original C&C resolution was 640 x 400, which is what the original artwork was scaled for
+		// But current actual screen resolution is being set to  640 x 480
 		// 400 is 83.33333 percent of 480
 		// So multiply desired scaling by 0.8333333 to get actual scaled height
 
