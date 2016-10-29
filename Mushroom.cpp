@@ -86,7 +86,8 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 		float heightAdjustmentAmount = 400.0f / 480.0f;
 		float actualWidthScaling = overallScaling * heightAdjustmentAmount;
 		float actualHeightScaling = overallScaling;
-		scaling = D3DXVECTOR2(actualWidthScaling, actualHeightScaling);
+		//scaling = D3DXVECTOR2(actualWidthScaling, actualHeightScaling);
+		scaling = D3DXVECTOR2(overallScaling, overallScaling);
 
 
 	}
