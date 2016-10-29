@@ -46,13 +46,16 @@ void Mushroom::update(float frameTime)
 	x += frameTime * velocity.x;
 	y += frameTime * velocity.y;
 
-	if ((x + mushroomNS::WIDTH) > GAME_WIDTH)              // if off right screen edge
+	int boundingBoxWidth = 16;
+	int boundingBoxHeight = 16;
+
+	if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
 		velocity.x = -velocity.x;
-	else if (x - mushroomNS::WIDTH < -mushroomNS::WIDTH)     // else if off left screen edge
+	else if (x - boundingBoxWidth < -mushroomNS::WIDTH)     // else if off left screen edge
 		velocity.x = -velocity.x;
-	if (y + mushroomNS::HEIGHT > GAME_HEIGHT)             // if off bottom screen edge
+	if (y + boundingBoxHeight > GAME_HEIGHT)             // if off bottom screen edge
 		velocity.y = -velocity.y;
-	else if (y - mushroomNS::HEIGHT < -mushroomNS::HEIGHT)    // else if off top screen edge
+	else if (y - boundingBoxHeight < -mushroomNS::HEIGHT)    // else if off top screen edge
 		velocity.y = -velocity.y;
 }
 
@@ -126,7 +129,10 @@ void Mushroom::drawSprite( COLOR_ARGB color)
 
 
 
-	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
+	int roundedX = x;
+	int roundexY = y;
+//	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
+	D3DXVECTOR2 translate = D3DXVECTOR2((float)roundedX, (float)roundexY);
 	D3DXMATRIX matrix;
 	D3DXMatrixTransformation2D(
 		&matrix,
@@ -139,7 +145,6 @@ void Mushroom::drawSprite( COLOR_ARGB color)
 
 
 	sprite->SetTransform(&matrix);
-
 
 	sprite->Draw(texture->getDirextXTexture(), &rect, NULL, NULL, color);
 	sprite->End();
