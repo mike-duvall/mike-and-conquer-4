@@ -16,8 +16,8 @@ namespace mushroomNS
 	//const int   WIDTH = 50;                // image width
 	//const int   HEIGHT = 39;               // image height
 
-	const int   WIDTH = 64;                // image width
-	const int   HEIGHT = 64;               // image height
+	const int   WIDTH = 16;                // image width
+	const int   HEIGHT = 16;               // image height
 
 
 	const int   X = GAME_WIDTH / 2 - WIDTH / 2; // location on screen

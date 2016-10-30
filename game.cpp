@@ -52,9 +52,9 @@ void Game::initialize(HWND hw)
     initialized = true;
 
 	mushroom1 = new Mushroom(this->getGraphics(), mushroomNS::WIDTH, mushroomNS::HEIGHT);
-	mushroom2 = new Mushroom(this->getGraphics(), mushroomNS::WIDTH, mushroomNS::HEIGHT);
-	mushroom2->setX(45.0);
-	mushroom2->setY(200.0);
+	//mushroom2 = new Mushroom(this->getGraphics(), mushroomNS::WIDTH, mushroomNS::HEIGHT);
+	//mushroom2->setX(45.0);
+	//mushroom2->setY(200.0);
 
 
 }
@@ -62,7 +62,7 @@ void Game::initialize(HWND hw)
 void Game::update()
 {
 	mushroom1->update(frameTime);
-	mushroom2->update(frameTime);
+	//mushroom2->update(frameTime);
 }
 
 
@@ -71,7 +71,7 @@ void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
 	mushroom1->draw();
-	mushroom2->draw();
+	//mushroom2->draw();
 //	graphics->spriteEnd();                  // end drawing sprites
 }
 

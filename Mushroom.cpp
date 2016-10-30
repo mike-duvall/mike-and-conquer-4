@@ -3,7 +3,7 @@
 #include "Texture.h"
 
 
-const char TEXTURES_IMAGE[] = "pictures\\m2.png";  // game textures
+const char TEXTURES_IMAGE[] = "pictures\\m3.png";  // game textures
 
 Mushroom::Mushroom(Graphics *g, int width, int height)
 {
@@ -11,8 +11,9 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 	x = mushroomNS::X;
 	y = mushroomNS::Y;
 
-	velocity.x = 100.0;
-	velocity.y = 100.0;
+	velocity.x = 300.0;
+	//velocity.y = 300.0;
+	velocity.y = 0.0;
 
     rect.left = 0;       
     rect.top = 0;
@@ -46,8 +47,8 @@ void Mushroom::update(float frameTime)
 	x += frameTime * velocity.x;
 	y += frameTime * velocity.y;
 
-	int boundingBoxWidth = 16;
-	int boundingBoxHeight = 16;
+	int boundingBoxWidth = 16 * 3;
+	int boundingBoxHeight = 16 * 3;
 
 	if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
 		velocity.x = -velocity.x;
