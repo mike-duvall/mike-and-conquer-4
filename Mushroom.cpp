@@ -1,6 +1,6 @@
 #include "Mushroom.h"
 #include "graphics.h"
-#include "Texture.h"
+
 
 
 const char TEXTURES_IMAGE[] = "pictures\\m3.png";  // game textures
@@ -25,7 +25,7 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 	this->width = width;
 	this->height = height;
 
-	texture = new Texture(graphics, TEXTURES_IMAGE);
+	InitializeTexture(TEXTURES_IMAGE);
 
 	if (!this->initializeSprite(graphics, TEXTURES_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing sprite"));
@@ -38,8 +38,42 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 
 }
 
+void Mushroom::InitializeTexture(std::string filename) {
+	// Get width and height from file
+	D3DXIMAGE_INFO info;
+	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
+	if (result != D3D_OK) {
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXGetImageInfoFromFile()"));
+	}
+
+	width = info.Width;
+	height = info.Height;
+
+	// Create the new texture by loading from file
+	result = D3DXCreateTextureFromFileEx(
+		graphics->get3Ddevice(),           //3D device
+		filename.c_str(),           //image filename
+		info.Width,         //texture width
+		info.Height,        //texture height
+		1,                  //mip-map levels (1 for no chain)
+		0,                  //usage
+		D3DFMT_UNKNOWN,     //surface format (default)
+		D3DPOOL_DEFAULT,    //memory class for the texture
+		D3DX_DEFAULT,       //image filter
+		D3DX_DEFAULT,       //mip filter
+		graphicsNS::TRANSCOLOR,         //color key for transparency
+		&info,              //bitmap file info (from loaded file)
+		NULL,               //color palette
+		&texture);         //destination texture
+	if (FAILED(result)) {
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXCreateTextureFromFileEx()"));
+	}
+
+}
+
 Mushroom::~Mushroom()
-{}
+{
+}
 
 
 void Mushroom::update(float frameTime)
@@ -143,7 +177,7 @@ void Mushroom::drawSprite( COLOR_ARGB color)
 
 	sprite->SetTransform(&matrix);
 
-	sprite->Draw(texture->getDirextXTexture(), &rect, NULL, NULL, color);
+	sprite->Draw(texture, &rect, NULL, NULL, color);
 	sprite->End();
 
 }

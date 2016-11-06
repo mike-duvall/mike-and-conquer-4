@@ -91,7 +91,6 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Mushroom.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -102,7 +101,6 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Mushroom.h" />
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon1.ico" />

@@ -43,7 +43,8 @@ public:
 	bool    initialized;
 
 	Graphics *graphics;
-	Texture * texture;
+	LPDIRECT3DTEXTURE9 texture;
+	void InitializeTexture(std::string filename);
 
 
 	bool initializeSprite(Graphics *g, std::string file);
