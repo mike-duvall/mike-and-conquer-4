@@ -7,7 +7,7 @@
 
 class Graphics;
 class Game;
-class Texture;
+class GameSprite;
 
 namespace mushroomNS
 {
@@ -42,18 +42,18 @@ public:
 
 	bool    initialized;
 
-	Graphics *graphics;
-	LPDIRECT3DTEXTURE9 texture;
-	void InitializeTexture(std::string filename);
+	Graphics * graphics;
+	GameSprite * gameSprite;
 
+	//LPDIRECT3DTEXTURE9 texture;
+	//void InitializeTexture(std::string filename);
+	//bool initializeSprite(Graphics *g, std::string file);
 
-	bool initializeSprite(Graphics *g, std::string file);
+	//LPD3DXSPRITE   sprite;
+	//D3DXVECTOR2 spriteCenter;
+	//D3DXVECTOR2 scaling;
 
-	LPD3DXSPRITE   sprite;
-	D3DXVECTOR2 spriteCenter;
-	D3DXVECTOR2 scaling;
-
-	void drawSprite(COLOR_ARGB color = graphicsNS::WHITE);
+	//void drawSprite(COLOR_ARGB color = graphicsNS::WHITE);
 
 
   public:
