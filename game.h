@@ -12,7 +12,7 @@ class Game;
 #include "constants.h"
 #include "gameError.h"
 
-#include "Mushroom.h"
+class Minigunner;
 
 
 

@@ -27,10 +27,10 @@
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mushroom.cpp">
+    <ClCompile Include="GameSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameSprite.cpp">
+    <ClCompile Include="Minigunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +53,10 @@
     <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mushroom.h">
+    <ClInclude Include="GameSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameSprite.h">
+    <ClInclude Include="Minigunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

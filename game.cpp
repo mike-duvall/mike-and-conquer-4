@@ -1,6 +1,8 @@
 
 #include "game.h"
 
+#include "Minigunner.h"
+
 Game::Game()
 {
     input = new Input();
