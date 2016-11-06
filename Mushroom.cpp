@@ -6,7 +6,7 @@
 
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
-Mushroom::Mushroom(Graphics *g, int width, int height)
+Minigunner::Minigunner(Graphics *g, int width, int height)
 {
 
 	x = mushroomNS::X;
@@ -36,12 +36,12 @@ Mushroom::Mushroom(Graphics *g, int width, int height)
 }
 
 
-Mushroom::~Mushroom()
+Minigunner::~Minigunner()
 {
 }
 
 
-void Mushroom::update(float frameTime)
+void Minigunner::update(float frameTime)
 {
 	x += frameTime * velocity.x;
 	y += frameTime * velocity.y;
@@ -61,7 +61,7 @@ void Mushroom::update(float frameTime)
 
 
 
-void Mushroom::draw()
+void Minigunner::draw()
 {
     if ( graphics == NULL)
         return;

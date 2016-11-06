@@ -31,8 +31,8 @@ protected:
     DWORD   sleepTime;              // number of milli-seconds to sleep between frames
     bool    initialized;
 
-	Mushroom  * mushroom1;
-	Mushroom  * mushroom2;
+	Minigunner  * mushroom1;
+	Minigunner  * mushroom2;
 
 public:
     Game();

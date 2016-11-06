@@ -26,7 +26,7 @@ namespace mushroomNS
 
 
 
-class Mushroom
+class Minigunner
 {
 
 public:
@@ -58,8 +58,8 @@ public:
 
   public:
 
-    Mushroom(Graphics *g, int width, int height);
-    virtual ~Mushroom();
+	  Minigunner(Graphics *g, int width, int height);
+    virtual ~Minigunner();
 
 
 	virtual void draw();
