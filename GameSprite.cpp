@@ -4,24 +4,14 @@
 
 
 
-GameSprite::GameSprite() {
-
-}
-
-
 GameSprite::~GameSprite() {
-
 }
 
 
-bool GameSprite::Initialize(LPDIRECT3DDEVICE9 device, std::string file, int width, int height) {
-
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height) {
 	this->device = device;
 	this->InitializeTexture( file);
 	this->InitializeSprite(file);
-
-	return true;
-
 }
 
 
@@ -96,7 +86,6 @@ bool GameSprite::InitializeSprite(std::string file)
 
 
 void GameSprite::Draw(float gameTime, D3DXVECTOR2 position)
-//void Mushroom::drawSprite(COLOR_ARGB color)
 {
 
 	COLOR_ARGB color = graphicsNS::WHITE;

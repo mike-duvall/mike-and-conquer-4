@@ -1,21 +1,16 @@
 #pragma once
 
 
-
 #include <d3dx9.h>
 #include <string>
 
 class GameSprite
 {
 public:
-	//Constructors and Destructor
-	GameSprite();
+	GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height);
 	~GameSprite();
-
-	//Sprite Functions
-	bool Initialize(LPDIRECT3DDEVICE9 device, std::string file, int width, int height);
-	bool IsInitialized();
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
+
 private:
 
 	void InitializeTexture( std::string filename);
@@ -26,9 +21,7 @@ private:
 	D3DXVECTOR2 scaling;
 
 
-	//Pointers
 	LPDIRECT3DTEXTURE9 texture;
-//	LPD3DXSPRITE sprite;
 	LPDIRECT3DDEVICE9 device;
 
 	//Attributes
