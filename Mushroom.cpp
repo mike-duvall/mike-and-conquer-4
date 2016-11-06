@@ -77,7 +77,7 @@ bool Mushroom::initializeSprite(Graphics *g, std::string file)
 
 
 		//float overallScaling = 5.0f;
-		float overallScaling = 3.0f;
+		float overallScaling = 4.0f;
 
 		// Original C&C resolution was 640 x 400, which is what the original artwork was scaled for
 		// But current actual screen resolution is being set to  640 x 480
@@ -121,13 +121,8 @@ void Mushroom::drawSprite( COLOR_ARGB color)
 	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	device3d->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, false);
 
-	device3d->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
-	device3d->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
-	device3d->SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
-
-	device3d->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-	device3d->SetSamplerState(1, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-	device3d->SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+	device3d->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+	device3d->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 
 
 
