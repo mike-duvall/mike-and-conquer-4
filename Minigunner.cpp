@@ -12,8 +12,8 @@ Minigunner::Minigunner(Graphics *g)
 	//x = mushroomNS::X;
 	//y = mushroomNS::Y;
 
-	x = GAME_WIDTH / 2 - WIDTH / 2; // location on screen
-	y = GAME_HEIGHT / 2 - HEIGHT / 2;
+	x = 500;
+	y = 500;
 
 
 	//velocity.x = 300.0;

@@ -4,8 +4,8 @@
 
 #include <windows.h>
 
-const char CLASS_NAME[] = "Spacewar";
-const char GAME_TITLE[] = "Spacewar v1.5";
+const char CLASS_NAME[] = "Mike and Conquer";
+const char GAME_TITLE[] = "Mike and Conquer";
 const bool FULLSCREEN = true;              // windowed or fullscreen
 const UINT GAME_WIDTH =  1920;               // width of game in pixels
 const UINT GAME_HEIGHT = 1080;               // height of game in pixels

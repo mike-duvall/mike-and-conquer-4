@@ -9,18 +9,6 @@ class Graphics;
 class Game;
 class GameSprite;
 
-//namespace mushroomNS
-//{
-//
-//	const int   WIDTH = 16;                // image width
-//	const int   HEIGHT = 16;               // image height
-//
-//
-//	const int   X = GAME_WIDTH / 2 - WIDTH / 2; // location on screen
-//	const int   Y = GAME_HEIGHT / 2 - HEIGHT / 2;
-//}
-
-
 
 class Minigunner
 {
@@ -29,8 +17,6 @@ private:
 
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height
-
-  
 
 	float       x;
 	float       y;

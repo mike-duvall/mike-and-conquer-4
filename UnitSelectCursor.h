@@ -15,8 +15,13 @@ class GameSprite;
 class UnitSelectCursor
 {
 
-public:
-  
+
+
+private:
+
+	const int   TEXTURE_WIDTH = 32; 
+	const int   TEXTURE_HEIGHT = 32; 
+ 
 
 	float       x;
 	float       y;
