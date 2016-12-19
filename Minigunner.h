@@ -9,27 +9,27 @@ class Graphics;
 class Game;
 class GameSprite;
 
-namespace mushroomNS
-{
-	//const int   WIDTH = 128;                // image width
-	//const int   HEIGHT = 128;               // image height
-	//const int   WIDTH = 50;                // image width
-	//const int   HEIGHT = 39;               // image height
-
-	const int   WIDTH = 16;                // image width
-	const int   HEIGHT = 16;               // image height
-
-
-	const int   X = GAME_WIDTH / 2 - WIDTH / 2; // location on screen
-	const int   Y = GAME_HEIGHT / 2 - HEIGHT / 2;
-}
+//namespace mushroomNS
+//{
+//
+//	const int   WIDTH = 16;                // image width
+//	const int   HEIGHT = 16;               // image height
+//
+//
+//	const int   X = GAME_WIDTH / 2 - WIDTH / 2; // location on screen
+//	const int   Y = GAME_HEIGHT / 2 - HEIGHT / 2;
+//}
 
 
 
 class Minigunner
 {
 
-public:
+private: 
+
+	const int   WIDTH = 16;                // image width
+	const int   HEIGHT = 16;               // image height
+
   
 
 	float       x;
@@ -45,20 +45,10 @@ public:
 	Graphics * graphics;
 	GameSprite * gameSprite;
 
-	//LPDIRECT3DTEXTURE9 texture;
-	//void InitializeTexture(std::string filename);
-	//bool initializeSprite(Graphics *g, std::string file);
-
-	//LPD3DXSPRITE   sprite;
-	//D3DXVECTOR2 spriteCenter;
-	//D3DXVECTOR2 scaling;
-
-	//void drawSprite(COLOR_ARGB color = graphicsNS::WHITE);
-
 
   public:
 
-	  Minigunner(Graphics *g, int width, int height);
+	Minigunner(Graphics *g);
     virtual ~Minigunner();
 
 

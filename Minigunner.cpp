@@ -6,14 +6,19 @@
 
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
-Minigunner::Minigunner(Graphics *g, int width, int height)
+Minigunner::Minigunner(Graphics *g)
 {
 
-	x = mushroomNS::X;
-	y = mushroomNS::Y;
+	//x = mushroomNS::X;
+	//y = mushroomNS::Y;
 
-	velocity.x = 300.0;
+	x = GAME_WIDTH / 2 - WIDTH / 2; // location on screen
+	y = GAME_HEIGHT / 2 - HEIGHT / 2;
+
+
+	//velocity.x = 300.0;
 	//velocity.y = 300.0;
+	velocity.x = 0.0;
 	velocity.y = 0.0;
 
     rect.left = 0;       
@@ -51,11 +56,11 @@ void Minigunner::update(float frameTime)
 
 	if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
 		velocity.x = -velocity.x;
-	else if (x - boundingBoxWidth < -mushroomNS::WIDTH)     // else if off left screen edge
+	else if (x - boundingBoxWidth < -WIDTH)     // else if off left screen edge
 		velocity.x = -velocity.x;
 	if (y + boundingBoxHeight > GAME_HEIGHT)             // if off bottom screen edge
 		velocity.y = -velocity.y;
-	else if (y - boundingBoxHeight < -mushroomNS::HEIGHT)    // else if off top screen edge
+	else if (y - boundingBoxHeight < -HEIGHT)    // else if off top screen edge
 		velocity.y = -velocity.y;
 }
 

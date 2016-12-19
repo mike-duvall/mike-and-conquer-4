@@ -54,10 +54,7 @@ void Game::initialize(HWND hw)
 
     initialized = true;
 
-	mushroom1 = new Minigunner(this->getGraphics(), mushroomNS::WIDTH, mushroomNS::HEIGHT);
-	//mushroom2 = new Mushroom(this->getGraphics(), mushroomNS::WIDTH, mushroomNS::HEIGHT);
-	//mushroom2->setX(45.0);
-	//mushroom2->setY(200.0);
+	mushroom1 = new Minigunner(this->getGraphics());
 
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
 
