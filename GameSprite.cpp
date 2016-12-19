@@ -88,7 +88,7 @@ bool GameSprite::InitializeSprite(std::string file)
 void GameSprite::Draw(float gameTime, D3DXVECTOR2 position)
 {
 
-	COLOR_ARGB color = graphicsNS::WHITE;
+	D3DCOLOR color = graphicsNS::WHITE;
 
 	if (texture == NULL)
 		return;

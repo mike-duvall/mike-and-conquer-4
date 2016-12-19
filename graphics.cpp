@@ -163,7 +163,7 @@ HRESULT Graphics::reset()
 }
 
 // Set color used to clear screen
-void Graphics::setBackColor(COLOR_ARGB c) {
+void Graphics::setBackColor(D3DCOLOR c) {
 	backColor = c;
 }
 

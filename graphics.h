@@ -7,35 +7,19 @@
 #endif
 
 
-class Mushroom;
-
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "constants.h"
 #include "gameError.h"
 
 
-// Color defines
-// ARGB numbers range from 0 through 255
-// a = Alpha channel (transparency where 255 is opaque)
-// r = Red, g = Green, b = Blue
-#define COLOR_ARGB DWORD
-#define SETCOLOR_ARGB(a,r,g,b) \
-    ((COLOR_ARGB)((((a)&0xff)<<24)|(((r)&0xff)<<16)|(((g)&0xff)<<8)|((b)&0xff)))
-
 namespace graphicsNS
 {
-    const COLOR_ARGB WHITE   = D3DCOLOR_ARGB(255,255,255,255);
-    const COLOR_ARGB MAGENTA = D3DCOLOR_ARGB(255,255,  0,255);
-	const COLOR_ARGB MAGENTA2 = D3DCOLOR_ARGB(255, 255, 0, 220);
-    const COLOR_ARGB BLACK   = D3DCOLOR_ARGB(255,  0,  0,  0);
-	const COLOR_ARGB CYAN = D3DCOLOR_ARGB(255, 0, 255, 255);
-	const COLOR_ARGB CUSTOM = D3DCOLOR_ARGB(255, 35, 146, 22);
-	const COLOR_ARGB CUSTOM2 = D3DCOLOR_ARGB(255, 147, 130, 64);
-	const COLOR_ARGB CUSTOM3 = D3DCOLOR_ARGB(255, 49, 165, 46);
-	const COLOR_ARGB CUSTOM4 = D3DCOLOR_ARGB(255, 43, 145, 40);
-	const COLOR_ARGB CUSTOM5 = D3DCOLOR_ARGB(255, 134, 155, 85);
-	const COLOR_ARGB CUSTOM6 = D3DCOLOR_XRGB(0, 100, 100);
+    const D3DCOLOR WHITE   = D3DCOLOR_ARGB(255,255,255,255);
+    const D3DCOLOR MAGENTA = D3DCOLOR_ARGB(255,255,  0,255);
+    const D3DCOLOR BLACK   = D3DCOLOR_ARGB(255,  0,  0,  0);
+	const D3DCOLOR CYAN = D3DCOLOR_ARGB(255, 0, 255, 255);
+	const D3DCOLOR CUSTOM6 = D3DCOLOR_XRGB(0, 100, 100);
 
     enum DISPLAY_MODE{TOGGLE, FULLSCREEN, WINDOW};
 }
@@ -55,7 +39,7 @@ private:
     bool        fullscreen;
     int         width;
     int         height;
-    COLOR_ARGB  backColor;      // background color
+    D3DCOLOR  backColor;      // background color
 
     void    initD3Dpp();
 
@@ -83,7 +67,7 @@ public:
 
 	LPDIRECT3DDEVICE9 get3Ddevice()   { return device3d; }
     bool getFullscreen()        { return fullscreen; }
-	void setBackColor(COLOR_ARGB c);
+	void setBackColor(D3DCOLOR c);
 
 
 
@@ -101,9 +85,6 @@ public:
         return result;
     }
 
-    //=============================================================================
-    // EndScene()
-    //=============================================================================
     HRESULT endScene() 
     {
         result = E_FAIL;
