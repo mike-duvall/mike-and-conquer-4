@@ -2,6 +2,7 @@
 #include "game.h"
 
 #include "Minigunner.h"
+#include "UnitSelectCursor.h"
 
 Game::Game()
 {
@@ -58,6 +59,8 @@ void Game::initialize(HWND hw)
 	//mushroom2->setX(45.0);
 	//mushroom2->setY(200.0);
 
+	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
+
 
 }
 
@@ -65,6 +68,7 @@ void Game::update()
 {
 	mushroom1->update(frameTime);
 	//mushroom2->update(frameTime);
+	unitSelectCursor->update(frameTime);
 }
 
 
@@ -74,7 +78,9 @@ void Game::render()
 //	graphics->spriteBegin();                // begin drawing sprites
 	mushroom1->draw();
 	//mushroom2->draw();
+	unitSelectCursor->draw();
 //	graphics->spriteEnd();                  // end drawing sprites
+
 }
 
 

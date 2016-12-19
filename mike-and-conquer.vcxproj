@@ -92,6 +92,7 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Minigunner.cpp" />
+    <ClCompile Include="UnitSelectCursor.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,7 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Minigunner.h" />
+    <ClInclude Include="UnitSelectCursor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon1.ico" />

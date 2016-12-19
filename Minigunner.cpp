@@ -26,7 +26,7 @@ Minigunner::Minigunner(Graphics *g, int width, int height)
 	this->width = width;
 	this->height = height;
 
-	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height);
+	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 
 	rect.left = 0;
 	rect.right = rect.left + width;

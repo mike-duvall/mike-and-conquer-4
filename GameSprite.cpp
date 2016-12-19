@@ -8,14 +8,14 @@ GameSprite::~GameSprite() {
 }
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
-	this->InitializeTexture( file);
+	this->InitializeTexture( file, transparentColor);
 	this->InitializeSprite(file);
 }
 
 
-void GameSprite::InitializeTexture(std::string filename) {
+void GameSprite::InitializeTexture(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
@@ -37,9 +37,9 @@ void GameSprite::InitializeTexture(std::string filename) {
 		0,                  //usage
 		D3DFMT_UNKNOWN,     //surface format (default)
 		D3DPOOL_DEFAULT,    //memory class for the texture
-		D3DX_DEFAULT,       //image filter
-		D3DX_DEFAULT,       //mip filter
-		graphicsNS::TRANSCOLOR,         //color key for transparency
+		D3DX_FILTER_POINT,       //image filter
+		D3DX_FILTER_NONE,       //mip filter
+		transparentColor,
 		&info,              //bitmap file info (from loaded file)
 		NULL,               //color palette
 		&texture);         //destination texture

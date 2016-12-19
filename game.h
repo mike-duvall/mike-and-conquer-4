@@ -13,6 +13,7 @@ class Game;
 #include "gameError.h"
 
 class Minigunner;
+class UnitSelectCursor;
 
 
 
@@ -33,6 +34,7 @@ protected:
 
 	Minigunner  * mushroom1;
 	Minigunner  * mushroom2;
+	UnitSelectCursor * unitSelectCursor;
 
 public:
     Game();
