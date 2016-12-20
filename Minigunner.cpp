@@ -4,17 +4,19 @@
 
 #include "GameSprite.h"
 
+#include "UnitSelectCursor.h"
+
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
-Minigunner::Minigunner(Graphics *g)
+
+
+Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
 {
 
-	//x = mushroomNS::X;
-	//y = mushroomNS::Y;
+	this->unitSelectCursor = unitSelectCursor;
 
 	x = 500;
 	y = 500;
-
 
 	//velocity.x = 300.0;
 	//velocity.y = 300.0;
@@ -79,6 +81,12 @@ void Minigunner::draw()
 	position.x = (float)roundedX;
 	position.y = (float)roundexY;
 	gameSprite->Draw(0, position);
+
+	if (isSelected) {
+		unitSelectCursor->setX(position.x);
+		unitSelectCursor->setY(position.y);
+		unitSelectCursor->draw();
+	}
 
 }
 

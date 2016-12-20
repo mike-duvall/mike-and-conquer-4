@@ -8,6 +8,7 @@
 class Graphics;
 class Game;
 class GameSprite;
+class UnitSelectCursor;
 
 
 class Minigunner
@@ -30,11 +31,15 @@ private:
 
 	Graphics * graphics;
 	GameSprite * gameSprite;
+	
+	UnitSelectCursor * unitSelectCursor;
+
+	boolean isSelected = true;
 
 
   public:
 
-	Minigunner(Graphics *g);
+	Minigunner(Graphics *g, UnitSelectCursor * unitSelectionCursor);
     virtual ~Minigunner();
 
 

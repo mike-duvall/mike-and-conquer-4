@@ -32,8 +32,7 @@ protected:
     DWORD   sleepTime;              // number of milli-seconds to sleep between frames
     bool    initialized;
 
-	Minigunner  * mushroom1;
-	Minigunner  * mushroom2;
+	Minigunner  * minigunner1;
 	UnitSelectCursor * unitSelectCursor;
 
 public:

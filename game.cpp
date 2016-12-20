@@ -54,16 +54,17 @@ void Game::initialize(HWND hw)
 
     initialized = true;
 
-	mushroom1 = new Minigunner(this->getGraphics());
-
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
+	minigunner1 = new Minigunner(this->getGraphics(), unitSelectCursor);
+
+
 
 
 }
 
 void Game::update()
 {
-	mushroom1->update(frameTime);
+	minigunner1->update(frameTime);
 	//mushroom2->update(frameTime);
 	unitSelectCursor->update(frameTime);
 }
@@ -73,9 +74,9 @@ void Game::update()
 void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
-	mushroom1->draw();
+	minigunner1->draw();
 	//mushroom2->draw();
-	unitSelectCursor->draw();
+	//unitSelectCursor->draw();
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }

@@ -109,10 +109,14 @@ void GameSprite::Draw(float gameTime, D3DXVECTOR2 position)
 	//	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
 	//D3DXVECTOR2 translate = D3DXVECTOR2((float)roundedX, (float)roundexY);
 	D3DXVECTOR2 translate = position;
+	float xOffset = this->width / 2.0;
+	float yOffset = this->height / 2.0;
+	translate.x = translate.x - xOffset;
+	translate.y = translate.y - yOffset;
 	D3DXMATRIX matrix;
 	D3DXMatrixTransformation2D(
 		&matrix,
-		NULL,               // keep origin at top left when scaling
+		&spriteCenter,               // keep origin at top left when scaling
 		0.0f,               // no scaling rotation
 		&scaling,           // scale amount
 		&spriteCenter,      // rotation center
