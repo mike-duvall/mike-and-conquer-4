@@ -1,5 +1,10 @@
 #include "input.h"
 
+
+
+//Have click of mouse result in small circle drawn at tip of mouse pointer
+//Use this to verify sprites are centered correctly
+
 Input::Input()
 {
     // clear key down array
@@ -38,6 +43,22 @@ bool Input::isKeyDown(UCHAR vkey) const
         return keysDown[vkey];
     else
         return false;
+}
+
+void Input::leftMouseDown()
+{
+	leftMouseButtonDown = true;
+}
+
+void Input::leftMouseUp()
+{
+	leftMouseButtonDown = false;
+}
+
+void Input::mousePosition(int x, int y)
+{
+	this->mouseX = x;
+	this->mouseY = y;
 }
 
 

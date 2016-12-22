@@ -9,7 +9,6 @@
 #include "gameError.h"
 
 
-
 namespace inputNS
 {
     const int KEYS_ARRAY_LEN = 256;     // size of key arrays
@@ -21,17 +20,23 @@ namespace inputNS
 
 class Input
 {
+
+public:
+	Input();
+	void keyDown(WPARAM);
+	void keyUp(WPARAM);
+	bool isKeyDown(UCHAR vkey) const;
+	void leftMouseDown();
+	void leftMouseUp();
+	void mousePosition(int x, int y);
+
+
 private:
     bool keysDown[inputNS::KEYS_ARRAY_LEN];     // true if specified key is down
     bool keysPressed[inputNS::KEYS_ARRAY_LEN];  // true if specified key was pressed
-
-public:
-
-    Input();
-    void keyDown(WPARAM);
-    void keyUp(WPARAM);
-    bool isKeyDown(UCHAR vkey) const;
-
+	bool leftMouseButtonDown;
+	int mouseX;
+	int mouseY;
 
 };
 

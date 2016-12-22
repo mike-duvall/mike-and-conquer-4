@@ -12,6 +12,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
+void init_input(HWND hWnd);
 
 Game *game = NULL;
 HWND hwnd = NULL;
@@ -32,6 +33,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     try{
         game->initialize(hwnd);     // throws GameError
+		init_input(hwnd);
 
 
         int done = 0;
@@ -65,6 +67,18 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     safeDelete(game);       // free memory before exit
     return 0;
+}
+
+// this is the function that initializes the Raw Input API
+void init_input(HWND hWnd)
+{
+	RAWINPUTDEVICE Mouse;
+	Mouse.usUsage = 0x02;    // register mouse
+	Mouse.usUsagePage = 0x01;    // top-level mouse
+	Mouse.dwFlags = NULL;    // flags
+	Mouse.hwndTarget = hWnd;    // handle to a window
+
+	RegisterRawInputDevices(&Mouse, 1, sizeof(RAWINPUTDEVICE));    // register the device
 }
 
 LRESULT WINAPI WinProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
