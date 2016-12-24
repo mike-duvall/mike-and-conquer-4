@@ -3,35 +3,8 @@
 
 #include "Minigunner.h"
 #include "UnitSelectCursor.h"
+#include "Circle.h"
 
-
-static int circleX = 200;
-static int circleY = 200;
-
-static const int CIRCLE_RESOLUTION = 64;
-
-struct VERTEX_2D_DIF { // transformed colorized
-	float x, y, z, rhw;
-	D3DCOLOR color;
-	static const DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
-};
-
-void DrawCircleFilled(LPDIRECT3DDEVICE9 device, float mx, float my, float r, D3DCOLOR color)
-{
-	VERTEX_2D_DIF verts[CIRCLE_RESOLUTION + 1];
-
-	for (int i = 0; i < CIRCLE_RESOLUTION + 1; i++)
-	{
-		verts[i].x = mx + r*cos(D3DX_PI*(i / (CIRCLE_RESOLUTION / 2.0f)));
-		verts[i].y = my + r*sin(D3DX_PI*(i / (CIRCLE_RESOLUTION / 2.0f)));
-		verts[i].z = 0;
-		verts[i].rhw = 1;
-		verts[i].color = color;
-	}
-
-	device->SetFVF(VERTEX_2D_DIF::FVF);
-	device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, CIRCLE_RESOLUTION - 1, &verts, sizeof(VERTEX_2D_DIF));
-}
 
 
 
@@ -82,14 +55,13 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 				if (inputData.header.dwType == RIM_TYPEMOUSE) {
 
+					POINT mousePos;
+					GetCursorPos(&mousePos);
 
-					static BOOL MouseDown;
 					if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
 						input->leftMouseDown();
-						POINT mousePos;
-						GetCursorPos(&mousePos);
-						circleX = mousePos.x;
-						circleY = mousePos.y;
+						circle->setX(mousePos.x);
+						circle->setY(mousePos.y);
 
 					}
 					if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_UP) {
@@ -132,7 +104,7 @@ void Game::initialize(HWND hw)
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
 	minigunner1 = new Minigunner(this->getGraphics(), unitSelectCursor);
 
-
+	circle = new Circle(500, 500);
 
 
 }
@@ -151,6 +123,7 @@ void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
 	minigunner1->draw();
+	circle->Draw(graphics->get3Ddevice());
 	//mushroom2->draw();
 	//unitSelectCursor->draw();
 //	graphics->spriteEnd();                  // end drawing sprites
@@ -163,7 +136,6 @@ void Game::renderGame()
     if (SUCCEEDED(graphics->beginScene()))
     {
         render();
-		DrawCircleFilled(graphics->get3Ddevice(), circleX, circleY,  20, graphicsNS::MAGENTA);
         graphics->endScene();
     }
 

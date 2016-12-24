@@ -14,6 +14,7 @@ class Game;
 
 class Minigunner;
 class UnitSelectCursor;
+class Circle;
 
 
 
@@ -34,6 +35,7 @@ protected:
 
 	Minigunner  * minigunner1;
 	UnitSelectCursor * unitSelectCursor;
+	Circle * circle;
 
 public:
     Game();

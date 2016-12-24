@@ -2,8 +2,11 @@
 
 
 
-//Have click of mouse result in small circle drawn at tip of mouse pointer
-//Use this to verify sprites are centered correctly
+//Clean up mouse code
+//Have clicking the minigunner select him
+//click elsewhere delsects? 
+//Then left click to move to position
+
 
 Input::Input()
 {
