@@ -37,10 +37,6 @@ UnitSelectCursor::~UnitSelectCursor()
 }
 
 
-void UnitSelectCursor::update(float frameTime)
-{
-
-}
 
 
 

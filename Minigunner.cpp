@@ -12,7 +12,7 @@ const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
 {
-
+	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
 
 	x = 500;
@@ -23,22 +23,11 @@ Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
 	velocity.x = 0.0;
 	velocity.y = 0.0;
 
-    rect.left = 0;       
-    rect.top = 0;
-    rect.right = width;
-    rect.bottom = height;
-
 	graphics = g;
 
-	this->width = width;
-	this->height = height;
 
 	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 
-	rect.left = 0;
-	rect.right = rect.left + width;
-	rect.top = 0;
-	rect.bottom = rect.top + height;
 
 }
 
@@ -64,6 +53,29 @@ void Minigunner::update(float frameTime)
 		velocity.y = -velocity.y;
 	else if (y - boundingBoxHeight < -HEIGHT)    // else if off top screen edge
 		velocity.y = -velocity.y;
+}
+
+bool Minigunner::pointIsWithin(int x, int y)
+{
+	int scale = 4;
+	int boundingBoxWidth = WIDTH * scale;
+	int boundingBoxHeight = HEIGHT * scale;
+
+
+	int boundingBoxLeftX = this->x - (boundingBoxWidth / 2.0);
+	int boundingBoxRightX = this->x + (boundingBoxWidth / 2.0);
+	int boundingBoxTopY = this->y - (boundingBoxHeight / 2.0);
+	int boundingBoxBottomY = this->y + (boundingBoxHeight / 2.0);
+
+	if (x >= boundingBoxLeftX &&
+		x <= boundingBoxRightX &&
+		y >= boundingBoxTopY &&
+		y <= boundingBoxBottomY) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 

@@ -28,8 +28,10 @@ public:
 	bool isKeyDown(UCHAR vkey) const;
 	void leftMouseDown();
 	void leftMouseUp();
+	bool isLeftMouseDown() { return leftMouseButtonDown; }
 	void mousePosition(int x, int y);
-
+	int getMouseX() { return mouseX;  }
+	int getMouseY() { return mouseY; }
 
 private:
     bool keysDown[inputNS::KEYS_ARRAY_LEN];     // true if specified key is down

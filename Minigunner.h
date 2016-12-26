@@ -14,29 +14,6 @@ class UnitSelectCursor;
 class Minigunner
 {
 
-private: 
-
-	const int   WIDTH = 16;                // image width
-	const int   HEIGHT = 16;               // image height
-
-	float       x;
-	float       y;
-	UINT         width;
-	UINT         height;
-	D3DXVECTOR2 velocity;
-	RECT        rect;
-
-
-	bool    initialized;
-
-	Graphics * graphics;
-	GameSprite * gameSprite;
-	
-	UnitSelectCursor * unitSelectCursor;
-
-	boolean isSelected = true;
-
-
   public:
 
 	Minigunner(Graphics *g, UnitSelectCursor * unitSelectionCursor);
@@ -50,8 +27,32 @@ private:
 	virtual void  setVelocity(D3DXVECTOR2 v) { velocity = v; }
 	void setX(float newX) { this->x = newX; }
 	void setY(float newY) { this->y = newY; }
+	bool pointIsWithin(int x, int y);
+	void setSelected(bool selected) { this->isSelected = selected; }
 
-	
+private:
+
+	const int   WIDTH = 16;                // image width
+	const int   HEIGHT = 16;               // image height
+
+	float       x;
+	float       y;
+	UINT         width;
+	UINT         height;
+	D3DXVECTOR2 velocity;
+
+	bool    initialized;
+
+	Graphics * graphics;
+	GameSprite * gameSprite;
+
+	UnitSelectCursor * unitSelectCursor;
+
+	boolean isSelected;
+
+
+
+
 };
 
 

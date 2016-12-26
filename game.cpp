@@ -23,6 +23,31 @@ Game::~Game()
 }
 
 
+void Game::initialize(HWND hw)
+{
+	hwnd = hw;                                  // save window handle
+
+	graphics = new Graphics();
+	graphics->initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
+
+
+	// attempt to set up high resolution timer
+	if (QueryPerformanceFrequency(&timerFreq) == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
+
+	QueryPerformanceCounter(&timeStart);        // get starting time
+
+	initialized = true;
+
+	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
+	minigunner1 = new Minigunner(this->getGraphics(), unitSelectCursor);
+
+	circle = new Circle(500, 500);
+
+
+}
+
+
 
 LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -60,6 +85,7 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 					if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
 						input->leftMouseDown();
+						input->mousePosition(mousePos.x, mousePos.y);
 						circle->setX(mousePos.x);
 						circle->setY(mousePos.y);
 
@@ -69,7 +95,7 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 					}
 
 					
-					input->mousePosition(inputData.data.mouse.lLastX, inputData.data.mouse.lLastY);
+					//input->mousePosition(inputData.data.mouse.lLastX, inputData.data.mouse.lLastY);
 
 
 
@@ -85,35 +111,19 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
     return DefWindowProc( hwnd, msg, wParam, lParam );    // let Windows handle it
 }
 
-void Game::initialize(HWND hw)
-{
-    hwnd = hw;                                  // save window handle
-
-    graphics = new Graphics();
-    graphics->initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
-
-
-    // attempt to set up high resolution timer
-    if(QueryPerformanceFrequency(&timerFreq) == false)
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
-
-    QueryPerformanceCounter(&timeStart);        // get starting time
-
-    initialized = true;
-
-	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
-	minigunner1 = new Minigunner(this->getGraphics(), unitSelectCursor);
-
-	circle = new Circle(500, 500);
-
-
-}
 
 void Game::update()
 {
 	minigunner1->update(frameTime);
-	//mushroom2->update(frameTime);
-	unitSelectCursor->update(frameTime);
+	if (input->isLeftMouseDown()) {
+		if (minigunner1->pointIsWithin(input->getMouseX(), input->getMouseY())) {
+			minigunner1->setSelected(true);
+		}
+		else {
+			minigunner1->setSelected(false);
+		}
+	}
+
 }
 
 
@@ -124,8 +134,6 @@ void Game::render()
 //	graphics->spriteBegin();                // begin drawing sprites
 	minigunner1->draw();
 	circle->Draw(graphics->get3Ddevice());
-	//mushroom2->draw();
-	//unitSelectCursor->draw();
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }
