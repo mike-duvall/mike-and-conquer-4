@@ -23,6 +23,48 @@ Game::~Game()
 }
 
 
+void Game::HandleMouseInput(LPARAM lParam) {
+	RAWINPUT inputData;
+
+	UINT DataSize = sizeof(RAWINPUT);
+	GetRawInputData((HRAWINPUT)lParam,
+		RID_INPUT,
+		&inputData,
+		&DataSize,
+		sizeof(RAWINPUTHEADER));
+
+	// set the mouse button status
+
+	if (inputData.header.dwType == RIM_TYPEMOUSE) {
+
+		POINT mousePos;
+		GetCursorPos(&mousePos);
+		input->mousePosition(mousePos.x, mousePos.y);
+
+		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
+			input->leftMouseDown();
+			circle->setX(mousePos.x);
+			circle->setY(mousePos.y);
+
+		}
+		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_UP) {
+			input->leftMouseUp();
+		}
+
+		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_RIGHT_BUTTON_DOWN) {
+			input->rightMouseDown();
+
+		}
+		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_RIGHT_BUTTON_UP) {
+			input->rightMouseUp();
+		}
+
+
+	}
+
+
+}
+
 void Game::initialize(HWND hw)
 {
 	hwnd = hw;                                  // save window handle
@@ -67,40 +109,7 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 			case WM_INPUT:
 			{
-				RAWINPUT inputData;
-
-				UINT DataSize = sizeof(RAWINPUT);
-				GetRawInputData((HRAWINPUT)lParam,
-					RID_INPUT,
-					&inputData,
-					&DataSize,
-					sizeof(RAWINPUTHEADER));
-
-				// set the mouse button status
-
-				if (inputData.header.dwType == RIM_TYPEMOUSE) {
-
-					POINT mousePos;
-					GetCursorPos(&mousePos);
-
-					if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
-						input->leftMouseDown();
-						input->mousePosition(mousePos.x, mousePos.y);
-						circle->setX(mousePos.x);
-						circle->setY(mousePos.y);
-
-					}
-					if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_UP) {
-						input->leftMouseUp();
-					}
-
-					
-					//input->mousePosition(inputData.data.mouse.lLastX, inputData.data.mouse.lLastY);
-
-
-
-				}
-
+				HandleMouseInput(lParam);
 
 
 				return 0;
@@ -119,10 +128,14 @@ void Game::update()
 		if (minigunner1->pointIsWithin(input->getMouseX(), input->getMouseY())) {
 			minigunner1->setSelected(true);
 		}
-		else {
-			minigunner1->setSelected(false);
+		else if(minigunner1->getIsSelected()){
+			minigunner1->MoveTo(input->getMouseX(), input->getMouseY());
 		}
 	}
+	if (input->isRightMouseDown()) {
+		minigunner1->setSelected(false);
+	}
+
 
 }
 

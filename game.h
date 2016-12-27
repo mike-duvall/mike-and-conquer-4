@@ -37,6 +37,8 @@ protected:
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;
 
+	void HandleMouseInput(LPARAM lParam);
+
 public:
     Game();
     virtual ~Game();

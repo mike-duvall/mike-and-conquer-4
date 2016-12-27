@@ -15,20 +15,21 @@ Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
 
-	x = 500;
-	y = 500;
+	this->x = 500;
+	this->y = 500;
+	this->destinationX = this->x;
+	this->destinationY = this->y;
+
 
 	//velocity.x = 300.0;
 	//velocity.y = 300.0;
-	velocity.x = 0.0;
-	velocity.y = 0.0;
+	velocity.x = 150.0;
+	velocity.y = 150.0;
 
 	graphics = g;
 
 
 	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
-
-
 }
 
 
@@ -37,22 +38,45 @@ Minigunner::~Minigunner()
 }
 
 
+void Minigunner::MoveTo(int x, int y) {
+	this->destinationX = x;
+	this->destinationY = y;
+}
+
 void Minigunner::update(float frameTime)
 {
-	x += frameTime * velocity.x;
-	y += frameTime * velocity.y;
 
-	int boundingBoxWidth = 16 * 3;
-	int boundingBoxHeight = 16 * 3;
+	int buffer = 2;
 
-	if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
-		velocity.x = -velocity.x;
-	else if (x - boundingBoxWidth < -WIDTH)     // else if off left screen edge
-		velocity.x = -velocity.x;
-	if (y + boundingBoxHeight > GAME_HEIGHT)             // if off bottom screen edge
-		velocity.y = -velocity.y;
-	else if (y - boundingBoxHeight < -HEIGHT)    // else if off top screen edge
-		velocity.y = -velocity.y;
+	if (this->x < (this->destinationX - buffer)) {
+		x += frameTime * velocity.x;
+	}
+	else if (this->x > (this->destinationX + buffer)) {
+		x -= frameTime * velocity.x;
+	}
+		
+	if (this->y < (this->destinationY - buffer)) {
+		y += frameTime * velocity.y;
+	}
+	else if (this->y > (this->destinationY + buffer)) {
+		y -= frameTime * velocity.y;
+	}
+
+
+	//x += frameTime * velocity.x;
+	//y += frameTime * velocity.y;
+
+	//int boundingBoxWidth = 16 * 3;
+	//int boundingBoxHeight = 16 * 3;
+
+	//if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
+	//	velocity.x = -velocity.x;
+	//else if (x - boundingBoxWidth < -WIDTH)     // else if off left screen edge
+	//	velocity.x = -velocity.x;
+	//if (y + boundingBoxHeight > GAME_HEIGHT)             // if off bottom screen edge
+	//	velocity.y = -velocity.y;
+	//else if (y - boundingBoxHeight < -HEIGHT)    // else if off top screen edge
+	//	velocity.y = -velocity.y;
 }
 
 bool Minigunner::pointIsWithin(int x, int y)

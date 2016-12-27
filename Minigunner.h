@@ -29,6 +29,8 @@ class Minigunner
 	void setY(float newY) { this->y = newY; }
 	bool pointIsWithin(int x, int y);
 	void setSelected(bool selected) { this->isSelected = selected; }
+	bool getIsSelected() { return this->isSelected; }
+	void MoveTo(int x, int y);
 
 private:
 
@@ -50,7 +52,8 @@ private:
 
 	boolean isSelected;
 
-
+	int destinationX;
+	int destinationY;
 
 
 };

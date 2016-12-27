@@ -28,7 +28,11 @@ public:
 	bool isKeyDown(UCHAR vkey) const;
 	void leftMouseDown();
 	void leftMouseUp();
+	void rightMouseDown();
+	void rightMouseUp();
+
 	bool isLeftMouseDown() { return leftMouseButtonDown; }
+	bool isRightMouseDown() { return rightMouseButtonDown; }
 	void mousePosition(int x, int y);
 	int getMouseX() { return mouseX;  }
 	int getMouseY() { return mouseY; }
@@ -37,6 +41,7 @@ private:
     bool keysDown[inputNS::KEYS_ARRAY_LEN];     // true if specified key is down
     bool keysPressed[inputNS::KEYS_ARRAY_LEN];  // true if specified key was pressed
 	bool leftMouseButtonDown;
+	bool rightMouseButtonDown;
 	int mouseX;
 	int mouseY;
 

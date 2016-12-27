@@ -12,6 +12,8 @@ Input::Input()
 {
 
 	this->leftMouseButtonDown = false;
+	this->rightMouseButtonDown = false;
+
     // clear key down array
     for (size_t i = 0; i < inputNS::KEYS_ARRAY_LEN; i++)
         keysDown[i] = false;
@@ -59,6 +61,17 @@ void Input::leftMouseUp()
 {
 	leftMouseButtonDown = false;
 }
+
+void Input::rightMouseDown()
+{
+	rightMouseButtonDown = true;
+}
+
+void Input::rightMouseUp()
+{
+	rightMouseButtonDown = false;
+}
+
 
 void Input::mousePosition(int x, int y)
 {
