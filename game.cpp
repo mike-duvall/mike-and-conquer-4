@@ -43,9 +43,6 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
 			input->leftMouseDown();
-			circle->setX(mousePos.x);
-			circle->setY(mousePos.y);
-
 		}
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_UP) {
 			input->leftMouseUp();
@@ -131,6 +128,10 @@ void Game::update()
 		else if(minigunner1->getIsSelected()){
 			minigunner1->MoveTo(input->getMouseX(), input->getMouseY());
 		}
+
+		circle->setX(input->getMouseX());
+		circle->setY(input->getMouseY());
+
 	}
 	if (input->isRightMouseDown()) {
 		minigunner1->setSelected(false);
