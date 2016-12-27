@@ -9,8 +9,8 @@ const std::string IMAGE_FILE = "pictures\\cursor.png";  // game textures
 UnitSelectCursor::UnitSelectCursor(Graphics *g)
 {
 
-	x = 500 - TEXTURE_WIDTH;
-	y = 500 - TEXTURE_HEIGHT;
+	x = 500;
+	y = 500;
 
 	this->width = TEXTURE_WIDTH;
 	this->height = TEXTURE_HEIGHT;

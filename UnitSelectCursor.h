@@ -10,8 +10,6 @@ class Game;
 class GameSprite;
 
 
-
-
 class UnitSelectCursor
 {
 
@@ -33,8 +31,6 @@ private:
 
 	Graphics * graphics;
 	GameSprite * gameSprite;
-
-
 
   public:
 

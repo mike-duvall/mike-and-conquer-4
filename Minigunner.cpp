@@ -17,8 +17,8 @@ Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
 
 	this->x = 500;
 	this->y = 500;
-	this->destinationX = this->x;
-	this->destinationY = this->y;
+	this->destinationX = int(this->x);
+	this->destinationY = int(this->y);
 
 
 	//velocity.x = 300.0;
@@ -84,12 +84,13 @@ bool Minigunner::pointIsWithin(int x, int y)
 	int scale = 4;
 	int boundingBoxWidth = WIDTH * scale;
 	int boundingBoxHeight = HEIGHT * scale;
+	
 
 
-	int boundingBoxLeftX = this->x - (boundingBoxWidth / 2.0);
-	int boundingBoxRightX = this->x + (boundingBoxWidth / 2.0);
-	int boundingBoxTopY = this->y - (boundingBoxHeight / 2.0);
-	int boundingBoxBottomY = this->y + (boundingBoxHeight / 2.0);
+	int boundingBoxLeftX = int(this->x - (boundingBoxWidth / 2));
+	int boundingBoxRightX = int(this->x + (boundingBoxWidth / 2));
+	int boundingBoxTopY = int(this->y - (boundingBoxHeight / 2));
+	int boundingBoxBottomY = int(this->y + (boundingBoxHeight / 2));
 
 	if (x >= boundingBoxLeftX &&
 		x <= boundingBoxRightX &&

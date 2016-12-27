@@ -109,8 +109,8 @@ void GameSprite::Draw(float gameTime, D3DXVECTOR2 position)
 	//	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
 	//D3DXVECTOR2 translate = D3DXVECTOR2((float)roundedX, (float)roundexY);
 	D3DXVECTOR2 translate = position;
-	float xOffset = this->width / 2.0;
-	float yOffset = this->height / 2.0;
+	float xOffset = this->width / 2.0f;
+	float yOffset = this->height / 2.0f;
 	translate.x = translate.x - xOffset;
 	translate.y = translate.y - yOffset;
 	D3DXMATRIX matrix;

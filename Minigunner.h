@@ -50,7 +50,7 @@ private:
 
 	UnitSelectCursor * unitSelectCursor;
 
-	boolean isSelected;
+	bool isSelected;
 
 	int destinationX;
 	int destinationY;

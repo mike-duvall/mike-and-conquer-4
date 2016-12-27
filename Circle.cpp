@@ -20,7 +20,7 @@ struct VERTEX_2D_DIF { // transformed colorized
 	static const DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 };
 
-void DrawCircleFilled(LPDIRECT3DDEVICE9 device, float mx, float my, float r, D3DCOLOR color)
+void DrawCircleFilled(LPDIRECT3DDEVICE9 device, int mx, int my, int r, D3DCOLOR color)
 {
 	VERTEX_2D_DIF verts[CIRCLE_RESOLUTION + 1];
 
