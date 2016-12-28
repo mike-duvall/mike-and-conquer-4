@@ -12,6 +12,7 @@ const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
+	this->state = "IDLE";
 	this->game = game;
 	this->graphics = graphics;
 	this->input = input;
@@ -42,26 +43,49 @@ void Minigunner::MoveTo(int x, int y) {
 	this->destinationY = y;
 }
 
-void Minigunner::update(float frameTime) {
-
-	if (isEnemy) {
-		return;
-	}
-
+void Minigunner::handleIdleState(float frameTime) {
 	if (input->isLeftMouseDown()) {
 		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
-		if(foundMinigunner == this) {
-			setSelected(true);
+		if (foundMinigunner != NULL) {
+			if (foundMinigunner == this) {
+				setSelected(true);
+			}
+			else {
+				// It's the enemy
+				state = "ATTACKING";
+				enemyAttacking = foundMinigunner;
+			}
 		}
 		else if (getIsSelected()) {
+			state = "MOVING";
 			MoveTo(input->getMouseX(), input->getMouseY());
 		}
 
 	}
-	if (input->isRightMouseDown()) {
-		setSelected(false);
-	}
 
+}
+
+
+void Minigunner::handleMovingState(float frameTime) {
+
+	if (input->isLeftMouseDown()) {
+		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		if (foundMinigunner != NULL) {
+			if (foundMinigunner == this) {
+				setSelected(true);
+			}
+			else {
+				// It's the enemy
+				state = "ATTACKING";
+				enemyAttacking = foundMinigunner;
+			}
+		}
+		else if (getIsSelected()) {
+			state = "MOVING";
+			MoveTo(input->getMouseX(), input->getMouseY());
+		}
+
+	}
 
 
 	int buffer = 2;
@@ -69,16 +93,61 @@ void Minigunner::update(float frameTime) {
 	if (this->x < (this->destinationX - buffer)) {
 		x += frameTime * velocity.x;
 	}
-	else if (this->x > (this->destinationX + buffer)) {
+	else if (this->x >(this->destinationX + buffer)) {
 		x -= frameTime * velocity.x;
 	}
-		
+
 	if (this->y < (this->destinationY - buffer)) {
 		y += frameTime * velocity.y;
 	}
-	else if (this->y > (this->destinationY + buffer)) {
+	else if (this->y >(this->destinationY + buffer)) {
 		y -= frameTime * velocity.y;
 	}
+
+}
+
+
+void Minigunner::handleAttackingState(float frameTime) {
+
+}
+
+
+void Minigunner::update(float frameTime) {
+
+	if (isEnemy) {
+		return;
+	}
+
+	if (state == "IDLE") {
+		handleIdleState(frameTime);
+	}
+	else if (state == "MOVING") {
+		handleMovingState(frameTime);
+	}
+	else if (state == "ATTACKING") {
+		handleAttackingState(frameTime);
+	}
+
+	if (input->isRightMouseDown()) {
+		setSelected(false);
+	}
+
+
+	//int buffer = 2;
+
+	//if (this->x < (this->destinationX - buffer)) {
+	//	x += frameTime * velocity.x;
+	//}
+	//else if (this->x > (this->destinationX + buffer)) {
+	//	x -= frameTime * velocity.x;
+	//}
+	//	
+	//if (this->y < (this->destinationY - buffer)) {
+	//	y += frameTime * velocity.y;
+	//}
+	//else if (this->y > (this->destinationY + buffer)) {
+	//	y -= frameTime * velocity.y;
+	//}
 
 
 	//x += frameTime * velocity.x;

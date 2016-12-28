@@ -59,6 +59,13 @@ private:
 
 	bool isEnemy;
 
+	std::string state;
+	void handleIdleState(float frameTime);
+	void handleMovingState(float frameTime);
+	void handleAttackingState(float frameTime);
+
+	Minigunner * enemyAttacking;
+
 };
 
 
