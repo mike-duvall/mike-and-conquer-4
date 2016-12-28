@@ -42,6 +42,7 @@ protected:
     bool    initialized;
 
 
+
 	void HandleMouseInput(LPARAM lParam);
 
 public:
@@ -61,6 +62,7 @@ public:
 	virtual void update();
 	virtual void render();
 
+	Minigunner * getMinigunnerAtPoint(int x, int y);
 
     Graphics* getGraphics() {return graphics;}
     Input* getInput()       {return input;}

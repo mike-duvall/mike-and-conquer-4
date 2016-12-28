@@ -4,19 +4,22 @@
 #include "GameSprite.h"
 #include "UnitSelectCursor.h"
 #include "input.h"
+#include "game.h"
 
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 
 
-Minigunner::Minigunner(Graphics * graphics,  int x, int y, UnitSelectCursor * unitSelectCursor, Input * input)
+Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
+	this->game = game;
 	this->graphics = graphics;
 	this->input = input;
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
-	this->x = (int)x;
-	this->y = (int)y;
+	this->isEnemy = isEnemy;
+	this->x = (float)x;
+	this->y = (float)y;
 	this->destinationX = int(this->x);
 	this->destinationY = int(this->y);
 
@@ -41,8 +44,13 @@ void Minigunner::MoveTo(int x, int y) {
 
 void Minigunner::update(float frameTime) {
 
+	if (isEnemy) {
+		return;
+	}
+
 	if (input->isLeftMouseDown()) {
-		if (pointIsWithin(input->getMouseX(), input->getMouseY())) {
+		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		if(foundMinigunner == this) {
 			setSelected(true);
 		}
 		else if (getIsSelected()) {

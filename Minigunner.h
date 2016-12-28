@@ -10,6 +10,7 @@ class Game;
 class GameSprite;
 class UnitSelectCursor;
 class Input;
+class Game;
 
 
 class Minigunner
@@ -17,7 +18,7 @@ class Minigunner
 
   public:
 
-	Minigunner(Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input);
+	Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
     virtual ~Minigunner();
 
 
@@ -39,6 +40,7 @@ private:
 	GameSprite * gameSprite;
 	UnitSelectCursor * unitSelectCursor;
 	Input * input;
+	Game * game;
 
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height
@@ -54,6 +56,8 @@ private:
 
 	int destinationX;
 	int destinationY;
+
+	bool isEnemy;
 
 };
 

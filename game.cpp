@@ -79,14 +79,26 @@ void Game::initialize(HWND hw)
 	initialized = true;
 
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
-	minigunner1 = new Minigunner(this->getGraphics(), 300, 900,  unitSelectCursor,input);
-	enemyMinigunner1 = new Minigunner(this->getGraphics(), 1000, 300, unitSelectCursor, input);
+	minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900,  unitSelectCursor,input, false);
+	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
 
 	circle = new Circle(500, 500);
 
 }
 
 
+
+Minigunner * Game::getMinigunnerAtPoint(int x, int y) {
+	if (minigunner1->pointIsWithin(x, y)) {
+		return minigunner1;
+	}
+	else if (enemyMinigunner1->pointIsWithin(x, y)) {
+		return enemyMinigunner1;
+	}
+	else {
+		return NULL;
+	}
+}
 
 LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
