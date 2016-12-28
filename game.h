@@ -24,6 +24,14 @@ protected:
     // common game properties
     Graphics *graphics;             // pointer to the one and ONLY Graphics object
     Input   *input;                 // pointer to Input
+
+
+	Minigunner  * minigunner1;
+	Minigunner  * enemyMinigunner1;
+	UnitSelectCursor * unitSelectCursor;
+	Circle * circle;
+
+
     HWND    hwnd;                   // window handle
     HRESULT hr;                     // standard return type
     LARGE_INTEGER timeStart;        // Performance Counter start value
@@ -33,9 +41,6 @@ protected:
     DWORD   sleepTime;              // number of milli-seconds to sleep between frames
     bool    initialized;
 
-	Minigunner  * minigunner1;
-	UnitSelectCursor * unitSelectCursor;
-	Circle * circle;
 
 	void HandleMouseInput(LPARAM lParam);
 

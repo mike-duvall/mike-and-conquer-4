@@ -1,35 +1,31 @@
 #include "Minigunner.h"
+
 #include "graphics.h"
-
-
 #include "GameSprite.h"
-
 #include "UnitSelectCursor.h"
+#include "input.h"
 
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 
 
-Minigunner::Minigunner(Graphics *g,  UnitSelectCursor * unitSelectCursor)
+Minigunner::Minigunner(Graphics * graphics,  int x, int y, UnitSelectCursor * unitSelectCursor, Input * input)
 {
+	this->graphics = graphics;
+	this->input = input;
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
-
-	this->x = 500;
-	this->y = 500;
+	this->x = (int)x;
+	this->y = (int)y;
 	this->destinationX = int(this->x);
 	this->destinationY = int(this->y);
-
 
 	//velocity.x = 300.0;
 	//velocity.y = 300.0;
 	velocity.x = 150.0;
 	velocity.y = 150.0;
 
-	graphics = g;
-
-
-	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
+	gameSprite = new GameSprite(graphics->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 }
 
 
@@ -43,8 +39,22 @@ void Minigunner::MoveTo(int x, int y) {
 	this->destinationY = y;
 }
 
-void Minigunner::update(float frameTime)
-{
+void Minigunner::update(float frameTime) {
+
+	if (input->isLeftMouseDown()) {
+		if (pointIsWithin(input->getMouseX(), input->getMouseY())) {
+			setSelected(true);
+		}
+		else if (getIsSelected()) {
+			MoveTo(input->getMouseX(), input->getMouseY());
+		}
+
+	}
+	if (input->isRightMouseDown()) {
+		setSelected(false);
+	}
+
+
 
 	int buffer = 2;
 
@@ -84,8 +94,6 @@ bool Minigunner::pointIsWithin(int x, int y)
 	int scale = 4;
 	int boundingBoxWidth = WIDTH * scale;
 	int boundingBoxHeight = HEIGHT * scale;
-	
-
 
 	int boundingBoxLeftX = int(this->x - (boundingBoxWidth / 2));
 	int boundingBoxRightX = int(this->x + (boundingBoxWidth / 2));

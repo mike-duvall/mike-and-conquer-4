@@ -9,6 +9,7 @@ class Graphics;
 class Game;
 class GameSprite;
 class UnitSelectCursor;
+class Input;
 
 
 class Minigunner
@@ -16,7 +17,7 @@ class Minigunner
 
   public:
 
-	Minigunner(Graphics *g, UnitSelectCursor * unitSelectionCursor);
+	Minigunner(Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input);
     virtual ~Minigunner();
 
 
@@ -34,6 +35,11 @@ class Minigunner
 
 private:
 
+	Graphics * graphics;
+	GameSprite * gameSprite;
+	UnitSelectCursor * unitSelectCursor;
+	Input * input;
+
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height
 
@@ -44,17 +50,10 @@ private:
 	D3DXVECTOR2 velocity;
 
 	bool    initialized;
-
-	Graphics * graphics;
-	GameSprite * gameSprite;
-
-	UnitSelectCursor * unitSelectCursor;
-
 	bool isSelected;
 
 	int destinationX;
 	int destinationY;
-
 
 };
 

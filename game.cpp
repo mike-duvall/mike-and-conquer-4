@@ -79,10 +79,10 @@ void Game::initialize(HWND hw)
 	initialized = true;
 
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
-	minigunner1 = new Minigunner(this->getGraphics(), unitSelectCursor);
+	minigunner1 = new Minigunner(this->getGraphics(), 300, 900,  unitSelectCursor,input);
+	enemyMinigunner1 = new Minigunner(this->getGraphics(), 1000, 300, unitSelectCursor, input);
 
 	circle = new Circle(500, 500);
-
 
 }
 
@@ -121,21 +121,22 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 void Game::update()
 {
 	minigunner1->update(frameTime);
+	enemyMinigunner1->update(frameTime);
 	if (input->isLeftMouseDown()) {
-		if (minigunner1->pointIsWithin(input->getMouseX(), input->getMouseY())) {
-			minigunner1->setSelected(true);
-		}
-		else if(minigunner1->getIsSelected()){
-			minigunner1->MoveTo(input->getMouseX(), input->getMouseY());
-		}
+	//	if (minigunner1->pointIsWithin(input->getMouseX(), input->getMouseY())) {
+	//		minigunner1->setSelected(true);
+	//	}
+	//	else if(minigunner1->getIsSelected()){
+	//		minigunner1->MoveTo(input->getMouseX(), input->getMouseY());
+	//	}
 
 		circle->setX(input->getMouseX());
 		circle->setY(input->getMouseY());
 
 	}
-	if (input->isRightMouseDown()) {
-		minigunner1->setSelected(false);
-	}
+	//if (input->isRightMouseDown()) {
+	//	minigunner1->setSelected(false);
+	//}
 
 
 }
@@ -147,6 +148,7 @@ void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
 	minigunner1->draw();
+	enemyMinigunner1->draw();
 	circle->Draw(graphics->get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
