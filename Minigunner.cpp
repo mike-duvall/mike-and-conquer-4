@@ -66,6 +66,12 @@ void Minigunner::handleIdleState(float frameTime) {
 
 }
 
+xxx Figure out how to write a UI test to test the app behaviour
+
+Investigate these: 
+	* https://engineering.riotgames.com/news/automated-testing-league-legends
+	* https://blog.testfort.com/automated-testing/video-game-test-automation
+	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
 
 void Minigunner::moveTowardsDestination(float frameTime) {
 	int buffer = 2;
