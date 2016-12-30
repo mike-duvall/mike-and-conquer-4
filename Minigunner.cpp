@@ -12,6 +12,7 @@ const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
+	this->health = 1000;
 	this->state = "IDLE";
 	this->game = game;
 	this->graphics = graphics;
@@ -66,6 +67,25 @@ void Minigunner::handleIdleState(float frameTime) {
 }
 
 
+void Minigunner::moveTowardsDestination(float frameTime) {
+	int buffer = 2;
+
+	if (this->x < (this->destinationX - buffer)) {
+		x += frameTime * velocity.x;
+	}
+	else if (this->x >(this->destinationX + buffer)) {
+		x -= frameTime * velocity.x;
+	}
+
+	if (this->y < (this->destinationY - buffer)) {
+		y += frameTime * velocity.y;
+	}
+	else if (this->y >(this->destinationY + buffer)) {
+		y -= frameTime * velocity.y;
+	}
+
+}
+
 void Minigunner::handleMovingState(float frameTime) {
 
 	if (input->isLeftMouseDown()) {
@@ -87,27 +107,44 @@ void Minigunner::handleMovingState(float frameTime) {
 
 	}
 
-
-	int buffer = 2;
-
-	if (this->x < (this->destinationX - buffer)) {
-		x += frameTime * velocity.x;
-	}
-	else if (this->x >(this->destinationX + buffer)) {
-		x -= frameTime * velocity.x;
-	}
-
-	if (this->y < (this->destinationY - buffer)) {
-		y += frameTime * velocity.y;
-	}
-	else if (this->y >(this->destinationY + buffer)) {
-		y -= frameTime * velocity.y;
-	}
+	moveTowardsDestination(frameTime);
 
 }
 
+double Distance(double dX0, double dY0, double dX1, double dY1)
+{
+	return sqrt((dX1 - dX0)*(dX1 - dX0) + (dY1 - dY0)*(dY1 - dY0));
+}
+
+int Minigunner::calculateDistanceToTarget() {
+	return Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
+}
+
+bool Minigunner::isInAttackRange() {
+	int distanceToTarget = calculateDistanceToTarget();
+
+	if (distanceToTarget < 200) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+void Minigunner::reduceHealth(int amount) {
+	this->health -= amount;
+}
 
 void Minigunner::handleAttackingState(float frameTime) {
+	if (isInAttackRange()) {
+		enemyAttacking->reduceHealth(10);
+	}
+	else {
+		MoveTo(enemyAttacking->getX(), enemyAttacking->getY());
+		moveTowardsDestination(frameTime);
+	}
+
 
 }
 
@@ -132,38 +169,6 @@ void Minigunner::update(float frameTime) {
 		setSelected(false);
 	}
 
-
-	//int buffer = 2;
-
-	//if (this->x < (this->destinationX - buffer)) {
-	//	x += frameTime * velocity.x;
-	//}
-	//else if (this->x > (this->destinationX + buffer)) {
-	//	x -= frameTime * velocity.x;
-	//}
-	//	
-	//if (this->y < (this->destinationY - buffer)) {
-	//	y += frameTime * velocity.y;
-	//}
-	//else if (this->y > (this->destinationY + buffer)) {
-	//	y -= frameTime * velocity.y;
-	//}
-
-
-	//x += frameTime * velocity.x;
-	//y += frameTime * velocity.y;
-
-	//int boundingBoxWidth = 16 * 3;
-	//int boundingBoxHeight = 16 * 3;
-
-	//if ((x + boundingBoxWidth) > GAME_WIDTH)              // if off right screen edge
-	//	velocity.x = -velocity.x;
-	//else if (x - boundingBoxWidth < -WIDTH)     // else if off left screen edge
-	//	velocity.x = -velocity.x;
-	//if (y + boundingBoxHeight > GAME_HEIGHT)             // if off bottom screen edge
-	//	velocity.y = -velocity.y;
-	//else if (y - boundingBoxHeight < -HEIGHT)    // else if off top screen edge
-	//	velocity.y = -velocity.y;
 }
 
 bool Minigunner::pointIsWithin(int x, int y)

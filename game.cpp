@@ -160,7 +160,11 @@ void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
 	minigunner1->draw();
-	enemyMinigunner1->draw();
+
+	if (enemyMinigunner1->getHealth() >= 0) {
+		enemyMinigunner1->draw();
+	}
+
 	circle->Draw(graphics->get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 

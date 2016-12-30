@@ -29,10 +29,13 @@ class Minigunner
 	virtual void  setVelocity(D3DXVECTOR2 v) { velocity = v; }
 	void setX(float newX) { this->x = newX; }
 	void setY(float newY) { this->y = newY; }
+	int getX() { return this->x; }
+	int getY() { return this->y; }
 	bool pointIsWithin(int x, int y);
 	void setSelected(bool selected) { this->isSelected = selected; }
 	bool getIsSelected() { return this->isSelected; }
 	void MoveTo(int x, int y);
+	int getHealth() { return this->health; }
 
 private:
 
@@ -64,6 +67,13 @@ private:
 	void handleMovingState(float frameTime);
 	void handleAttackingState(float frameTime);
 
+	bool isInAttackRange();
+	void moveTowardsDestination(float frameTime);
+	int calculateDistanceToTarget();
+
+	int health;
+
+	void reduceHealth(int amount);
 	Minigunner * enemyAttacking;
 
 };
