@@ -7,6 +7,22 @@
 #include "game.h"
 
 
+#include <cpprest\http_listener.h>
+
+using namespace web::http::experimental::listener;
+using namespace web::http;
+using namespace web;
+
+
+http_listener *listener;
+
+
+
+void handle_get(http_request message)
+{
+	message.reply(status_codes::OK, U("Hello, World! handle_get"));
+};
+
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
 bool CreateMainWindow(HWND &, HINSTANCE, int);
@@ -34,6 +50,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     try{
         game->initialize(hwnd);     // throws GameError
 		init_input(hwnd);
+
+		listener = new http_listener(L"http://localhost:11369");
+		listener->open().wait();
+		listener->support(methods::GET, handle_get);
 
 
         int done = 0;

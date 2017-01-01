@@ -66,12 +66,12 @@ void Minigunner::handleIdleState(float frameTime) {
 
 }
 
-xxx Figure out how to write a UI test to test the app behaviour
-
-Investigate these: 
-	* https://engineering.riotgames.com/news/automated-testing-league-legends
-	* https://blog.testfort.com/automated-testing/video-game-test-automation
-	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
+//xxx Figure out how to write a UI test to test the app behaviour
+//
+//Investigate these: 
+//	* https://engineering.riotgames.com/news/automated-testing-league-legends
+//	* https://blog.testfort.com/automated-testing/video-game-test-automation
+//	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
 
 void Minigunner::moveTowardsDestination(float frameTime) {
 	int buffer = 2;
@@ -123,7 +123,7 @@ double Distance(double dX0, double dY0, double dX1, double dY1)
 }
 
 int Minigunner::calculateDistanceToTarget() {
-	return Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
+	return (int)Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
 }
 
 bool Minigunner::isInAttackRange() {
