@@ -42,7 +42,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     MSG msg;
 
-    game = new Game;
+	bool testMode = false;
+	std::string commandLine = std::string(lpCmdLine);
+	std::string TESTMODE = std::string("TESTMODE");
+
+
+	if (TESTMODE == commandLine) {
+		testMode = true;
+	};
+
+    game = new Game(testMode);
 
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
         return 1;

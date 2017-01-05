@@ -8,11 +8,12 @@
 
 
 
-Game::Game()
+Game::Game(bool testMode)
 {
     input = new Input();
     graphics = NULL;
     initialized = false;
+	this->testMode = testMode;
 }
 
 Game::~Game()
@@ -78,9 +79,16 @@ void Game::initialize(HWND hw)
 
 	initialized = true;
 
+
 	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
-	minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900,  unitSelectCursor,input, false);
-	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
+
+	minigunner1 = NULL;
+	enemyMinigunner1 = NULL;
+
+	if (!testMode) {
+		minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900, unitSelectCursor, input, false);
+		enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
+	}
 
 	circle = new Circle(500, 500);
 
@@ -132,24 +140,16 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 void Game::update()
 {
-	minigunner1->update(frameTime);
-	enemyMinigunner1->update(frameTime);
+	if (minigunner1 != NULL) {
+		minigunner1->update(frameTime);
+	}
+	if (enemyMinigunner1 != NULL) {
+		enemyMinigunner1->update(frameTime);
+	}
 	if (input->isLeftMouseDown()) {
-	//	if (minigunner1->pointIsWithin(input->getMouseX(), input->getMouseY())) {
-	//		minigunner1->setSelected(true);
-	//	}
-	//	else if(minigunner1->getIsSelected()){
-	//		minigunner1->MoveTo(input->getMouseX(), input->getMouseY());
-	//	}
-
 		circle->setX(input->getMouseX());
 		circle->setY(input->getMouseY());
-
 	}
-	//if (input->isRightMouseDown()) {
-	//	minigunner1->setSelected(false);
-	//}
-
 
 }
 
@@ -159,10 +159,14 @@ void Game::update()
 void Game::render()
 {
 //	graphics->spriteBegin();                // begin drawing sprites
-	minigunner1->draw();
+	if (minigunner1 != NULL) {
+		minigunner1->draw();
+	}
 
-	if (enemyMinigunner1->getHealth() >= 0) {
-		enemyMinigunner1->draw();
+	if (enemyMinigunner1 != NULL) {
+		if (enemyMinigunner1->getHealth() >= 0) {
+			enemyMinigunner1->draw();
+		}
 	}
 
 	circle->Draw(graphics->get3Ddevice());
