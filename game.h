@@ -43,7 +43,7 @@ public:
     Graphics* getGraphics() {return graphics;}
     Input* getInput()       {return input;}
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
-
+	void InitializeStuff();
 
 protected:
 

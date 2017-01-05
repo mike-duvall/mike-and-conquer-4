@@ -16,11 +16,14 @@ using namespace web;
 
 http_listener *listener;
 
+Game *game = NULL;
 
 
 void handle_get(http_request message)
 {
-	message.reply(status_codes::OK, U("Hello, World! handle_get"));
+	game->InitializeStuff();
+	message.reply(status_codes::OK, U("Initialized game"));
+
 };
 
 // Function prototypes
@@ -28,9 +31,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
+void handle_get(http_request message);
+
 void init_input(HWND hWnd);
 
-Game *game = NULL;
 HWND hwnd = NULL;
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,

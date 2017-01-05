@@ -8,16 +8,14 @@
 
 
 
-Game::Game(bool testMode)
-{
+Game::Game(bool testMode) {
     input = new Input();
     graphics = NULL;
     initialized = false;
 	this->testMode = testMode;
 }
 
-Game::~Game()
-{
+Game::~Game() {
 	releaseAll();
     deleteAll();                // free all reserved memory
     ShowCursor(true);           // show cursor
@@ -63,8 +61,7 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 }
 
-void Game::initialize(HWND hw)
-{
+void Game::initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
 	graphics = new Graphics();
@@ -106,6 +103,11 @@ Minigunner * Game::getMinigunnerAtPoint(int x, int y) {
 	else {
 		return NULL;
 	}
+}
+
+void Game::InitializeStuff() {
+	minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900, unitSelectCursor, input, false);
+	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
 }
 
 LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
