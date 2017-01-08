@@ -44,6 +44,8 @@ public:
     Input* getInput()       {return input;}
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 	void InitializeStuff();
+	int getMinigunner1X(); 
+	int getMinigunner1Y(); 
 
 protected:
 

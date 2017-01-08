@@ -15,23 +15,45 @@ using namespace web;
 
 
 http_listener *listener;
+http_listener *listener2;
 
 Game *game = NULL;
 
 
-void handle_get(http_request message)
-{
+bool firstTime = true;
+
+void handle_create_minigunner(http_request message) {
 	game->InitializeStuff();
-	message.reply(status_codes::OK, U("Initialized game"));
+	if (firstTime) {
+		message.reply(status_codes::OK, U("Initialized game"));
+		firstTime = false;
+	}
+	else 
+		message.reply(status_codes::OK, U("Seond time"));
+};
+
+
+
+
+void handle_get_minigunner(http_request message) {
+
+	json::value obj;
+
+	
+	obj[L"x"] = json::value::number(game->getMinigunner1X());
+	obj[L"y"] = json::value::number(game->getMinigunner1Y());
+
+	message.reply(status_codes::OK, obj);
 
 };
+
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
 bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
-void handle_get(http_request message);
+
 
 void init_input(HWND hWnd);
 
@@ -64,9 +86,13 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         game->initialize(hwnd);     // throws GameError
 		init_input(hwnd);
 
-		listener = new http_listener(L"http://localhost:11369");
+		listener = new http_listener(L"http://localhost:11369/gdiMinigunner");
 		listener->open().wait();
-		listener->support(methods::GET, handle_get);
+		listener->support(methods::GET, handle_create_minigunner);
+
+		listener2 = new http_listener(L"http://localhost:11369/getMinigunner");
+		listener2->open().wait();
+		listener2->support(methods::GET, handle_get_minigunner);
 
 
         int done = 0;

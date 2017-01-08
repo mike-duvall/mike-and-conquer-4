@@ -22,6 +22,15 @@ Game::~Game() {
 }
 
 
+int Game::getMinigunner1X() {
+	return minigunner1->getX();
+}
+
+int Game::getMinigunner1Y() {
+	return minigunner1->getY();
+}
+
+
 void Game::HandleMouseInput(LPARAM lParam) {
 	RAWINPUT inputData;
 
