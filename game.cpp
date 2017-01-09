@@ -106,7 +106,7 @@ Minigunner * Game::getMinigunnerAtPoint(int x, int y) {
 	if (minigunner1->pointIsWithin(x, y)) {
 		return minigunner1;
 	}
-	else if (enemyMinigunner1->pointIsWithin(x, y)) {
+	else if (enemyMinigunner1 != NULL && enemyMinigunner1->pointIsWithin(x, y)) {
 		return enemyMinigunner1;
 	}
 	else {
@@ -119,8 +119,11 @@ void Game::InitializeStuff() {
 	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
 }
 
-LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
-{
+void Game::InitialGDIMinigunner(int minigunnerX, int minigunnerY) {
+	minigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, false);
+}
+
+LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
     if(initialized)     // do not process messages if not initialized
     {
         switch( msg )

@@ -20,16 +20,48 @@ http_listener *listener2;
 Game *game = NULL;
 
 
-bool firstTime = true;
-
 void handle_create_minigunner(http_request message) {
-	game->InitializeStuff();
-	if (firstTime) {
-		message.reply(status_codes::OK, U("Initialized game"));
-		firstTime = false;
+	//Make this a POST, make it read initial location and
+	//	place only the minigunner
+
+	//	May need to start making things threadsafe
+
+	//	May need an 'initialize' phase followed by a 'run' phase
+	//	but still will need to be able read things in a threadsafe manner
+
+	pplx::task<json::value> jsonValue = message.extract_json();
+	web::json::value webJsonValue = jsonValue.get();
+	web::json::object object = webJsonValue.as_object();
+
+	//webJsonValue.as_object().cbegin
+	int minigunnerX = -666;
+	int minigunnerY = -666;
+	    
+	for (auto iter = object.cbegin(); iter != object.cend(); ++iter)
+	{
+		// Make sure to get the value as const reference otherwise you will end up copying 
+		// the whole JSON value recursively which can be expensive if it is a nested object. 
+		utility::string_t t = iter->first;
+		//const json::value &str = iter->first;
+		const json::value &v = iter->second;
+
+		if (t == L"x") {
+			minigunnerX = v.as_integer();
+		}
+
+		if (t == L"y") {
+			minigunnerY = v.as_integer();
+		}
+
+		// Perform actions here to process each string and value in the JSON object...
+		//std::wcout << L"String: " << str.as_string() << L", Value: " << v.to_string() << endl;
+		std::wcout << L"String: " << t << L", Value: " << v.to_string() << std::endl;
 	}
-	else 
-		message.reply(status_codes::OK, U("Seond time"));
+
+
+//	game->InitializeStuff();
+	game->InitialGDIMinigunner(minigunnerX, minigunnerY);
+    message.reply(status_codes::OK, U("Initialized game"));
 };
 
 
@@ -54,6 +86,8 @@ bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
 
+
+void handle_create_minigunner(http_request message);
 
 void init_input(HWND hWnd);
 
@@ -88,7 +122,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		listener = new http_listener(L"http://localhost:11369/gdiMinigunner");
 		listener->open().wait();
-		listener->support(methods::GET, handle_create_minigunner);
+		listener->support(methods::POST, handle_create_minigunner);
 
 		listener2 = new http_listener(L"http://localhost:11369/getMinigunner");
 		listener2->open().wait();
