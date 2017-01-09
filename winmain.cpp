@@ -20,6 +20,12 @@ http_listener *listener2;
 Game *game = NULL;
 
 
+* Update to do GET of minigunner from same URL as POST
+* Add endpoint to POST enemy minigunner
+* Add endpoint to select GDI minigunner and attack NOD one
+* Validate GDI position and that NOD is dead
+
+
 void handle_create_minigunner(http_request message) {
 	//Make this a POST, make it read initial location and
 	//	place only the minigunner
