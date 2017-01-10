@@ -26,12 +26,8 @@ Game *game = NULL;
 //* Validate GDI position and that NOD is dead200
 
 
-void handle_create_minigunner(http_request message) {
-	//Make this a POST, make it read initial location and
-	//	place only the minigunner
-
+void handlePostGdiMinigunner(http_request message) {
 	//	May need to start making things threadsafe
-
 	//	May need an 'initialize' phase followed by a 'run' phase
 	//	but still will need to be able read things in a threadsafe manner
 
@@ -39,35 +35,32 @@ void handle_create_minigunner(http_request message) {
 	web::json::value webJsonValue = jsonValue.get();
 	web::json::object object = webJsonValue.as_object();
 
-	//webJsonValue.as_object().cbegin
 	int minigunnerX = -666;
 	int minigunnerY = -666;
 	    
-	for (auto iter = object.cbegin(); iter != object.cend(); ++iter)
-	{
-		// Make sure to get the value as const reference otherwise you will end up copying 
-		// the whole JSON value recursively which can be expensive if it is a nested object. 
-		utility::string_t t = iter->first;
+	for (auto iter = object.cbegin(); iter != object.cend(); ++iter) {
+		utility::string_t attributeName = iter->first;
 		//const json::value &str = iter->first;
 		const json::value &v = iter->second;
 
-		if (t == L"x") {
+		if (attributeName == L"x") {
 			minigunnerX = v.as_integer();
 		}
 
-		if (t == L"y") {
+		if (attributeName == L"y") {
 			minigunnerY = v.as_integer();
 		}
 	}
 
 	game->InitialGDIMinigunner(minigunnerX, minigunnerY);
-    message.reply(status_codes::OK, U("Initialized game"));
+	// TODO:  update this to return the created minigunner as JSON, instead of result message
+    message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
 
 
 
-void handle_get_minigunner(http_request message) {
+void handleGetGdiMinigunner(http_request message) {
 
 	json::value obj;
 
@@ -122,8 +115,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		listener = new http_listener(L"http://localhost:11369/gdiMinigunner");
 		listener->open().wait();
-		listener->support(methods::POST, handle_create_minigunner);
-		listener->support(methods::GET, handle_get_minigunner);
+		listener->support(methods::POST, handlePostGdiMinigunner);
+		listener->support(methods::GET, handleGetGdiMinigunner);
 
 
         int done = 0;
