@@ -14,7 +14,7 @@ using namespace web::http;
 using namespace web;
 
 
-http_listener *listener;
+http_listener * gdiMinigunnerListener;
 
 
 Game *game = NULL;
@@ -61,15 +61,10 @@ void handlePostGdiMinigunner(http_request message) {
 
 
 void handleGetGdiMinigunner(http_request message) {
-
 	json::value obj;
-
-	
 	obj[L"x"] = json::value::number(game->getMinigunner1X());
 	obj[L"y"] = json::value::number(game->getMinigunner1Y());
-
 	message.reply(status_codes::OK, obj);
-
 };
 
 
@@ -113,10 +108,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         game->initialize(hwnd);     // throws GameError
 		init_input(hwnd);
 
-		listener = new http_listener(L"http://localhost:11369/gdiMinigunner");
-		listener->open().wait();
-		listener->support(methods::POST, handlePostGdiMinigunner);
-		listener->support(methods::GET, handleGetGdiMinigunner);
+		gdiMinigunnerListener = new http_listener(L"http://localhost:11369/gdiMinigunner");
+		gdiMinigunnerListener->open().wait();
+		gdiMinigunnerListener->support(methods::POST, handlePostGdiMinigunner);
+		gdiMinigunnerListener->support(methods::GET, handleGetGdiMinigunner);
 
 
         int done = 0;
