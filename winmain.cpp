@@ -22,8 +22,9 @@ Game *game = NULL;
 
 
 // X * Update to do GET of minigunner from same URL as POST
-//* Add endpoint to POST enemy minigunner
-//* Add endpoint to select GDI minigunner and attack NOD one
+// X * Add endpoint to POST enemy minigunner
+
+* Add endpoint to select GDI minigunner and attack NOD one
 //* Validate GDI position and that NOD is dead200
 
 
