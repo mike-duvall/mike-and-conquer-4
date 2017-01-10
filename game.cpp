@@ -22,13 +22,22 @@ Game::~Game() {
 }
 
 
-int Game::getMinigunner1X() {
+int Game::getGDIMinigunner1X() {
 	return minigunner1->getX();
 }
 
-int Game::getMinigunner1Y() {
+int Game::getGDIMinigunner1Y() {
 	return minigunner1->getY();
 }
+
+int Game::getNODMinigunner1X() {
+	return enemyMinigunner1->getX();
+}
+
+int Game::getNODMinigunner1Y() {
+	return enemyMinigunner1->getY();
+}
+
 
 
 void Game::HandleMouseInput(LPARAM lParam) {
@@ -119,9 +128,16 @@ void Game::InitializeStuff() {
 	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
 }
 
-void Game::InitialGDIMinigunner(int minigunnerX, int minigunnerY) {
-	minigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, false);
+void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
+	bool isEnemy = false;
+	minigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
+
+void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
+	bool isEnemy = true;
+	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+}
+
 
 LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
     if(initialized)     // do not process messages if not initialized

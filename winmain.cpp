@@ -15,6 +15,7 @@ using namespace web;
 
 
 http_listener * gdiMinigunnerListener;
+http_listener * nodMinigunnerListener;
 
 
 Game *game = NULL;
@@ -26,11 +27,12 @@ Game *game = NULL;
 //* Validate GDI position and that NOD is dead200
 
 
-void handlePostGdiMinigunner(http_request message) {
-	//	May need to start making things threadsafe
-	//	May need an 'initialize' phase followed by a 'run' phase
-	//	but still will need to be able read things in a threadsafe manner
+//	May need to start making things threadsafe
+//	May need an 'initialize' phase followed by a 'run' phase
+//	but still will need to be able read things in a threadsafe manner
 
+
+void handlePostGdiMinigunner(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
 	web::json::value webJsonValue = jsonValue.get();
 	web::json::object object = webJsonValue.as_object();
@@ -52,20 +54,54 @@ void handlePostGdiMinigunner(http_request message) {
 		}
 	}
 
-	game->InitialGDIMinigunner(minigunnerX, minigunnerY);
+	game->InitializeGDIMinigunner(minigunnerX, minigunnerY);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
 
 
+void handlePostNodMinigunner(http_request message) {
+	pplx::task<json::value> jsonValue = message.extract_json();
+	web::json::value webJsonValue = jsonValue.get();
+	web::json::object object = webJsonValue.as_object();
+
+	int minigunnerX = -666;
+	int minigunnerY = -666;
+
+	for (auto iter = object.cbegin(); iter != object.cend(); ++iter) {
+		utility::string_t attributeName = iter->first;
+		//const json::value &str = iter->first;
+		const json::value &v = iter->second;
+
+		if (attributeName == L"x") {
+			minigunnerX = v.as_integer();
+		}
+
+		if (attributeName == L"y") {
+			minigunnerY = v.as_integer();
+		}
+	}
+
+	game->InitializeNODMinigunner(minigunnerX, minigunnerY);
+	// TODO:  update this to return the created minigunner as JSON, instead of result message
+	message.reply(status_codes::OK, U("Initialized minigunner"));
+};
 
 void handleGetGdiMinigunner(http_request message) {
 	json::value obj;
-	obj[L"x"] = json::value::number(game->getMinigunner1X());
-	obj[L"y"] = json::value::number(game->getMinigunner1Y());
+	obj[L"x"] = json::value::number(game->getGDIMinigunner1X());
+	obj[L"y"] = json::value::number(game->getGDIMinigunner1Y());
 	message.reply(status_codes::OK, obj);
 };
+
+void handleGetNodMinigunner(http_request message) {
+	json::value obj;
+	obj[L"x"] = json::value::number(game->getNODMinigunner1X());
+	obj[L"y"] = json::value::number(game->getNODMinigunner1Y());
+	message.reply(status_codes::OK, obj);
+};
+
 
 
 // Function prototypes
@@ -112,6 +148,12 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		gdiMinigunnerListener->open().wait();
 		gdiMinigunnerListener->support(methods::POST, handlePostGdiMinigunner);
 		gdiMinigunnerListener->support(methods::GET, handleGetGdiMinigunner);
+
+		nodMinigunnerListener = new http_listener(L"http://localhost:11369/nodMinigunner");
+		nodMinigunnerListener->open().wait();
+		nodMinigunnerListener->support(methods::POST, handlePostNodMinigunner);
+		nodMinigunnerListener->support(methods::GET, handleGetNodMinigunner);
+
 
 
         int done = 0;

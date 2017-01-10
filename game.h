@@ -44,9 +44,13 @@ public:
     Input* getInput()       {return input;}
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 	void InitializeStuff();
-	void InitialGDIMinigunner(int minigunnerX, int minigunnerY);
-	int getMinigunner1X(); 
-	int getMinigunner1Y(); 
+	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
+	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
+	int getGDIMinigunner1X(); 
+	int getGDIMinigunner1Y(); 
+	int getNODMinigunner1X();
+	int getNODMinigunner1Y();
+
 
 protected:
 
