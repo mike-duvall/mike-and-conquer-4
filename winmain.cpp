@@ -15,15 +15,15 @@ using namespace web;
 
 
 http_listener *listener;
-http_listener *listener2;
+
 
 Game *game = NULL;
 
 
-* Update to do GET of minigunner from same URL as POST
-* Add endpoint to POST enemy minigunner
-* Add endpoint to select GDI minigunner and attack NOD one
-* Validate GDI position and that NOD is dead
+// X * Update to do GET of minigunner from same URL as POST
+//* Add endpoint to POST enemy minigunner
+//* Add endpoint to select GDI minigunner and attack NOD one
+//* Validate GDI position and that NOD is dead200
 
 
 void handle_create_minigunner(http_request message) {
@@ -58,14 +58,8 @@ void handle_create_minigunner(http_request message) {
 		if (t == L"y") {
 			minigunnerY = v.as_integer();
 		}
-
-		// Perform actions here to process each string and value in the JSON object...
-		//std::wcout << L"String: " << str.as_string() << L", Value: " << v.to_string() << endl;
-		std::wcout << L"String: " << t << L", Value: " << v.to_string() << std::endl;
 	}
 
-
-//	game->InitializeStuff();
 	game->InitialGDIMinigunner(minigunnerX, minigunnerY);
     message.reply(status_codes::OK, U("Initialized game"));
 };
@@ -129,10 +123,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		listener = new http_listener(L"http://localhost:11369/gdiMinigunner");
 		listener->open().wait();
 		listener->support(methods::POST, handle_create_minigunner);
-
-		listener2 = new http_listener(L"http://localhost:11369/getMinigunner");
-		listener2->open().wait();
-		listener2->support(methods::GET, handle_get_minigunner);
+		listener->support(methods::GET, handle_get_minigunner);
 
 
         int done = 0;
