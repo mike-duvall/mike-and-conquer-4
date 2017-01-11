@@ -16,15 +16,52 @@ using namespace web;
 
 http_listener * gdiMinigunnerListener;
 http_listener * nodMinigunnerListener;
+http_listener * leftClickListener;
 
 
 Game *game = NULL;
 
 
+
+* Try running game on other boxA, full screen, with test running on boxB,
+so setting mouse location will work correctly
+Will have to update localhost to actual IP address of boxA
+
+// LeftClick function
+void LeftClick()
+{
+	INPUT    Input = { 0 };
+	// left down 
+	Input.type = INPUT_MOUSE;
+	Input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+	::SendInput(1, &Input, sizeof(INPUT));
+
+	// left up
+	::ZeroMemory(&Input, sizeof(INPUT));
+	Input.type = INPUT_MOUSE;
+	Input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+	::SendInput(1, &Input, sizeof(INPUT));
+}
+
+// MouseMove function
+void MouseMove(int x, int y)
+{
+	double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+	double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+	double fx = x*(65535.0f / fScreenWidth);
+	double fy = y*(65535.0f / fScreenHeight);
+	INPUT  Input = { 0 };
+	Input.type = INPUT_MOUSE;
+	Input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+	Input.mi.dx = fx;
+	Input.mi.dy = fy;
+	::SendInput(1, &Input, sizeof(INPUT));
+}
+
 // X * Update to do GET of minigunner from same URL as POST
 // X * Add endpoint to POST enemy minigunner
 
-* Add endpoint to select GDI minigunner and attack NOD one
+//* Add endpoint to select GDI minigunner and attack NOD one
 //* Validate GDI position and that NOD is dead200
 
 
@@ -104,15 +141,42 @@ void handleGetNodMinigunner(http_request message) {
 };
 
 
+void handlePOSTLeftClick(http_request message) {
+	pplx::task<json::value> jsonValue = message.extract_json();
+	web::json::value webJsonValue = jsonValue.get();
+	web::json::object object = webJsonValue.as_object();
+
+	int mouseX = -666;
+	int mouseY = -666;
+
+	for (auto iter = object.cbegin(); iter != object.cend(); ++iter) {
+		utility::string_t attributeName = iter->first;
+		//const json::value &str = iter->first;
+		const json::value &v = iter->second;
+
+		if (attributeName == L"x") {
+			mouseX = v.as_integer();
+		}
+
+		if (attributeName == L"y") {
+			mouseY = v.as_integer();
+		}
+	}
+
+	MouseMove(mouseX, mouseY);
+	LeftClick();
+	message.reply(status_codes::OK, U("Success"));
+};
+
+
+
+
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
 bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
-
-
-void handle_create_minigunner(http_request message);
 
 void init_input(HWND hWnd);
 
@@ -155,7 +219,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		nodMinigunnerListener->support(methods::POST, handlePostNodMinigunner);
 		nodMinigunnerListener->support(methods::GET, handleGetNodMinigunner);
 
-
+		leftClickListener = new http_listener(L"http://localhost:11369/leftClick");
+		leftClickListener->open().wait();
+		leftClickListener->support(methods::POST, handlePOSTLeftClick);
 
         int done = 0;
         while (!done)
