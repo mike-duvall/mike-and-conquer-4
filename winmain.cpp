@@ -169,6 +169,13 @@ void handlePOSTLeftClick(http_request message) {
 };
 
 
+//Next:
+//*Get remote debugging going, app running on one box, test running on another
+//	* See if can configure so that don't have to run as admin in order to open the port
+//		See here: https://casablanca.codeplex.com/discussions/532385
+//		Maybe HttpCfg or netsh
+//	* Don't hard code IP address, try just * or no host, etc
+
 
 
 
@@ -182,7 +189,8 @@ void init_input(HWND hWnd);
 
 HWND hwnd = NULL;
 
-std::wstring baseUrl = L"http://192.168.0.179:11369";
+//std::wstring baseUrl = L"http://192.168.0.179:11369";
+std::wstring baseUrl = L"http://*:11369";
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     LPSTR lpCmdLine, int nCmdShow)
