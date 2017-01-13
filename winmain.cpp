@@ -23,9 +23,9 @@ Game *game = NULL;
 
 
 
-* Try running game on other boxA, full screen, with test running on boxB,
-so setting mouse location will work correctly
-Will have to update localhost to actual IP address of boxA
+//* Try running game on other boxA, full screen, with test running on boxB,
+//so setting mouse location will work correctly
+//Will have to update localhost to actual IP address of boxA
 
 // LeftClick function
 void LeftClick()
@@ -182,6 +182,8 @@ void init_input(HWND hWnd);
 
 HWND hwnd = NULL;
 
+std::wstring baseUrl = L"http://192.168.0.179:11369";
+
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     LPSTR lpCmdLine, int nCmdShow)
 {
@@ -209,17 +211,21 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         game->initialize(hwnd);     // throws GameError
 		init_input(hwnd);
 
-		gdiMinigunnerListener = new http_listener(L"http://localhost:11369/gdiMinigunner");
+		std::wstring gdiMinigunnerURL = baseUrl + L"/gdiMinigunner";
+		gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 		gdiMinigunnerListener->open().wait();
 		gdiMinigunnerListener->support(methods::POST, handlePostGdiMinigunner);
 		gdiMinigunnerListener->support(methods::GET, handleGetGdiMinigunner);
 
-		nodMinigunnerListener = new http_listener(L"http://localhost:11369/nodMinigunner");
+
+		std::wstring nodMinigunnerURL = baseUrl + L"/nodMinigunner";
+		nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 		nodMinigunnerListener->open().wait();
 		nodMinigunnerListener->support(methods::POST, handlePostNodMinigunner);
 		nodMinigunnerListener->support(methods::GET, handleGetNodMinigunner);
 
-		leftClickListener = new http_listener(L"http://localhost:11369/leftClick");
+		std::wstring leftClickURL = baseUrl + L"/leftClick";
+		leftClickListener = new http_listener(leftClickURL);
 		leftClickListener->open().wait();
 		leftClickListener->support(methods::POST, handlePOSTLeftClick);
 
