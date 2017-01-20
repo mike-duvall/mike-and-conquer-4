@@ -4,7 +4,8 @@
 #include "Minigunner.h"
 #include "UnitSelectCursor.h"
 #include "Circle.h"
-
+#include "GameEvent.h"
+#include "GetGDIMinigunnerGameEvent.h"
 
 
 
@@ -73,9 +74,7 @@ void Game::HandleMouseInput(LPARAM lParam) {
 			input->rightMouseUp();
 		}
 
-
 	}
-
 
 }
 
@@ -133,6 +132,22 @@ void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	minigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
 
+void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
+	GameEvent * gameEvent = new GameEvent(this, "CREATE_GDI_MINIGUNNER", x, y);
+	std::lock_guard<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+}
+
+
+Minigunner * Game::GetGDIMinigunnerViaEvent() {
+	GetGDIMinigunnerGameEvent * gameEvent = new GetGDIMinigunnerGameEvent(this);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
 void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
 	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
@@ -168,8 +183,22 @@ LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 }
 
 
-void Game::update()
-{
+
+void Game::ProcessGameEvents() {
+	std::vector<GameEvent *>::iterator iter;
+	std::lock_guard<std::mutex> lock(gameEventsMutex);
+	for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter) {
+		GameEvent * nextGameEvent = *iter;
+		nextGameEvent->Process();
+		/*this->InitializeGDIMinigunner(nextGameEvent->x, nextGameEvent->y);*/
+	}
+	gameEvents.clear();
+
+}
+
+void Game::update() {
+
+	ProcessGameEvents();
 	if (minigunner1 != NULL) {
 		minigunner1->update(frameTime);
 	}

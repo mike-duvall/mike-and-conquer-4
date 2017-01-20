@@ -6,16 +6,22 @@ class Game;
 
 #include <windows.h>
 #include <Mmsystem.h>
+
+#include <vector>
+#include <mutex>
+
 #include "graphics.h"
 #include "input.h"
 
 #include "constants.h"
 #include "gameError.h"
 
+
+
 class Minigunner;
 class UnitSelectCursor;
 class Circle;
-
+class GameEvent;
 
 
 class Game
@@ -35,6 +41,7 @@ public:
     virtual void resetAll();
     virtual void deleteAll();
     virtual void renderGame();
+	void ProcessGameEvents();
 	virtual void update();
 	virtual void render();
 
@@ -50,9 +57,15 @@ public:
 	int getGDIMinigunner1Y(); 
 	int getNODMinigunner1X();
 	int getNODMinigunner1Y();
+	void AddCreateGDIMinigunnerEvent(int x, int y);
+	Minigunner * GetGDIMinigunnerViaEvent();
 
+	Minigunner * GetGDIMinigunner() { return minigunner1;  }
 
 protected:
+
+	std::vector<GameEvent *> gameEvents;
+	std::mutex gameEventsMutex;
 
 	Graphics *graphics;             // pointer to the one and ONLY Graphics object
 	Input   *input;                 // pointer to Input

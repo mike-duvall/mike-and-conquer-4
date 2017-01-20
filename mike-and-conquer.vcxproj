@@ -89,7 +89,9 @@
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameSprite.cpp" />
+    <ClCompile Include="GetGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Minigunner.cpp" />
@@ -101,7 +103,9 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameSprite.h" />
+    <ClInclude Include="GetGDIMinigunnerGameEvent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />

@@ -9,6 +9,7 @@
 
 #include <cpprest\http_listener.h>
 
+
 using namespace web::http::experimental::listener;
 using namespace web::http;
 using namespace web;
@@ -53,8 +54,8 @@ void MouseMove(int x, int y)
 	INPUT  Input = { 0 };
 	Input.type = INPUT_MOUSE;
 	Input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-	Input.mi.dx = fx;
-	Input.mi.dy = fy;
+	Input.mi.dx = (LONG)fx;
+	Input.mi.dy = (LONG)fy;
 	::SendInput(1, &Input, sizeof(INPUT));
 }
 
@@ -68,6 +69,7 @@ void MouseMove(int x, int y)
 //	May need to start making things threadsafe
 //	May need an 'initialize' phase followed by a 'run' phase
 //	but still will need to be able read things in a threadsafe manner
+
 
 
 void handlePostGdiMinigunner(http_request message) {
@@ -92,7 +94,8 @@ void handlePostGdiMinigunner(http_request message) {
 		}
 	}
 
-	game->InitializeGDIMinigunner(minigunnerX, minigunnerY);
+	game->AddCreateGDIMinigunnerEvent(minigunnerX, minigunnerY);
+	//game->InitializeGDIMinigunner(minigunnerX, minigunnerY);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
@@ -126,7 +129,13 @@ void handlePostNodMinigunner(http_request message) {
 	message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
+
+
+
 void handleGetGdiMinigunner(http_request message) {
+
+	Minigunner * gdiMinigunner = game->GetGDIMinigunnerViaEvent();
+
 	json::value obj;
 	obj[L"x"] = json::value::number(game->getGDIMinigunner1X());
 	obj[L"y"] = json::value::number(game->getGDIMinigunner1Y());
