@@ -59,17 +59,6 @@ void MouseMove(int x, int y)
 	::SendInput(1, &Input, sizeof(INPUT));
 }
 
-// X * Update to do GET of minigunner from same URL as POST
-// X * Add endpoint to POST enemy minigunner
-
-//* Add endpoint to select GDI minigunner and attack NOD one
-//* Validate GDI position and that NOD is dead200
-
-
-//	May need to start making things threadsafe
-//	May need an 'initialize' phase followed by a 'run' phase
-//	but still will need to be able read things in a threadsafe manner
-
 
 
 void handlePostGdiMinigunner(http_request message) {
@@ -100,7 +89,9 @@ void handlePostGdiMinigunner(http_request message) {
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
-
+//* Refactor and smooth out GameEvent hierarchy, create subclass for creating GDIminigunner
+//* Add eventing to handle creating Nod minigunner
+//* Add eventing to handle reading of Nod minigunner
 
 void handlePostNodMinigunner(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();

@@ -6,6 +6,7 @@
 #include "Circle.h"
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
+#include "CreateGDIMinigunnerGameEvent.h"
 
 
 
@@ -133,7 +134,7 @@ void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 }
 
 void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
-	GameEvent * gameEvent = new GameEvent(this, "CREATE_GDI_MINIGUNNER", x, y);
+	GameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 }

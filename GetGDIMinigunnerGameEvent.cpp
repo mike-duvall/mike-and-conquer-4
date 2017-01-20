@@ -4,12 +4,10 @@
 #include "game.h"
 
 
-GetGDIMinigunnerGameEvent::GetGDIMinigunnerGameEvent(Game * aGame) : GameEvent(aGame, "x", 0, 0) {
+GetGDIMinigunnerGameEvent::GetGDIMinigunnerGameEvent(Game * aGame) : GameEvent(aGame) {
 
 }
 
-
-//Need to add call to gameEvent->process() in main loop
 
 //Can do same kind of wait on condition in the createGDI rest call as well
 //general pattern, post event, wait for it to be completed, then return

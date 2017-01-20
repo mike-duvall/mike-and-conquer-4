@@ -7,12 +7,9 @@ class Game;
 class GameEvent {
 	public:
 
-		GameEvent(Game * aGame, const std::string & type, int x, int y);
-		virtual void Process();
+		GameEvent(Game * aGame);
+		virtual void Process() = 0;
 
-		std::string eventType;
-		int x;
-		int y;
 
 protected:
 		Game * game;
