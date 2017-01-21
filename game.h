@@ -58,8 +58,8 @@ public:
 	int getNODMinigunner1X();
 	int getNODMinigunner1Y();
 	void AddCreateGDIMinigunnerEvent(int x, int y);
+	void AddCreateNODMinigunnerEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerViaEvent();
-
 	Minigunner * GetGDIMinigunner() { return minigunner1;  }
 
 protected:

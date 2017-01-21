@@ -48,6 +48,9 @@
     <ClCompile Include="CreateGDIMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CreateNODMinigunnerGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CreateGDIMinigunnerGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateNODMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

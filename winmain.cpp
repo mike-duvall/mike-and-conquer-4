@@ -84,14 +84,14 @@ void handlePostGdiMinigunner(http_request message) {
 	}
 
 	game->AddCreateGDIMinigunnerEvent(minigunnerX, minigunnerY);
-	//game->InitializeGDIMinigunner(minigunnerX, minigunnerY);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
-//* Refactor and smooth out GameEvent hierarchy, create subclass for creating GDIminigunner
+//Next steps
 //* Add eventing to handle creating Nod minigunner
 //* Add eventing to handle reading of Nod minigunner
+//* Test debugging remotely
 
 void handlePostNodMinigunner(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
@@ -115,7 +115,8 @@ void handlePostNodMinigunner(http_request message) {
 		}
 	}
 
-	game->InitializeNODMinigunner(minigunnerX, minigunnerY);
+//	game->InitializeNODMinigunner(minigunnerX, minigunnerY);
+	game->AddCreateNODMinigunnerEvent(minigunnerX, minigunnerY);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
 };

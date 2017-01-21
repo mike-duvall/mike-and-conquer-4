@@ -7,6 +7,7 @@
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
 #include "CreateGDIMinigunnerGameEvent.h"
+#include "CreateNODMinigunnerGameEvent.h"
 
 
 
@@ -153,6 +154,13 @@ void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
 	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
+
+void Game::AddCreateNODMinigunnerEvent(int x, int y) {
+	GameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
+	std::lock_guard<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+}
+
 
 
 LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
