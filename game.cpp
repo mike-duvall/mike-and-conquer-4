@@ -6,6 +6,7 @@
 #include "Circle.h"
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
+#include "GetNODMinigunnerGameEvent.h"
 #include "CreateGDIMinigunnerGameEvent.h"
 #include "CreateNODMinigunnerGameEvent.h"
 
@@ -149,6 +150,17 @@ Minigunner * Game::GetGDIMinigunnerViaEvent() {
 	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
 	return gdiMinigunner;
 }
+
+Minigunner * Game::GetNODMinigunnerViaEvent() {
+	GetNODMinigunnerGameEvent * gameEvent = new GetNODMinigunnerGameEvent(this);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
+
 
 void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;

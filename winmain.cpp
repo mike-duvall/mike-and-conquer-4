@@ -6,6 +6,9 @@
 #include <crtdbg.h>             // for detecting memory leaks
 #include "game.h"
 
+#include <chrono>
+#include <thread>
+
 
 #include <cpprest\http_listener.h>
 
@@ -27,6 +30,32 @@ Game *game = NULL;
 //* Try running game on other boxA, full screen, with test running on boxB,
 //so setting mouse location will work correctly
 //Will have to update localhost to actual IP address of boxA
+
+
+
+void MoveMouseAndLeftClick(int x, int y) {
+	INPUT input;
+	input.type = INPUT_MOUSE;
+
+		double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+		double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+		double fx = x*(65535.0f / fScreenWidth);
+		double fy = y*(65535.0f / fScreenHeight);
+
+
+	input.mi.dx = fx;
+	input.mi.dy = fy;
+	input.mi.dwFlags = (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE | MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP);
+
+//	input.mi.dx = 0;
+//	input.mi.dy = 0;
+
+//	input.mi.dwFlags = (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE | MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP);
+	input.mi.mouseData = 0;
+	input.mi.dwExtraInfo = NULL;
+	input.mi.time = 0;
+	SendInput(1, &input, sizeof(INPUT));
+}
 
 // LeftClick function
 void LeftClick()
@@ -59,7 +88,31 @@ void MouseMove(int x, int y)
 	::SendInput(1, &Input, sizeof(INPUT));
 }
 
+void ClickLeftMouseButton(int x, int y)
+{
 
+	double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+	double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+	double fx = x*(65535.0f / fScreenWidth);
+	double fy = y*(65535.0f / fScreenHeight);
+
+	INPUT mouseInput = { 0 };
+	mouseInput.type = INPUT_MOUSE;
+	mouseInput.mi.dx = fx;
+	mouseInput.mi.dy = fy;
+	mouseInput.mi.mouseData = 0;
+
+
+	mouseInput.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+	::SendInput(1, &mouseInput, sizeof(INPUT));
+
+	mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;;
+	::SendInput(1, &mouseInput, sizeof(INPUT));
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+	::SendInput(1, &mouseInput, sizeof(INPUT));
+}
 
 void handlePostGdiMinigunner(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
@@ -92,6 +145,7 @@ void handlePostGdiMinigunner(http_request message) {
 //* Add eventing to handle creating Nod minigunner
 //* Add eventing to handle reading of Nod minigunner
 //* Test debugging remotely
+// * Remove getGDIMinigunner1X()
 
 void handlePostNodMinigunner(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
@@ -135,6 +189,8 @@ void handleGetGdiMinigunner(http_request message) {
 };
 
 void handleGetNodMinigunner(http_request message) {
+
+	Minigunner * gdiMinigunner = game->GetNODMinigunnerViaEvent();
 	json::value obj;
 	obj[L"x"] = json::value::number(game->getNODMinigunner1X());
 	obj[L"y"] = json::value::number(game->getNODMinigunner1Y());
@@ -164,8 +220,10 @@ void handlePOSTLeftClick(http_request message) {
 		}
 	}
 
-	MouseMove(mouseX, mouseY);
-	LeftClick();
+	//MoveMouseAndLeftClick(mouseX, mouseY);
+	ClickLeftMouseButton(mouseX, mouseY);
+	//MouseMove(mouseX, mouseY);
+	//LeftClick();
 	message.reply(status_codes::OK, U("Success"));
 };
 
