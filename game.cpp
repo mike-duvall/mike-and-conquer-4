@@ -244,7 +244,7 @@ void Game::render()
 	}
 
 	if (enemyMinigunner1 != NULL) {
-		if (enemyMinigunner1->GetHealth() >= 0) {
+		if (enemyMinigunner1->GetHealth() > 0) {
 			enemyMinigunner1->draw();
 		}
 	}
