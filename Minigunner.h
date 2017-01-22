@@ -35,7 +35,7 @@ class Minigunner
 	void setSelected(bool selected) { this->isSelected = selected; }
 	bool getIsSelected() { return this->isSelected; }
 	void MoveTo(int x, int y);
-	int getHealth() { return this->health; }
+	int GetHealth() { return this->health; }
 
 private:
 

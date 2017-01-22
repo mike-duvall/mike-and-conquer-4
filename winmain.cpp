@@ -8,6 +8,7 @@
 
 #include <chrono>
 #include <thread>
+#include "Minigunner.h"
 
 
 #include <cpprest\http_listener.h>
@@ -43,8 +44,8 @@ void MoveMouseAndLeftClick(int x, int y) {
 		double fy = y*(65535.0f / fScreenHeight);
 
 
-	input.mi.dx = fx;
-	input.mi.dy = fy;
+	input.mi.dx = (LONG)fx;
+	input.mi.dy = (LONG) fy;
 	input.mi.dwFlags = (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE | MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP);
 
 //	input.mi.dx = 0;
@@ -98,8 +99,8 @@ void ClickLeftMouseButton(int x, int y)
 
 	INPUT mouseInput = { 0 };
 	mouseInput.type = INPUT_MOUSE;
-	mouseInput.mi.dx = fx;
-	mouseInput.mi.dy = fy;
+	mouseInput.mi.dx = (LONG)fx;
+	mouseInput.mi.dy = (LONG)fy;
 	mouseInput.mi.mouseData = 0;
 
 
@@ -194,6 +195,8 @@ void handleGetNodMinigunner(http_request message) {
 	json::value obj;
 	obj[L"x"] = json::value::number(game->getNODMinigunner1X());
 	obj[L"y"] = json::value::number(game->getNODMinigunner1Y());
+	obj[L"health"] = json::value::number(gdiMinigunner->GetHealth());
+
 	message.reply(status_codes::OK, obj);
 };
 
