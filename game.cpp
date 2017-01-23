@@ -26,22 +26,6 @@ Game::~Game() {
 }
 
 
-int Game::getGDIMinigunner1X() {
-	return minigunner1->getX();
-}
-
-int Game::getGDIMinigunner1Y() {
-	return minigunner1->getY();
-}
-
-int Game::getNODMinigunner1X() {
-	return enemyMinigunner1->getX();
-}
-
-int Game::getNODMinigunner1Y() {
-	return enemyMinigunner1->getY();
-}
-
 
 
 void Game::HandleMouseInput(LPARAM lParam) {

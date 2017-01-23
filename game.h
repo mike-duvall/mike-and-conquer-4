@@ -53,10 +53,6 @@ public:
 	void InitializeStuff();
 	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
-	int getGDIMinigunner1X(); 
-	int getGDIMinigunner1Y(); 
-	int getNODMinigunner1X();
-	int getNODMinigunner1Y();
 	void AddCreateGDIMinigunnerEvent(int x, int y);
 	void AddCreateNODMinigunnerEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerViaEvent();

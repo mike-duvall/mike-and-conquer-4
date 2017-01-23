@@ -113,23 +113,24 @@ void handlePostNodMinigunner(http_request message) {
 
 
 
-void handleGetGdiMinigunner(http_request message) {
+void HandleGetGdiMinigunner(http_request message) {
 
-	Minigunner * gdiMinigunner = game->GetGDIMinigunnerViaEvent();
+	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
 
 	json::value obj;
-	obj[L"x"] = json::value::number(game->getGDIMinigunner1X());
-	obj[L"y"] = json::value::number(game->getGDIMinigunner1Y());
+	obj[L"x"] = json::value::number(minigunner->getX());
+	obj[L"y"] = json::value::number(minigunner->getY());
 	message.reply(status_codes::OK, obj);
 };
 
-void handleGetNodMinigunner(http_request message) {
+void HandleGetNodMinigunner(http_request message) {
 
-	Minigunner * gdiMinigunner = game->GetNODMinigunnerViaEvent();
+	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
+
 	json::value obj;
-	obj[L"x"] = json::value::number(game->getNODMinigunner1X());
-	obj[L"y"] = json::value::number(game->getNODMinigunner1Y());
-	obj[L"health"] = json::value::number(gdiMinigunner->GetHealth());
+	obj[L"x"] = json::value::number(minigunner->getX());
+	obj[L"y"] = json::value::number(minigunner->getY());
+	obj[L"health"] = json::value::number(minigunner->GetHealth());
 
 	message.reply(status_codes::OK, obj);
 };
@@ -157,10 +158,7 @@ void handlePOSTLeftClick(http_request message) {
 		}
 	}
 
-	//MoveMouseAndLeftClick(mouseX, mouseY);
 	ClickLeftMouseButton(mouseX, mouseY);
-	//MouseMove(mouseX, mouseY);
-	//LeftClick();
 	message.reply(status_codes::OK, U("Success"));
 };
 
@@ -185,7 +183,6 @@ void init_input(HWND hWnd);
 
 HWND hwnd = NULL;
 
-//std::wstring baseUrl = L"http://192.168.0.179:11369";
 std::wstring baseUrl = L"http://*:11369";
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -219,14 +216,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 		gdiMinigunnerListener->open().wait();
 		gdiMinigunnerListener->support(methods::POST, handlePostGdiMinigunner);
-		gdiMinigunnerListener->support(methods::GET, handleGetGdiMinigunner);
+		gdiMinigunnerListener->support(methods::GET, HandleGetGdiMinigunner);
 
 
 		std::wstring nodMinigunnerURL = baseUrl + L"/nodMinigunner";
 		nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 		nodMinigunnerListener->open().wait();
 		nodMinigunnerListener->support(methods::POST, handlePostNodMinigunner);
-		nodMinigunnerListener->support(methods::GET, handleGetNodMinigunner);
+		nodMinigunnerListener->support(methods::GET, HandleGetNodMinigunner);
 
 		std::wstring leftClickURL = baseUrl + L"/leftClick";
 		leftClickListener = new http_listener(leftClickURL);
