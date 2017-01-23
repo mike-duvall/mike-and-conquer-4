@@ -6,6 +6,8 @@
 #include <crtdbg.h>             // for detecting memory leaks
 #include "game.h"
 
+#include <utility>
+
 #include <chrono>
 #include <thread>
 #include "Minigunner.h"
@@ -53,14 +55,15 @@ void ClickLeftMouseButton(int x, int y) {
 	::SendInput(1, &mouseInput, sizeof(INPUT));
 }
 
-void handlePostGdiMinigunner(http_request message) {
+
+std::pair<int, int>  ParseMinigunnerRequest(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
 	web::json::value webJsonValue = jsonValue.get();
 	web::json::object object = webJsonValue.as_object();
 
 	int minigunnerX = -666;
 	int minigunnerY = -666;
-	    
+
 	for (auto iter = object.cbegin(); iter != object.cend(); ++iter) {
 		utility::string_t attributeName = iter->first;
 		//const json::value &str = iter->first;
@@ -75,37 +78,22 @@ void handlePostGdiMinigunner(http_request message) {
 		}
 	}
 
-	game->AddCreateGDIMinigunnerEvent(minigunnerX, minigunnerY);
+	std::pair<int, int> xAndY = std::make_pair(minigunnerX, minigunnerY);
+	return xAndY;
+}
+
+void HandlePostGdiMinigunner(http_request message) {
+	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
+	game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
 // * Remove getGDIMinigunner1X()
 
-void handlePostNodMinigunner(http_request message) {
-	pplx::task<json::value> jsonValue = message.extract_json();
-	web::json::value webJsonValue = jsonValue.get();
-	web::json::object object = webJsonValue.as_object();
-
-	int minigunnerX = -666;
-	int minigunnerY = -666;
-
-	for (auto iter = object.cbegin(); iter != object.cend(); ++iter) {
-		utility::string_t attributeName = iter->first;
-		//const json::value &str = iter->first;
-		const json::value &v = iter->second;
-
-		if (attributeName == L"x") {
-			minigunnerX = v.as_integer();
-		}
-
-		if (attributeName == L"y") {
-			minigunnerY = v.as_integer();
-		}
-	}
-
-//	game->InitializeNODMinigunner(minigunnerX, minigunnerY);
-	game->AddCreateNODMinigunnerEvent(minigunnerX, minigunnerY);
+void HandlePostNodMinigunner(http_request message) {
+	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
+	game->AddCreateNODMinigunnerEvent(xAndY.first, xAndY.second);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
 };
@@ -212,14 +200,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		std::wstring gdiMinigunnerURL = baseUrl + L"/gdiMinigunner";
 		gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 		gdiMinigunnerListener->open().wait();
-		gdiMinigunnerListener->support(methods::POST, handlePostGdiMinigunner);
+		gdiMinigunnerListener->support(methods::POST, HandlePostGdiMinigunner);
 		gdiMinigunnerListener->support(methods::GET, HandleGetGdiMinigunner);
 
 
 		std::wstring nodMinigunnerURL = baseUrl + L"/nodMinigunner";
 		nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 		nodMinigunnerListener->open().wait();
-		nodMinigunnerListener->support(methods::POST, handlePostNodMinigunner);
+		nodMinigunnerListener->support(methods::POST, HandlePostNodMinigunner);
 		nodMinigunnerListener->support(methods::GET, HandleGetNodMinigunner);
 
 		std::wstring leftClickURL = baseUrl + L"/leftClick";
