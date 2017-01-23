@@ -113,26 +113,25 @@ void handlePostNodMinigunner(http_request message) {
 
 
 
-void HandleGetGdiMinigunner(http_request message) {
-
-	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
-
-	json::value obj;
-	obj[L"x"] = json::value::number(minigunner->getX());
-	obj[L"y"] = json::value::number(minigunner->getY());
-	message.reply(status_codes::OK, obj);
-};
-
-void HandleGetNodMinigunner(http_request message) {
-
-	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
-
+void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
 	json::value obj;
 	obj[L"x"] = json::value::number(minigunner->getX());
 	obj[L"y"] = json::value::number(minigunner->getY());
 	obj[L"health"] = json::value::number(minigunner->GetHealth());
-
 	message.reply(status_codes::OK, obj);
+}
+
+
+
+void HandleGetGdiMinigunner(http_request message) {
+	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
+	RenderAndReturnMinigunner(message, minigunner);
+};
+
+
+void HandleGetNodMinigunner(http_request message) {
+	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
+	RenderAndReturnMinigunner(message, minigunner);
 };
 
 
@@ -164,11 +163,9 @@ void handlePOSTLeftClick(http_request message) {
 
 
 //Next:
-//*Get remote debugging going, app running on one box, test running on another
 //	* See if can configure so that don't have to run as admin in order to open the port
 //		See here: https://casablanca.codeplex.com/discussions/532385
 //		Maybe HttpCfg or netsh
-//	* Don't hard code IP address, try just * or no host, etc
 
 
 
