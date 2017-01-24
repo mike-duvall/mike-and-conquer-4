@@ -89,7 +89,6 @@ void HandlePostGdiMinigunner(http_request message) {
     message.reply(status_codes::OK, U("Initialized minigunner"));
 };
 
-// * Remove getGDIMinigunner1X()
 
 void HandlePostNodMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
@@ -97,8 +96,6 @@ void HandlePostNodMinigunner(http_request message) {
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
 };
-
-
 
 
 void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
@@ -157,6 +154,9 @@ void handlePOSTLeftClick(http_request message) {
 
 
 
+//Todo:
+//* Make it so don't have to run as admin, see above
+//* Pull out Rest handling into separate class
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
@@ -197,20 +197,20 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         game->initialize(hwnd);     // throws GameError
 		init_input(hwnd);
 
-		std::wstring gdiMinigunnerURL = baseUrl + L"/gdiMinigunner";
+		std::wstring gdiMinigunnerURL = baseUrl + L"/mac/gdiMinigunner";
 		gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 		gdiMinigunnerListener->open().wait();
 		gdiMinigunnerListener->support(methods::POST, HandlePostGdiMinigunner);
 		gdiMinigunnerListener->support(methods::GET, HandleGetGdiMinigunner);
 
 
-		std::wstring nodMinigunnerURL = baseUrl + L"/nodMinigunner";
+		std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
 		nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 		nodMinigunnerListener->open().wait();
 		nodMinigunnerListener->support(methods::POST, HandlePostNodMinigunner);
 		nodMinigunnerListener->support(methods::GET, HandleGetNodMinigunner);
 
-		std::wstring leftClickURL = baseUrl + L"/leftClick";
+		std::wstring leftClickURL = baseUrl + L"/mac/leftClick";
 		leftClickListener = new http_listener(leftClickURL);
 		leftClickListener->open().wait();
 		leftClickListener->support(methods::POST, handlePOSTLeftClick);
