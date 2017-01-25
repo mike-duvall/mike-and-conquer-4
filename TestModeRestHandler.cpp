@@ -8,54 +8,38 @@
 #include "Minigunner.h"
 
 
-TestModeRestHandler * globalTestModRestHandler = NULL;
-
-void StaticHandlePostGdiMinigunner(http_request message) {
-	globalTestModRestHandler->HandlePostGdiMinigunner(message);
-}
-
-
-void StaticHandleGetGdiMinigunner(http_request message) {
-	globalTestModRestHandler->HandleGetGdiMinigunner(message);
-}
-
-
-void StaticHandlePostNodMinigunner(http_request message) {
-	globalTestModRestHandler->HandlePostNodMinigunner(message);
-}
-
-
-void StaticHandleGetNodMinigunner(http_request message) {
-	globalTestModRestHandler->HandleGetNodMinigunner(message);
-}
-
-
-void StaticHandlePOSTLeftClick(http_request message) {
-	globalTestModRestHandler->HandlePOSTLeftClick(message);
-}
-
-
 
 TestModeRestHandler::TestModeRestHandler(Game * aGame) {
-	globalTestModRestHandler = this;
 	this->game = aGame;
 	std::wstring gdiMinigunnerURL = baseUrl + L"/mac/gdiMinigunner";
 	gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 	gdiMinigunnerListener->open().wait();
-	gdiMinigunnerListener->support(methods::POST, StaticHandlePostGdiMinigunner);
-	gdiMinigunnerListener->support(methods::GET, StaticHandleGetGdiMinigunner);
+	gdiMinigunnerListener->support(
+		methods::POST,
+		[this](http_request request) {return HandlePostGdiMinigunner(request); });
 
+	gdiMinigunnerListener->support(
+		methods::GET,
+		[this](http_request request) {return HandleGetGdiMinigunner(request); });
 
 	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
 	nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 	nodMinigunnerListener->open().wait();
-	nodMinigunnerListener->support(methods::POST, StaticHandlePostNodMinigunner);
-	nodMinigunnerListener->support(methods::GET, StaticHandleGetNodMinigunner);
+	nodMinigunnerListener->support(
+		methods::POST,
+		[this](http_request request) {return HandlePostNodMinigunner(request); });
+
+
+	nodMinigunnerListener->support(
+		methods::GET,
+		[this](http_request request) {return HandleGetNodMinigunner(request); });
 
 	std::wstring leftClickURL = baseUrl + L"/mac/leftClick";
 	leftClickListener = new http_listener(leftClickURL);
 	leftClickListener->open().wait();
-	leftClickListener->support(methods::POST, StaticHandlePOSTLeftClick);
+	leftClickListener->support(
+		methods::POST,
+		[this](http_request request) {return HandlePOSTLeftClick(request); });
 
 }
 

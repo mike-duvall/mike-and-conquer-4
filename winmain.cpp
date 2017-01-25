@@ -17,18 +17,6 @@
 Game * game = NULL;
 
 
-
-//Next:
-//	* See if can configure so that don't have to run as admin in order to open the port
-//		See here: https://casablanca.codeplex.com/discussions/532385
-//		Maybe HttpCfg or netsh
-
-
-
-//Todo:
-//* Make it so don't have to run as admin, see above
-//* Pull out Rest handling into separate class
-
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
 bool CreateMainWindow(HWND &, HINSTANCE, int);
