@@ -20,8 +20,8 @@ Game::Game(bool testMode) {
 }
 
 Game::~Game() {
-	releaseAll();
-    deleteAll();                // free all reserved memory
+	ReleaseAll();
+    DeleteAll();                // free all reserved memory
     ShowCursor(true);           // show cursor
 }
 
@@ -65,7 +65,7 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 }
 
-void Game::initialize(HWND hw) {
+void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
 	graphics = new Graphics();
@@ -81,14 +81,14 @@ void Game::initialize(HWND hw) {
 	initialized = true;
 
 
-	unitSelectCursor = new UnitSelectCursor(this->getGraphics());
+	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
 
 	minigunner1 = NULL;
 	enemyMinigunner1 = NULL;
 
 	if (!testMode) {
-		minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900, unitSelectCursor, input, false);
-		enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
+		minigunner1 = new Minigunner(this, this->GetGraphics(), 300, 900, unitSelectCursor, input, false);
+		enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), 1000, 300, unitSelectCursor, input, true);
 	}
 
 	circle = new Circle(500, 500);
@@ -97,7 +97,7 @@ void Game::initialize(HWND hw) {
 
 
 
-Minigunner * Game::getMinigunnerAtPoint(int x, int y) {
+Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
 	if (minigunner1->pointIsWithin(x, y)) {
 		return minigunner1;
 	}
@@ -110,13 +110,13 @@ Minigunner * Game::getMinigunnerAtPoint(int x, int y) {
 }
 
 void Game::InitializeStuff() {
-	minigunner1 = new Minigunner(this, this->getGraphics(), 300, 900, unitSelectCursor, input, false);
-	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), 1000, 300, unitSelectCursor, input, true);
+	minigunner1 = new Minigunner(this, this->GetGraphics(), 300, 900, unitSelectCursor, input, false);
+	enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), 1000, 300, unitSelectCursor, input, true);
 }
 
 void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
-	minigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	minigunner1 = new Minigunner(this, this->GetGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
 
 void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
@@ -148,7 +148,7 @@ Minigunner * Game::GetNODMinigunnerViaEvent() {
 
 void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
-	enemyMinigunner1 = new Minigunner(this, this->getGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
 
 void Game::AddCreateNODMinigunnerEvent(int x, int y) {
@@ -159,7 +159,7 @@ void Game::AddCreateNODMinigunnerEvent(int x, int y) {
 
 
 
-LRESULT Game::messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
+LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
     if(initialized)     // do not process messages if not initialized
     {
         switch( msg )
@@ -195,13 +195,12 @@ void Game::ProcessGameEvents() {
 	for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter) {
 		GameEvent * nextGameEvent = *iter;
 		nextGameEvent->Process();
-		/*this->InitializeGDIMinigunner(nextGameEvent->x, nextGameEvent->y);*/
 	}
 	gameEvents.clear();
 
 }
 
-void Game::update() {
+void Game::Update() {
 
 	ProcessGameEvents();
 	if (minigunner1 != NULL) {
@@ -220,8 +219,7 @@ void Game::update() {
 
 
 
-void Game::render()
-{
+void Game::Render() {
 //	graphics->spriteBegin();                // begin drawing sprites
 	if (minigunner1 != NULL) {
 		minigunner1->draw();
@@ -239,19 +237,17 @@ void Game::render()
 }
 
 
-void Game::renderGame()
-{
+void Game::RenderGame() {
     if (SUCCEEDED(graphics->beginScene()))
     {
-        render();
+        Render();
         graphics->endScene();
     }
 
     graphics->showBackbuffer();
 }
 
-void Game::run(HWND hwnd)
-{
+void Game::Run(HWND hwnd) {
     if(graphics == NULL)            // if graphics not initialized
         return;
 
@@ -274,8 +270,8 @@ void Game::run(HWND hwnd)
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-    update(); 
-    renderGame(); 
+    Update(); 
+    RenderGame(); 
 
     if (input->isKeyDown(ESC_KEY))
 		PostQuitMessage(0);
@@ -284,23 +280,20 @@ void Game::run(HWND hwnd)
 
 
 
-void Game::releaseAll()
-{
+void Game::ReleaseAll() {
 //	gameTextures.onLostDevice();
 	return;
 }
 
-void Game::resetAll()
-{
+void Game::ResetAll() {
 //	gameTextures.onResetDevice();
 	return;
 }
 
 
 
-void Game::deleteAll()
-{
-    releaseAll();               // call onLostDevice() for every graphics item
+void Game::DeleteAll() {
+    ReleaseAll();               // call onLostDevice() for every graphics item
     safeDelete(graphics);
     safeDelete(input);
     initialized = false;

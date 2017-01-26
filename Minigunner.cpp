@@ -46,7 +46,7 @@ void Minigunner::MoveTo(int x, int y) {
 
 void Minigunner::handleIdleState(float frameTime) {
 	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
 				setSelected(true);
@@ -95,7 +95,7 @@ void Minigunner::moveTowardsDestination(float frameTime) {
 void Minigunner::handleMovingState(float frameTime) {
 
 	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
 				setSelected(true);

@@ -31,25 +31,25 @@ public:
     Game(bool testMode);
     virtual ~Game();
 
-    LRESULT messageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
+    LRESULT MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
-    virtual void initialize(HWND hwnd);
+    virtual void Initialize(HWND hwnd);
 
-    virtual void run(HWND);
+    virtual void Run(HWND);
 
-    virtual void releaseAll();
-    virtual void resetAll();
-    virtual void deleteAll();
-    virtual void renderGame();
+    virtual void ReleaseAll();
+    virtual void ResetAll();
+    virtual void DeleteAll();
+    virtual void RenderGame();
 	void ProcessGameEvents();
-	virtual void update();
-	virtual void render();
+	virtual void Update();
+	virtual void Render();
 
-	Minigunner * getMinigunnerAtPoint(int x, int y);
+	Minigunner * GetMinigunnerAtPoint(int x, int y);
 
-    Graphics* getGraphics() {return graphics;}
-    Input* getInput()       {return input;}
-    void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
+    Graphics* GetGraphics() {return graphics;}
+    Input* GetInput()       {return input;}
+    void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 	void InitializeStuff();
 	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
