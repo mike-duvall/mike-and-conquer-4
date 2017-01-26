@@ -69,7 +69,7 @@ void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
 	graphics = new Graphics();
-	graphics->initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
+	graphics->Initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
 
 
 	// attempt to set up high resolution timer
@@ -210,8 +210,8 @@ void Game::Update() {
 		enemyMinigunner1->update(frameTime);
 	}
 	if (input->isLeftMouseDown()) {
-		circle->setX(input->getMouseX());
-		circle->setY(input->getMouseY());
+		circle->SetX(input->getMouseX());
+		circle->SetY(input->getMouseY());
 	}
 
 }
@@ -231,20 +231,20 @@ void Game::Render() {
 		}
 	}
 
-	circle->Draw(graphics->get3Ddevice());
+	circle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }
 
 
 void Game::RenderGame() {
-    if (SUCCEEDED(graphics->beginScene()))
+    if (SUCCEEDED(graphics->BeginScene()))
     {
         Render();
         graphics->endScene();
     }
 
-    graphics->showBackbuffer();
+    graphics->ShowBackbuffer();
 }
 
 void Game::Run(HWND hwnd) {

@@ -24,8 +24,7 @@ class Circle;
 class GameEvent;
 
 
-class Game
-{
+class Game {
 
 public:
     Game(bool testMode);

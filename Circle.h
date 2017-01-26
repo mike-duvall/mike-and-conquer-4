@@ -19,8 +19,8 @@ public:
 
 	void Draw(LPDIRECT3DDEVICE9 device);
 
-	void setX(int x) { this->x = x; }
-	void setY(int y) { this->y = y; }
+	void SetX(int x) { this->x = x; }
+	void SetY(int y) { this->y = y; }
 
 
 

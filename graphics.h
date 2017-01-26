@@ -26,8 +26,7 @@ namespace graphicsNS
 
 
 
-class Graphics
-{
+class Graphics {
 private:
 	LPDIRECT3D9       direct3d;
 	LPDIRECT3DDEVICE9 device3d;
@@ -41,18 +40,18 @@ private:
     int         height;
     D3DCOLOR  backColor;      // background color
 
-    void    initD3Dpp();
+    void    InitD3Dpp();
 
 public:
 
     Graphics();
     virtual ~Graphics();
 
-    void    releaseAll();
+    void    ReleaseAll();
 
-    void    initialize(HWND hw, int width, int height, bool fullscreen);
+    void    Initialize(HWND hw, int width, int height, bool fullscreen);
 
-    HRESULT showBackbuffer();
+    HRESULT ShowBackbuffer();
 
     // Checks the adapter to see if it is compatible with the BackBuffer height,
     // width and refresh rate specified in d3dpp. Fills in the pMode structure with
@@ -60,19 +59,18 @@ public:
     // Pre: d3dpp is initialized.
     // Post: Returns true if compatible mode found and pMode structure is filled.
     //       Returns false if no compatible mode found.
-    bool    isAdapterCompatible();
+    bool    IsAdapterCompatible();
 
-    HRESULT reset();
-
-
-	LPDIRECT3DDEVICE9 get3Ddevice()   { return device3d; }
-    bool getFullscreen()        { return fullscreen; }
-	void setBackColor(D3DCOLOR c);
+    HRESULT Reset();
 
 
+	LPDIRECT3DDEVICE9 Get3Ddevice()   { return device3d; }
+    bool GetFullscreen()        { return fullscreen; }
+	void SetBackColor(D3DCOLOR c);
 
-    HRESULT beginScene() 
-    {
+
+
+    HRESULT BeginScene() {
         result = E_FAIL;
         if(device3d == NULL)
             return result;
@@ -85,8 +83,7 @@ public:
         return result;
     }
 
-    HRESULT endScene() 
-    {
+    HRESULT endScene() {
         result = E_FAIL;
         if(device3d)
             result = device3d->EndScene();

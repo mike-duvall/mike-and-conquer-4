@@ -30,7 +30,7 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	velocity.x = 150.0;
 	velocity.y = 150.0;
 
-	gameSprite = new GameSprite(graphics->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 }
 
 
