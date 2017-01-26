@@ -90,7 +90,7 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="CreateNODMinigunnerGameEvent.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameSprite.cpp" />
     <ClCompile Include="GetGDIMinigunnerGameEvent.cpp" />
@@ -107,8 +107,8 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="CreateGDIMinigunnerGameEvent.h" />
     <ClInclude Include="CreateNODMinigunnerGameEvent.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="gameError.h" />
-    <ClInclude Include="game.h" />
     <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameSprite.h" />
     <ClInclude Include="GetGDIMinigunnerGameEvent.h" />
