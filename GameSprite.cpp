@@ -49,8 +49,7 @@ void GameSprite::InitializeTexture(std::string filename, D3DCOLOR transparentCol
 
 }
 
-bool GameSprite::InitializeSprite(std::string file)
-{
+bool GameSprite::InitializeSprite(std::string file) {
 
 	bool success = true;
 	try {
@@ -85,8 +84,7 @@ bool GameSprite::InitializeSprite(std::string file)
 }
 
 
-void GameSprite::Draw(float gameTime, D3DXVECTOR2 position)
-{
+void GameSprite::Draw(float gameTime, D3DXVECTOR2 position) {
 
 	D3DCOLOR color = graphicsNS::WHITE;
 

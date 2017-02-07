@@ -3,8 +3,7 @@
 
 
 
-Graphics::Graphics()
-{
+Graphics::Graphics() {
     direct3d = NULL;
     device3d = NULL;
 
@@ -14,20 +13,17 @@ Graphics::Graphics()
     backColor = graphicsNS::CUSTOM6;
 }
 
-Graphics::~Graphics()
-{
-    releaseAll();
+Graphics::~Graphics() {
+    ReleaseAll();
 }
 
-void Graphics::releaseAll()
-{
+void Graphics::ReleaseAll() {
     //safeRelease(sprite);
     safeRelease(device3d);
     safeRelease(direct3d);
 }
 
-void Graphics::initialize(HWND hw, int w, int h, bool full)
-{
+void Graphics::Initialize(HWND hw, int w, int h, bool full) {
     hwnd = hw;
     width = w;
     height = h;
@@ -38,10 +34,9 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
     if (direct3d == NULL)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Direct3D"));
 
-    initD3Dpp();        // init D3D presentation parameters
-    if(fullscreen)      // if full-screen mode
-    {
-        if(isAdapterCompatible())   // is the adapter compatible
+    InitD3Dpp();        // init D3D presentation parameters
+    if(fullscreen) {      // if full-screen mode
+        if(IsAdapterCompatible())   // is the adapter compatible
             // set the refresh rate with a compatible one
             d3dpp.FullScreen_RefreshRateInHz = pMode.RefreshRate;
         else
@@ -84,9 +79,8 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
 //=============================================================================
 // Initialize D3D presentation parameters
 //=============================================================================
-void Graphics::initD3Dpp()
-{
-    try{
+void Graphics::InitD3Dpp() {
+    try {
         ZeroMemory(&d3dpp, sizeof(d3dpp));              // fill the structure with 0
         // fill in the parameters we need
         d3dpp.BackBufferWidth   = width;
@@ -105,15 +99,14 @@ void Graphics::initD3Dpp()
             d3dpp.PresentationInterval   = D3DPRESENT_INTERVAL_IMMEDIATE;
         d3dpp.EnableAutoDepthStencil = true;
         d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;    // Depth 24, Stencil 8
-    } catch(...)
-    {
+    }
+	catch(...) {
         throw(GameError(gameErrorNS::FATAL_ERROR, 
                 "Error initializing D3D presentation parameters"));
     }
 }
 
-HRESULT Graphics::showBackbuffer()
-{
+HRESULT Graphics::ShowBackbuffer() {
     // Display backbuffer to screen
     result = device3d->Present(NULL, NULL, NULL, NULL);
     return result;
@@ -127,12 +120,10 @@ HRESULT Graphics::showBackbuffer()
 // Post: Returns true if compatible mode found and pMode structure is filled.
 //       Returns false if no compatible mode found.
 //=============================================================================
-bool Graphics::isAdapterCompatible()
-{
+bool Graphics::IsAdapterCompatible() {
     UINT modes = direct3d->GetAdapterModeCount(D3DADAPTER_DEFAULT, 
                                             d3dpp.BackBufferFormat);
-    for(UINT i=0; i<modes; i++)
-    {
+    for(UINT i=0; i<modes; i++) {
         result = direct3d->EnumAdapterModes( D3DADAPTER_DEFAULT, 
                                         d3dpp.BackBufferFormat,
                                         i, &pMode);
@@ -149,9 +140,8 @@ bool Graphics::isAdapterCompatible()
 //=============================================================================
 // Reset the graphics device
 //=============================================================================
-HRESULT Graphics::reset()
-{
-    initD3Dpp();                        // init D3D presentation parameters
+HRESULT Graphics::Reset() {
+    InitD3Dpp();                        // init D3D presentation parameters
     result = device3d->Reset(&d3dpp);   // attempt to reset graphics device
 
     // Configure for alpha blend of primitives
@@ -163,7 +153,7 @@ HRESULT Graphics::reset()
 }
 
 // Set color used to clear screen
-void Graphics::setBackColor(D3DCOLOR c) {
+void Graphics::SetBackColor(D3DCOLOR c) {
 	backColor = c;
 }
 

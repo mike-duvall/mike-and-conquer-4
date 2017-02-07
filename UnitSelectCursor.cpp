@@ -22,7 +22,7 @@ UnitSelectCursor::UnitSelectCursor(Graphics *g)
 
 	graphics = g;
 
-	gameSprite = new GameSprite(g->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::MAGENTA);
+	gameSprite = new GameSprite(g->Get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::MAGENTA);
 
 	rect.left = 0;
 	rect.right = rect.left + width;

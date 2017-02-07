@@ -6,16 +6,27 @@
 #include <crtdbg.h>             // for detecting memory leaks
 #include "game.h"
 
+#include <utility>
+
+#include <chrono>
+#include <thread>
+#include "Minigunner.h"
+#include "TestModeRestHandler.h"
+
+
+Game * game = NULL;
+
 
 // Function prototypes
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int); 
 bool CreateMainWindow(HWND &, HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM); 
 
+
 void init_input(HWND hWnd);
 
-Game *game = NULL;
 HWND hwnd = NULL;
+
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     LPSTR lpCmdLine, int nCmdShow)
@@ -26,15 +37,27 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     MSG msg;
 
-    game = new Game;
+	bool testMode = false;
+	std::string commandLine = std::string(lpCmdLine);
+	std::string TESTMODE = std::string("TESTMODE");
+
+
+	if (TESTMODE == commandLine) {
+		testMode = true;
+	};
+
+    game = new Game(testMode);
 
     if (!CreateMainWindow(hwnd, hInstance, nCmdShow))
         return 1;
 
     try{
-        game->initialize(hwnd);     // throws GameError
+        game->Initialize(hwnd);     // throws GameError
 		init_input(hwnd);
 
+		if (testMode) {
+			TestModeRestHandler * testModeRestHandler = new TestModeRestHandler(game);
+		}
 
         int done = 0;
         while (!done)
@@ -47,20 +70,18 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             } else
-                game->run(hwnd);    
+                game->Run(hwnd);    
         }
         safeDelete(game);          
         return msg.wParam;
     }
-    catch(const GameError &err)
-    {
-        game->deleteAll();
+    catch(const GameError &err) {
+        game->DeleteAll();
         DestroyWindow(hwnd);
         MessageBox(NULL, err.getMessage(), "Error", MB_OK);
     }
-    catch(...)
-    {
-        game->deleteAll();
+    catch(...) {
+        game->DeleteAll();
         DestroyWindow(hwnd);
         MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
     }
@@ -83,7 +104,7 @@ void init_input(HWND hWnd)
 
 LRESULT WINAPI WinProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-    return (game->messageHandler(hwnd, msg, wParam, lParam));
+    return (game->MessageHandler(hwnd, msg, wParam, lParam));
 }
 
 bool CreateMainWindow(HWND &hwnd, HINSTANCE hInstance, int nCmdShow) 

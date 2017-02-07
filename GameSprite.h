@@ -4,8 +4,7 @@
 #include <d3dx9.h>
 #include <string>
 
-class GameSprite
-{
+class GameSprite {
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor);
 	~GameSprite();

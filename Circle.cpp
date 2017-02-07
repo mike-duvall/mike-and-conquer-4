@@ -5,8 +5,7 @@
 
 
 
-Circle::Circle(int x, int y)
-{
+Circle::Circle(int x, int y) {
 	this->x = x;
 	this->y = y;
 }
@@ -20,8 +19,7 @@ struct VERTEX_2D_DIF { // transformed colorized
 	static const DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 };
 
-void DrawCircleFilled(LPDIRECT3DDEVICE9 device, int mx, int my, int r, D3DCOLOR color)
-{
+void DrawCircleFilled(LPDIRECT3DDEVICE9 device, int mx, int my, int r, D3DCOLOR color) {
 	VERTEX_2D_DIF verts[CIRCLE_RESOLUTION + 1];
 
 	for (int i = 0; i < CIRCLE_RESOLUTION + 1; i++)
@@ -40,7 +38,6 @@ void DrawCircleFilled(LPDIRECT3DDEVICE9 device, int mx, int my, int r, D3DCOLOR 
 
 
 
-void Circle::Draw(LPDIRECT3DDEVICE9 device)
-{
+void Circle::Draw(LPDIRECT3DDEVICE9 device) {
 	DrawCircleFilled(device, x, y, 5, graphicsNS::MAGENTA);
 }

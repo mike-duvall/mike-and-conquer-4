@@ -30,7 +30,7 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	velocity.x = 150.0;
 	velocity.y = 150.0;
 
-	gameSprite = new GameSprite(graphics->get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 }
 
 
@@ -46,7 +46,7 @@ void Minigunner::MoveTo(int x, int y) {
 
 void Minigunner::handleIdleState(float frameTime) {
 	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
 				setSelected(true);
@@ -66,12 +66,12 @@ void Minigunner::handleIdleState(float frameTime) {
 
 }
 
-xxx Figure out how to write a UI test to test the app behaviour
-
-Investigate these: 
-	* https://engineering.riotgames.com/news/automated-testing-league-legends
-	* https://blog.testfort.com/automated-testing/video-game-test-automation
-	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
+//xxx Figure out how to write a UI test to test the app behaviour
+//
+//Investigate these: 
+//	* https://engineering.riotgames.com/news/automated-testing-league-legends
+//	* https://blog.testfort.com/automated-testing/video-game-test-automation
+//	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
 
 void Minigunner::moveTowardsDestination(float frameTime) {
 	int buffer = 2;
@@ -95,7 +95,7 @@ void Minigunner::moveTowardsDestination(float frameTime) {
 void Minigunner::handleMovingState(float frameTime) {
 
 	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->getMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
+		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
 				setSelected(true);
@@ -123,7 +123,7 @@ double Distance(double dX0, double dY0, double dX1, double dY1)
 }
 
 int Minigunner::calculateDistanceToTarget() {
-	return Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
+	return (int)Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
 }
 
 bool Minigunner::isInAttackRange() {
@@ -139,7 +139,9 @@ bool Minigunner::isInAttackRange() {
 
 
 void Minigunner::reduceHealth(int amount) {
-	this->health -= amount;
+	if (health > 0) {
+		this->health -= amount;
+	}
 }
 
 void Minigunner::handleAttackingState(float frameTime) {

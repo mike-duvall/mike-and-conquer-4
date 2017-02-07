@@ -1,2 +1,28 @@
 
 For extracting images from C&C MIX files, use XCC Mixer 1.47
+
+
+Test driver
+************
+Test driver program located here:  https://github.com/mike-duvall/mike-and-conquer-test
+
+Pass command line argument `TESTMODE` to enable driving the program from the test driver
+
+In order to enable the app to host Rest endpoints, you have to either:
+a)  Run Visual Studio(or mike-and-conquer.exe) as Administratoe
+or 
+b) Open up the proper Rest endpoints on the Windows box in question, with this command:
+netsh http add urlacl url=http://*:11369/mac/ user=mduvall
+(where user is the appropriate user)
+You can later delete this permission if needed with:
+netsh http delete urlacl http://+:11369/mac/
+
+and you can list all existing permissions with:
+
+netsh http show urlacl
+
+
+Remote debugging
+****************
+
+(Add remote debugging notes here)

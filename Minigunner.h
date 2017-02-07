@@ -29,13 +29,13 @@ class Minigunner
 	virtual void  setVelocity(D3DXVECTOR2 v) { velocity = v; }
 	void setX(float newX) { this->x = newX; }
 	void setY(float newY) { this->y = newY; }
-	int getX() { return this->x; }
-	int getY() { return this->y; }
+	int getX() { return (int)this->x; }
+	int getY() { return (int)this->y; }
 	bool pointIsWithin(int x, int y);
 	void setSelected(bool selected) { this->isSelected = selected; }
 	bool getIsSelected() { return this->isSelected; }
 	void MoveTo(int x, int y);
-	int getHealth() { return this->health; }
+	int GetHealth() { return this->health; }
 
 private:
 

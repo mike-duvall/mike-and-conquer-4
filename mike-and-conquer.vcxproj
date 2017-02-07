@@ -88,33 +88,71 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="CreateGDIMinigunnerGameEvent.cpp" />
+    <ClCompile Include="CreateNODMinigunnerGameEvent.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameSprite.cpp" />
+    <ClCompile Include="GetGDIMinigunnerGameEvent.cpp" />
+    <ClCompile Include="GetNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Minigunner.cpp" />
+    <ClCompile Include="TestModeRestHandler.cpp" />
     <ClCompile Include="UnitSelectCursor.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="CreateGDIMinigunnerGameEvent.h" />
+    <ClInclude Include="CreateNODMinigunnerGameEvent.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="gameError.h" />
-    <ClInclude Include="game.h" />
+    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameSprite.h" />
+    <ClInclude Include="GetGDIMinigunnerGameEvent.h" />
+    <ClInclude Include="GetNODMinigunnerGameEvent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Minigunner.h" />
+    <ClInclude Include="TestModeRestHandler.h" />
     <ClInclude Include="UnitSelectCursor.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="icon1.ico" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="mike-and-conquer.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes.txt" />
+    <Text Include="readme.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.9.1\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+  </Target>
 </Project>
