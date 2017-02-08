@@ -14,6 +14,20 @@
 #include "TestModeRestHandler.h"
 
 
+
+//Unit test todos:
+//Add mike-and-conquer-test project
+//Add basic catch.hpp test
+//Check that in
+//
+//(Assume mike-and-conquer is now mike-and-conquer-main)
+//
+//Add mike-and-conquer-lib project
+//Put code in it
+//Test that code in catch
+//Pull that code into mike-and-conquer-main
+//Gradually move stuff from main to lib
+
 Game * game = NULL;
 
 
