@@ -16,17 +16,18 @@
 
 
 //Unit test todos:
-//Add mike-and-conquer-test project
-//Add basic catch.hpp test
-//Check that in
+//XAdd mike-and-conquer-test project
+//XAdd basic catch.hpp test
+//XCheck that in
 //
 //(Assume mike-and-conquer is now mike-and-conquer-main)
 //
-//Add mike-and-conquer-lib project
-//Put code in it
-//Test that code in catch
-//Pull that code into mike-and-conquer-main
-//Gradually move stuff from main to lib
+//xAdd mike-and-conquer-lib project
+//xPut code in it
+//xTest that code in catch
+
+// Make mike-and-conquer depend on mike-and-conquer-lib
+//Gradually move stuff from mike-and-conquer to mike-and-conquer-lib
 
 Game * game = NULL;
 
