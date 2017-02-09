@@ -16,18 +16,10 @@
 
 
 //Unit test todos:
-//XAdd mike-and-conquer-test project
-//XAdd basic catch.hpp test
-//XCheck that in
-//
-//(Assume mike-and-conquer is now mike-and-conquer-main)
-//
-//xAdd mike-and-conquer-lib project
-//xPut code in it
-//xTest that code in catch
-
-// Make mike-and-conquer depend on mike-and-conquer-lib
-//Gradually move stuff from mike-and-conquer to mike-and-conquer-lib
+// * Put a dummy class in lib and use it from main(prove that C++ classes also work in lib, was issue in distant past)
+// * Pull a small part of real game code into lib and use it in main
+// * Pull all remaining real game code into lib and use it in main
+// * Start TDD'ing classes for reading C&C .SHP files
 
 Game * game = NULL;
 
