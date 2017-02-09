@@ -11,6 +11,7 @@
     <DeploymentDirectory>c:\remotetemp</DeploymentDirectory>
     <AdditionalFiles>
     </AdditionalFiles>
-    <LocalDebuggerCommandArguments>TESTMODE</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
