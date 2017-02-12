@@ -12,7 +12,14 @@
 #include <thread>
 #include "Minigunner.h"
 #include "TestModeRestHandler.h"
+#include "dummy.h"
 
+
+//Unit test todos:
+// * Put a dummy class in lib and use it from main(prove that C++ classes also work in lib, was issue in distant past)
+// * Pull a small part of real game code into lib and use it in main
+// * Pull all remaining real game code into lib and use it in main
+// * Start TDD'ing classes for reading C&C .SHP files
 
 Game * game = NULL;
 
@@ -36,6 +43,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     #endif
 
     MSG msg;
+
+	int fact = Factorial(1);
 
 	bool testMode = false;
 	std::string commandLine = std::string(lpCmdLine);
