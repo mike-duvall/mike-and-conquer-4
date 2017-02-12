@@ -16,14 +16,15 @@ TEST_CASE("Factorials are computed", "[factorial]") {
 
 TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	// Given
-	//int ShpFile shpFile = new ShpFile("e1.shp");
-	ShpFile shpFile;
-	int x = 3;
+	ShpFile shpFile(std::string("assets/e1.shp"));
 
 	// then
-	REQUIRE(shpFile.width() == 50);
-	REQUIRE(shpFile.height() == 39);
-	REQUIRE(x == 3);
+	REQUIRE(shpFile.Size() == 40105);
+	REQUIRE(shpFile.NumberOfImages() == 532);
+	REQUIRE(shpFile.Width() == 50);
+	REQUIRE(shpFile.Height() == 39);
+
+
 }
 
 
