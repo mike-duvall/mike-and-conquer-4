@@ -12,9 +12,11 @@ public:
 	int Height();
 	long Size();
 	int NumberOfImages();
+	std::vector<unsigned char> & SpriteFrame1();
 
 private:
-	std::vector<char> charVector;
+	std::vector<unsigned char> charVector;
+	std::vector<unsigned char> spriteFrame1Vector;
 	int numberOfImages;
 	int width;
 	int height;

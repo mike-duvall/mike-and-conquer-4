@@ -5,7 +5,9 @@
 
 
 
-static std::vector<char> ReadAllBytes(char const* filename) {
+static std::vector<unsigned char> ReadAllBytes(char const* filename) {
+
+
 	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
 	std::ifstream::pos_type pos = ifs.tellg();
 
@@ -14,11 +16,16 @@ static std::vector<char> ReadAllBytes(char const* filename) {
 	ifs.seekg(0, std::ios::beg);
 	ifs.read(&result[0], pos);
 
-	return result;
+	std::vector<unsigned char> unsignedResult;
+	for (std::vector<char>::iterator it = result.begin(); it != result.end(); ++it) {
+		unsignedResult.push_back(*it);
+	}
+
+	return unsignedResult;
 }
 
 
-int ReadTwoBytesAsInt(int byteOffset1, int byteOffset2, std::vector<char> bytes) {
+int ReadTwoBytesAsInt(int byteOffset1, int byteOffset2, std::vector<unsigned char> bytes) {
 	char byte0 = bytes[byteOffset1];
 	char byte1 = bytes[byteOffset2];
 	return (byte1 * 256) + byte0;
@@ -64,3 +71,8 @@ long ShpFile::Size() {
 int ShpFile::NumberOfImages() {
 	return numberOfImages;
 }
+
+
+std::vector<unsigned char> & ShpFile::SpriteFrame1() {
+	return spriteFrame1Vector;
+}	

@@ -23,7 +23,8 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.NumberOfImages() == 532);
 	REQUIRE(shpFile.Width() == 50);
 	REQUIRE(shpFile.Height() == 39);
-
+	//REQUIRE(shpFile.SpriteFrame1().get(474) == 179) // or -77
+	//REQUIRE(shpFile.SpriteFrame1().get(474) == 180) // or -76
 
 }
 
