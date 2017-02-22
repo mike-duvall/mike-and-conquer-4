@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 
+#include "ImageHeader.h"
 
 
 static std::vector<unsigned char> ReadAllBytes(char const* filename) {
@@ -52,6 +53,9 @@ ShpFile::ShpFile(std::string & filename) {
 	numberOfImages = ReadNumberOfImages();
 	width = ReadWidth();
 	height = ReadHeight();
+
+	ImageHeader * imageHeader = new ImageHeader(charVector);
+	imageHeaders.push_back(imageHeader);
 }
 
 
@@ -76,3 +80,9 @@ int ShpFile::NumberOfImages() {
 std::vector<unsigned char> & ShpFile::SpriteFrame1() {
 	return spriteFrame1Vector;
 }	
+
+
+
+std::vector<ImageHeader *> & ShpFile::ImageHeaders() {
+	return this->imageHeaders;
+}

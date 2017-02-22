@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+class ImageHeader;
+
 class ShpFile {
 
 public:
@@ -13,10 +15,12 @@ public:
 	long Size();
 	int NumberOfImages();
 	std::vector<unsigned char> & SpriteFrame1();
+	std::vector<ImageHeader *> & ImageHeaders();
 
 private:
 	std::vector<unsigned char> charVector;
 	std::vector<unsigned char> spriteFrame1Vector;
+	std::vector<ImageHeader *> imageHeaders;
 	int numberOfImages;
 	int width;
 	int height;
