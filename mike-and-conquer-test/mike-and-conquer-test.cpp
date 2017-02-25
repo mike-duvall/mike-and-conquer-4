@@ -1,6 +1,8 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include "ShpFile.h"
+#include "ImageHeader.h"
+
 
 unsigned int Factorial(unsigned int number);
 
@@ -32,9 +34,10 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders().size() > 0);
 	//REQUIRE(shpFile.ImageHeaders().size() == 532);
 
+	REQUIRE(shpFile.ImageHeaders()[0]->Offset() == 0);
 
-//	REQUIRE(shpFile.ImageHeaders()[0].Offset == 0)
-//	REQUIRE(shpFile.ImageHeaders()[0].Format == ShpFile.Format.LCW))
+
+	REQUIRE(shpFile.ImageHeaders()[0]->Format() == XORPrev);
 
 	//REQUIRE(shpFile.SpriteFrame1().size() > 500);
 	//REQUIRE(shpFile.SpriteFrame1()[474] == 179); // or -77

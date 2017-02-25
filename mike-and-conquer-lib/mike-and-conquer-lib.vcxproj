@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="dummy.h" />
     <ClInclude Include="ImageHeader.h" />
+    <ClInclude Include="LittleEndianNumberStream.h" />
     <ClInclude Include="ShpFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

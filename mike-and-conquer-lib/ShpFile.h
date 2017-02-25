@@ -18,15 +18,12 @@ public:
 	std::vector<ImageHeader *> & ImageHeaders();
 
 private:
+	std::ifstream * shpFileStream;
 	std::vector<unsigned char> charVector;
 	std::vector<unsigned char> spriteFrame1Vector;
 	std::vector<ImageHeader *> imageHeaders;
 	int numberOfImages;
 	int width;
 	int height;
-
-	int ReadNumberOfImages();
-	int ReadWidth();
-	int ReadHeight();
 
 };

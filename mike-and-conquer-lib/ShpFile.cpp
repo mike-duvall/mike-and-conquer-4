@@ -7,8 +7,6 @@
 
 
 static std::vector<unsigned char> ReadAllBytes(char const* filename) {
-
-
 	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
 	std::ifstream::pos_type pos = ifs.tellg();
 
@@ -26,33 +24,30 @@ static std::vector<unsigned char> ReadAllBytes(char const* filename) {
 }
 
 
-int ReadTwoBytesAsInt(int byteOffset1, int byteOffset2, std::vector<unsigned char> bytes) {
-	char byte0 = bytes[byteOffset1];
-	char byte1 = bytes[byteOffset2];
-	return (byte1 * 256) + byte0;
+
+uint16_t ReadUInt16(std::ifstream * stream) {
+	char charByte0;
+	char charByte1;
+	*stream >> charByte0;
+	*stream >> charByte1;
+	return (charByte1 * 256) + charByte0;
 }
 
-
-int ShpFile::ReadNumberOfImages() {
-	return ReadTwoBytesAsInt(0, 1, charVector);
-}
-
-int ShpFile::ReadWidth() {
-	return ReadTwoBytesAsInt(6, 7, charVector);
-}
-
-
-int ShpFile::ReadHeight() {
-	return ReadTwoBytesAsInt(8, 9, charVector);
-}
 
 
 
 ShpFile::ShpFile(std::string & filename) {
+	shpFileStream = new std::ifstream(filename, std::ios::binary | std::ios::ate);
+	std::ifstream::pos_type pos = shpFileStream->tellg();
+	shpFileStream->seekg(0, std::ios::beg);
+
 	charVector = ReadAllBytes(filename.c_str());
-	numberOfImages = ReadNumberOfImages();
-	width = ReadWidth();
-	height = ReadHeight();
+	numberOfImages = ReadUInt16(shpFileStream);  // 0, 1
+	ReadUInt16(shpFileStream);  // 2, 3
+	ReadUInt16(shpFileStream);  // 4, 5
+
+	width = ReadUInt16(shpFileStream);  // 6, 7
+	height = ReadUInt16(shpFileStream);  // 8, 9
 
 	ImageHeader * imageHeader = new ImageHeader(charVector);
 	imageHeaders.push_back(imageHeader);
