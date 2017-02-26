@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="ImageHeader.cpp" />
+    <ClCompile Include="LittleEndianNumberStream.cpp" />
     <ClCompile Include="ShpFile.cpp" />
   </ItemGroup>
   <ItemGroup>
