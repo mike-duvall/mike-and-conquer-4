@@ -18,6 +18,7 @@ public:
 private:
 
 	Format format;
+	uint32_t fileOffset;
 
 
 };

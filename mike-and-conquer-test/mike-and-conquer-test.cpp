@@ -34,7 +34,7 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders().size() > 0);
 	//REQUIRE(shpFile.ImageHeaders().size() == 532);
 
-	REQUIRE(shpFile.ImageHeaders()[0]->GetOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetOffset() == 4286);
 
 
 	REQUIRE(shpFile.ImageHeaders()[0]->GetFormat() == LCW);

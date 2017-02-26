@@ -35,6 +35,7 @@ ImageHeader::ImageHeader(std::ifstream & stream) {
 	//int data = ReadTwoBytesAsInt
 
 	uint32_t data = ReadUInt32(&stream);
+	fileOffset = data & 0xffffff;
 	format = (Format)(data >> 24);
 	int x = 3;
 
@@ -42,7 +43,7 @@ ImageHeader::ImageHeader(std::ifstream & stream) {
 
 
 unsigned int ImageHeader::GetOffset() {
-	return 0;
+	return fileOffset;
 }
 
 
