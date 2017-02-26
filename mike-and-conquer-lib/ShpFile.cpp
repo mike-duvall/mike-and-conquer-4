@@ -49,7 +49,10 @@ ShpFile::ShpFile(std::string & filename) {
 	width = ReadUInt16(shpFileStream);  // 6, 7
 	height = ReadUInt16(shpFileStream);  // 8, 9
 
-	ImageHeader * imageHeader = new ImageHeader(charVector);
+	ReadUInt16(shpFileStream);  
+	ReadUInt16(shpFileStream);  
+
+	ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
 	imageHeaders.push_back(imageHeader);
 }
 

@@ -11,7 +11,13 @@ class ImageHeader {
 public:
 
 
-	ImageHeader(std::vector<unsigned char> & data);
-	unsigned int Offset();
-	Format Format();
+	ImageHeader(std::ifstream & stream);
+	unsigned int GetOffset();
+	Format GetFormat();
+
+private:
+
+	Format format;
+
+
 };

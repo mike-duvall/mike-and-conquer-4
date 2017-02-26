@@ -3,10 +3,28 @@
 #include "ImageHeader.h"
 
 
+#include <fstream>
 
 
+uint32_t ReadUInt32(std::ifstream * stream) {
+	uint8_t byte0;
+	uint8_t byte1;
+	uint8_t byte2;
+	uint8_t byte3;
 
-ImageHeader::ImageHeader(std::vector<unsigned char> & data) {
+	*stream >> byte0;
+	*stream >> byte1;
+	*stream >> byte2;
+	*stream >> byte3;
+
+	uint32_t sum = 0;
+	sum = byte0 | (byte1 << 8) | (byte2 << 16) | (byte3 << 24);
+
+	return sum;
+}
+
+
+ImageHeader::ImageHeader(std::ifstream & stream) {
 	
 	//var data = stream.ReadUInt32();
 	//FileOffset = data & 0xffffff;
@@ -16,15 +34,18 @@ ImageHeader::ImageHeader(std::vector<unsigned char> & data) {
 
 	//int data = ReadTwoBytesAsInt
 
+	uint32_t data = ReadUInt32(&stream);
+	format = (Format)(data >> 24);
+	int x = 3;
 
 }
 
 
-unsigned int ImageHeader::Offset() {
+unsigned int ImageHeader::GetOffset() {
 	return 0;
 }
 
 
-Format ImageHeader::Format() {
-	return XORPrev;
+Format ImageHeader::GetFormat() {
+	return format;
 }
