@@ -19,16 +19,30 @@ ImageHeader::ImageHeader(std::ifstream & stream) {
 	uint32_t data = ReadUInt32(stream);
 	fileOffset = data & 0xffffff;
 	format = (Format)(data >> 24);
-	int x = 3;
+
+
+	refOffset = ReadUInt16(stream);
+	refFormat = (Format)ReadUInt16(stream);
+
 
 }
 
 
-unsigned int ImageHeader::GetOffset() {
+unsigned int ImageHeader::GetFileOffset() {
 	return fileOffset;
 }
 
 
 Format ImageHeader::GetFormat() {
 	return format;
+}
+
+
+unsigned int ImageHeader::GetRefOffset() {
+	return refOffset;
+}
+
+
+Format ImageHeader::GetRefFormat() {
+	return refFormat;
 }

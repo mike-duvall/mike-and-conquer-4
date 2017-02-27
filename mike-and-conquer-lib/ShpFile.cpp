@@ -32,8 +32,6 @@ ShpFile::ShpFile(std::string & filename) {
 	std::ifstream::pos_type pos = shpFileStream->tellg();
 	shpFileStream->seekg(0, std::ios::beg);
 
-	uint16_t x = 3;
-
 	charVector = ReadAllBytes(filename.c_str());
 	numberOfImages = ReadUInt16(*shpFileStream);  // 0, 1
 	ReadUInt16(*shpFileStream);  // 2, 3
@@ -47,6 +45,10 @@ ShpFile::ShpFile(std::string & filename) {
 
 	ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
 	imageHeaders.push_back(imageHeader);
+
+	imageHeader = new ImageHeader(*shpFileStream);
+	imageHeaders.push_back(imageHeader);
+
 }
 
 
