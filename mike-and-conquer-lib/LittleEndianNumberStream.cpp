@@ -5,11 +5,19 @@
 
 
 uint16_t ReadUInt16(std::ifstream & stream) {
-	char charByte0;
-	char charByte1;
-	stream >> charByte0;
-	stream >> charByte1;
-	return (charByte1 * 256) + charByte0;
+	//char charByte0;
+	//char charByte1;
+	//stream >> charByte0;
+	//stream >> charByte1;
+
+	uint8_t byte0;
+	uint8_t byte1;
+
+	stream >> byte0;
+	stream >> byte1;
+
+
+	return (byte1 * 256) + byte0;
 }
 
 

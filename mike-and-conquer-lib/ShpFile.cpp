@@ -43,11 +43,10 @@ ShpFile::ShpFile(std::string & filename) {
 	ReadUInt16(*shpFileStream);  
 	ReadUInt16(*shpFileStream);  
 
-	ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
-	imageHeaders.push_back(imageHeader);
-
-	imageHeader = new ImageHeader(*shpFileStream);
-	imageHeaders.push_back(imageHeader);
+	for (int i = 0; i < numberOfImages; i++) {
+		ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
+		imageHeaders.push_back(imageHeader);
+	}
 
 }
 
