@@ -36,7 +36,7 @@ ShpFile::ShpFile(std::string & filename) {
 	charVector = ReadAllBytes(filename.c_str());
 	
 
-	std::ofstream out("mc-e1.shp.txt");
+	std::ofstream out("d:/mc-e1.shp.txt");
 	for (std::vector<unsigned char>::iterator it = charVector.begin(); it != charVector.end(); ++it) {
 		unsigned int charAsInt = *it;
 //		std::cout << charAsInt << std::endl;
