@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 #include "ImageHeader.h"
 
@@ -33,6 +34,17 @@ ShpFile::ShpFile(std::string & filename) {
 	shpFileStream->seekg(0, std::ios::beg);
 
 	charVector = ReadAllBytes(filename.c_str());
+	
+
+	std::ofstream out("mc-e1.shp.txt");
+	for (std::vector<unsigned char>::iterator it = charVector.begin(); it != charVector.end(); ++it) {
+		unsigned int charAsInt = *it;
+//		std::cout << charAsInt << std::endl;
+		out << charAsInt << std::endl;
+	}
+
+	out.close();
+	
 	numberOfImages = ReadUInt16(*shpFileStream);  // 0, 1
 	ReadUInt16(*shpFileStream);  // 2, 3
 	ReadUInt16(*shpFileStream);  // 4, 5

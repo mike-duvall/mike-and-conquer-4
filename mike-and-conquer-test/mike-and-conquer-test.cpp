@@ -39,17 +39,82 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders()[0]->GetRefOffset() == 0);
 	REQUIRE(shpFile.ImageHeaders()[0]->GetRefFormat() == NONE);
 
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetFileOffset() == 4375);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetFormat() == XORLCW);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == 32768);
 
-	REQUIRE(shpFile.ImageHeaders()[1]->GetFileOffset() == 4375);
-	REQUIRE(shpFile.ImageHeaders()[1]->GetFormat() == XORLCW);
-	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  // 4030 instead
-	REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == 32768);
+	//REQUIRE(shpFile.ImageHeaders()[2]->GetFileOffset() == 4461);
+	//REQUIRE(shpFile.ImageHeaders()[2]->GetFormat() == XORLCW);
+	//REQUIRE(shpFile.ImageHeaders()[2]->GetRefOffset() == 4286);
+	//REQUIRE(shpFile.ImageHeaders()[2]->GetRefFormat() == 32768);
+
+	//REQUIRE(shpFile.ImageHeaders()[3]->GetFileOffset() == 4531);
+	//REQUIRE(shpFile.ImageHeaders()[3]->GetFormat() == XORLCW);
+	//REQUIRE(shpFile.ImageHeaders()[3]->GetRefOffset() == 4286);
+	//REQUIRE(shpFile.ImageHeaders()[3]->GetRefFormat() == 32768);
+
+	REQUIRE(shpFile.ImageHeaders()[4]->GetFileOffset() == 4609);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetRefOffset() == 4286);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetRefFormat() == 32768);
 
 
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetFileOffset() == 40021);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetFormat() == LCW);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetRefOffset() == 0);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetRefFormat() == NONE);
+	//failing here.
+		// I compared the raw file contents, and they are exactly the same
+		// so now, watch [4] being read and compare to then [5] being read
+
+	REQUIRE(shpFile.ImageHeaders()[5]->GetFileOffset() == 4687);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetFormat() == XORPrev);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetRefOffset() == 4);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetRefFormat() == 18432);
+
+
+	REQUIRE(shpFile.ImageHeaders()[6]->GetFileOffset() == 4767);
+	REQUIRE(shpFile.ImageHeaders()[6]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[6]->GetRefOffset() == 4286);
+	REQUIRE(shpFile.ImageHeaders()[6]->GetRefFormat() == 32768);
+
+
+
+	REQUIRE(shpFile.ImageHeaders()[10]->GetFileOffset() == 5041);
+	REQUIRE(shpFile.ImageHeaders()[10]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[10]->GetRefOffset() == 5699);
+	REQUIRE(shpFile.ImageHeaders()[10]->GetRefFormat() == 4286);
+
+
+
+	REQUIRE(shpFile.ImageHeaders()[20]->GetFileOffset() == 5842);
+	REQUIRE(shpFile.ImageHeaders()[20]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[20]->GetRefOffset() == 5699);
+	REQUIRE(shpFile.ImageHeaders()[20]->GetRefFormat() == 32768);
+
+
+
+	REQUIRE(shpFile.ImageHeaders()[40]->GetFileOffset() == 7423);
+	REQUIRE(shpFile.ImageHeaders()[40]->GetFormat() == LCW);
+	REQUIRE(shpFile.ImageHeaders()[40]->GetRefOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[40]->GetRefFormat() == 0);
+
+
+
+	REQUIRE(shpFile.ImageHeaders()[82]->GetFileOffset() == 10373);
+	REQUIRE(shpFile.ImageHeaders()[82]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[82]->GetRefOffset() == 10267);
+	REQUIRE(shpFile.ImageHeaders()[82]->GetRefFormat() == 32768);
+
+
+	REQUIRE(shpFile.ImageHeaders()[167]->GetFileOffset() == 15911);
+	REQUIRE(shpFile.ImageHeaders()[167]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[167]->GetRefOffset() == 15701);
+	REQUIRE(shpFile.ImageHeaders()[167]->GetRefFormat() == 32768);
+
+
+
+	REQUIRE(shpFile.ImageHeaders()[531]->GetFileOffset() == 40021);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetFormat() == LCW);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetRefOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetRefFormat() == NONE);
 
 
 	//REQUIRE(shpFile.SpriteFrame1().size() > 500);
