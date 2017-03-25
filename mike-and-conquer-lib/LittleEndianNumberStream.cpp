@@ -6,17 +6,17 @@
 
 uint16_t ReadUInt16(std::ifstream & stream) {
 
-	char xbyte0;
-	char xbyte1;
+	char charByte0;
+	char charByte1;
 
-	stream.get(xbyte0);
-	stream.get(xbyte1);
+	stream.get(charByte0);
+	stream.get(charByte1);
 
-	unsigned char byte0 = xbyte0;
-	unsigned char byte1 = xbyte1;
+	unsigned char unsignedCharByte0 = charByte0;
+	unsigned char unsignedCharByte1 = charByte1;
 
 
-	uint16_t sum = byte0 | (byte1 << 8);
+	uint16_t sum = unsignedCharByte0 | (unsignedCharByte1 << 8);
 	return sum;
 }
 
@@ -24,23 +24,23 @@ uint16_t ReadUInt16(std::ifstream & stream) {
 
 uint32_t ReadUInt32(std::ifstream & stream) {
 
-	char xbyte0;
-	char xbyte1;
-	char xbyte2;
-	char xbyte3;
 
-	stream.get(xbyte0);
-	stream.get(xbyte1);
-	stream.get(xbyte2);
-	stream.get(xbyte3);
+	char charByte0;
+	char charByte1;
+	char charByte2;
+	char charByte3;
 
-	unsigned char byte0 = xbyte0;
-	unsigned char byte1 = xbyte1;
-	unsigned char byte2 = xbyte2;
-	unsigned char byte3 = xbyte3;
+	stream.get(charByte0);
+	stream.get(charByte1);
+	stream.get(charByte2);
+	stream.get(charByte3);
 
-	uint32_t sum = 0;
-	sum = byte0 | (byte1 << 8) | (byte2 << 16) | (byte3 << 24);
+	unsigned char unsignedCarByte0 = charByte0;
+	unsigned char unsignedCharByte1 = charByte1;
+	unsigned char unsignedCharByte2 = charByte2;
+	unsigned char unsignedCharByte3 = charByte3;
+
+	uint32_t sum = unsignedCarByte0 | (unsignedCharByte1 << 8) | (unsignedCharByte2 << 16) | (unsignedCharByte3 << 24);
 
 	return sum;
 }
