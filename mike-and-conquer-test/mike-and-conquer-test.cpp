@@ -26,12 +26,6 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.Width() == 50);
 	REQUIRE(shpFile.Height() == 39);
 
-
-	//Add code from ShpTdLoader.cs, around line 131
-	//	read and validate imageHeaders
-
-
-	//REQUIRE(shpFile.ImageHeaders().size() == 2);
 	REQUIRE(shpFile.ImageHeaders().size() == 532);
 
 	REQUIRE(shpFile.ImageHeaders()[0]->GetFileOffset() == 4286);
@@ -39,22 +33,26 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders()[0]->GetRefOffset() == 0);
 	REQUIRE(shpFile.ImageHeaders()[0]->GetRefFormat() == NONE);
 
-
 	REQUIRE(shpFile.ImageHeaders()[1]->GetFileOffset() == 4375);
 	REQUIRE(shpFile.ImageHeaders()[1]->GetFormat() == XORLCW);
-	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  // 4030 instead
+	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  
 	REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == 32768);
 
 
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetFileOffset() == 40021);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetFormat() == LCW);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetRefOffset() == 0);
-	//REQUIRE(shpFile.ImageHeaders()[531]->GetRefFormat() == NONE);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetFileOffset() == 4609);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetFormat() == XORLCW);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetRefOffset() == 4286);
+	REQUIRE(shpFile.ImageHeaders()[4]->GetRefFormat() == 32768);
 
+	REQUIRE(shpFile.ImageHeaders()[5]->GetFileOffset() == 4687);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetFormat() == XORPrev);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetRefOffset() == 4);
+	REQUIRE(shpFile.ImageHeaders()[5]->GetRefFormat() == 18432);
 
-	//REQUIRE(shpFile.SpriteFrame1().size() > 500);
-	//REQUIRE(shpFile.SpriteFrame1()[474] == 179); // or -77
-	//REQUIRE(shpFile.SpriteFrame1().get(474) == 180) // or -76
+	REQUIRE(shpFile.ImageHeaders()[531]->GetFileOffset() == 40021);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetFormat() == LCW);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetRefOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[531]->GetRefFormat() == NONE);
 
 }
 
