@@ -19,7 +19,8 @@ public:
 
 private:
 	std::ifstream * shpFileStream;
-	std::vector<unsigned char> charVector;
+	std::vector<unsigned char> allData;
+	int allDataOffset;
 	std::vector<unsigned char> spriteFrame1Vector;
 	std::vector<ImageHeader *> imageHeaders;
 	int numberOfImages;

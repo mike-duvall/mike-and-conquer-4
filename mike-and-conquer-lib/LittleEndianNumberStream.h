@@ -8,5 +8,5 @@ class LittleEndianNumberStream {
 };
 
 
-uint16_t ReadUInt16(std::ifstream & stream);
-uint32_t ReadUInt32(std::ifstream & stream);
+uint16_t ReadUInt16(std::vector<unsigned char> & data, int & dataOffset);
+uint32_t ReadUInt32(std::vector<unsigned char> & data, int & dataOffset);

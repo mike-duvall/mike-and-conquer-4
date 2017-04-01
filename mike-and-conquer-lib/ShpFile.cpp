@@ -33,7 +33,8 @@ ShpFile::ShpFile(std::string & filename) {
 	std::ifstream::pos_type pos = shpFileStream->tellg();
 	shpFileStream->seekg(0, std::ios::beg);
 
-	charVector = ReadAllBytes(filename.c_str());
+	allDataOffset = 0;
+	allData = ReadAllBytes(filename.c_str());
 	
 
 	// write contents of file to text file
@@ -45,18 +46,18 @@ ShpFile::ShpFile(std::string & filename) {
 
 	//out.close();
 	
-	numberOfImages = ReadUInt16(*shpFileStream);  // 0, 1
-	ReadUInt16(*shpFileStream);  // 2, 3
-	ReadUInt16(*shpFileStream);  // 4, 5
+	numberOfImages = ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);  // 2, 3
+	ReadUInt16(allData, allDataOffset);  // 4, 5
 
-	width = ReadUInt16(*shpFileStream);  // 6, 7
-	height = ReadUInt16(*shpFileStream);  // 8, 9
+	width = ReadUInt16(allData, allDataOffset);  // 6, 7
+	height = ReadUInt16(allData, allDataOffset);  // 8, 9
 
-	ReadUInt16(*shpFileStream);  
-	ReadUInt16(*shpFileStream);  
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
 
 	for (int i = 0; i < numberOfImages; i++) {
-		ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
+		ImageHeader * imageHeader = new ImageHeader(allData, allDataOffset);
 		imageHeaders.push_back(imageHeader);
 	}
 
@@ -72,7 +73,7 @@ int ShpFile::Height() {
 }
 
 long ShpFile::Size() {
-	return charVector.size();
+	return allData.size();
 }
 
 

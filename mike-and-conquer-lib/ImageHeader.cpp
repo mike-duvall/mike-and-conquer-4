@@ -6,7 +6,7 @@
 
 
 
-ImageHeader::ImageHeader(std::ifstream & stream) {
+ImageHeader::ImageHeader(std::vector<unsigned char> & data, int & dataOffset) {
 	
 	//var data = stream.ReadUInt32();
 	//FileOffset = data & 0xffffff;
@@ -16,13 +16,13 @@ ImageHeader::ImageHeader(std::ifstream & stream) {
 
 	//int data = ReadTwoBytesAsInt
 
-	uint32_t data = ReadUInt32(stream);
-	fileOffset = data & 0xffffff;
-	format = (Format)(data >> 24);
+	uint32_t readData = ReadUInt32(data,dataOffset);
+	fileOffset = readData & 0xffffff;
+	format = (Format)(readData >> 24);
 
 
-	refOffset = ReadUInt16(stream);
-	refFormat = (Format)ReadUInt16(stream);
+	refOffset = ReadUInt16(data, dataOffset);
+	refFormat = (Format)ReadUInt16(data, dataOffset);
 
 
 }
