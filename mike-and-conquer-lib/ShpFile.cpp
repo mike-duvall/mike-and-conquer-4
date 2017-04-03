@@ -61,8 +61,39 @@ ShpFile::ShpFile(std::string & filename) {
 		imageHeaders.push_back(imageHeader);
 	}
 
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+
+	shpBytesFileOffset = imageHeaders[0]->GetFileOffset();
+
+	int size = allData.size();
+	int countRemaining = size - allDataOffset;
+		
+	for (int i = 0; i < countRemaining; i++) {
+		//printf("i=%d", i);
+		shpBytes.push_back(allData[allDataOffset++]);
+	}
+
+	int x = 3;
+	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
+
 }
 
+
+int ShpFile::GetShpBytesFileOffset() {
+	return shpBytesFileOffset;
+}
+
+
+std::vector<unsigned char> & ShpFile::GetShpBytes() {
+	return shpBytes;
+}
 
 int ShpFile::Width() {
 	return width;

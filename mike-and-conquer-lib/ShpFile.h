@@ -16,6 +16,8 @@ public:
 	int NumberOfImages();
 	std::vector<unsigned char> & SpriteFrame1();
 	std::vector<ImageHeader *> & ImageHeaders();
+	int GetShpBytesFileOffset();
+	std::vector<unsigned char> & GetShpBytes();
 
 private:
 	std::ifstream * shpFileStream;
@@ -26,5 +28,7 @@ private:
 	int numberOfImages;
 	int width;
 	int height;
+	int shpBytesFileOffset;
+	std::vector<unsigned char> shpBytes;
 
 };
