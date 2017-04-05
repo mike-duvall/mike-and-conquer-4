@@ -17,6 +17,8 @@ public:
 
 	unsigned int GetRefOffset();
 	Format GetRefFormat();
+	std::vector<unsigned char> & GetData();
+	void SetData(std::vector<unsigned char> & dataToSet);
 
 
 private:
@@ -25,6 +27,8 @@ private:
 	uint32_t fileOffset;
 	uint16_t refOffset;
 	Format refFormat;
+
+	std::vector<unsigned char> data;
 
 
 };

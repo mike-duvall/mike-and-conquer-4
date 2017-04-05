@@ -28,6 +28,10 @@ ImageHeader::ImageHeader(std::vector<unsigned char> & data, int & dataOffset) {
 }
 
 
+void ImageHeader::SetData(std::vector<unsigned char> & dataToSet) {
+	this->data = dataToSet;
+}
+
 unsigned int ImageHeader::GetFileOffset() {
 	return fileOffset;
 }
@@ -45,4 +49,9 @@ unsigned int ImageHeader::GetRefOffset() {
 
 Format ImageHeader::GetRefFormat() {
 	return refFormat;
+}
+
+
+std::vector<unsigned char> & ImageHeader::GetData() {
+	return data;
 }

@@ -5,9 +5,8 @@
 #include <iostream>
 
 #include "ImageHeader.h"
-
-
 #include "LittleEndianNumberStream.h"
+#include "LCWCompression.h"
 
 static std::vector<unsigned char> ReadAllBytes(char const* filename) {
 	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
@@ -80,10 +79,64 @@ ShpFile::ShpFile(std::string & filename) {
 		shpBytes.push_back(allData[allDataOffset++]);
 	}
 
+	Decompress(imageHeaders[0]);
+
 	int x = 3;
 	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
 
 }
+
+
+void ShpFile::Decompress(ImageHeader * h) {
+	//// No extra work is required for empty frames
+	//if (h.Size.Width == 0 || h.Size.Height == 0)
+	//	return;
+
+	//if (recurseDepth > imageCount)
+	//	throw new InvalidDataException("Format20/40 headers contain infinite loop");
+
+	switch (h->GetFormat()) {
+		//case Format.XORPrev:
+		//case Format.XORLCW:
+		//{
+		//	if (h.RefImage.Data == null)
+		//	{
+		//		++recurseDepth;
+		//		Decompress(h.RefImage);
+		//		--recurseDepth;
+		//	}
+
+		//	h.Data = CopyImageData(h.RefImage.Data);
+		//	XORDeltaCompression.DecodeInto(shpBytes, h.Data, (int)(h.FileOffset - shpBytesFileOffset));
+		//	break;
+		//}
+
+		case LCW: {
+			//var imageBytes = new byte[Size.Width * Size.Height];
+			//LCWCompression.DecodeInto(shpBytes, imageBytes, (int)(h.FileOffset - shpBytesFileOffset));
+			//h.Data = imageBytes;
+
+			int count = this->Width() * this->Height();
+			//uint8_t * imageByes = new uint8_t[count];
+			//LCWCompression.DecodeInto(shpBytes, imageBytes, (int)(h.FileOffset - shpBytesFileOffset));
+
+			
+			std::vector<unsigned char> imageBytes(count);
+
+			LCWCompression::DecodeInto(shpBytes, imageBytes, (int)(h->GetFileOffset() - shpBytesFileOffset, false));
+			h->SetData(imageBytes);
+
+			
+
+			break;
+		}
+	}
+
+	//default:
+	//	throw new InvalidDataException();
+	//}
+}
+
 
 
 int ShpFile::GetShpBytesFileOffset() {

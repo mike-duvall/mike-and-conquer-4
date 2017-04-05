@@ -38,10 +38,19 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.GetShpBytes().size() == 35819);
 	REQUIRE(shpFile.GetShpBytes()[0] == 129);
 	
-	//REQUIRE(shpFile.ImageHeaders()[0]->GetData().size() == 1950);
-	//REQUIRE(shpFile.ImageHeaders()[0]->GetData()[0] == 0);
-	//REQUIRE(shpFile.ImageHeaders()[0]->GetData()[474] == 179);
-	//REQUIRE(shpFile.ImageHeaders()[0]->GetData()[475] == 180);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData().size() == 1950);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[0] == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[474] == 179);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[475] == 180);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[524] == 180);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[525] == 181);
+
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[974] == 13);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[975] == 12);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[976] == 13);
+
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[1948] == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[1949] == 0);
 
 
 	REQUIRE(shpFile.ImageHeaders()[1]->GetFileOffset() == 4375);

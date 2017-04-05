@@ -30,5 +30,6 @@ private:
 	int height;
 	int shpBytesFileOffset;
 	std::vector<unsigned char> shpBytes;
+	void Decompress(ImageHeader * h);
 
 };

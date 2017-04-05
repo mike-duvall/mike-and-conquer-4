@@ -30,6 +30,9 @@
     <ClCompile Include="LittleEndianNumberStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LCWCompression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dummy.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LittleEndianNumberStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LCWCompression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
