@@ -20,7 +20,6 @@ public:
 	std::vector<unsigned char> & GetShpBytes();
 
 private:
-	std::ifstream * shpFileStream;
 	std::vector<unsigned char> allData;
 	int allDataOffset;
 	std::vector<unsigned char> spriteFrame1Vector;

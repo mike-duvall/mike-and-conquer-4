@@ -28,7 +28,7 @@ static std::vector<unsigned char> ReadAllBytes(char const* filename) {
 
 
 ShpFile::ShpFile(std::string & filename) {
-	shpFileStream = new std::ifstream(filename, std::ios::binary | std::ios::ate);
+	std::ifstream * shpFileStream = new std::ifstream(filename, std::ios::binary | std::ios::ate);
 	std::ifstream::pos_type pos = shpFileStream->tellg();
 	shpFileStream->seekg(0, std::ios::beg);
 
