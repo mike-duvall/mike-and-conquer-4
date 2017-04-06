@@ -38,9 +38,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dummy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShpFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>

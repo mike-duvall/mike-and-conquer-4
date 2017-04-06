@@ -11,7 +11,7 @@ TEST_CASE("Can read palette entries", "[SHP]") {
 	PaletteFile paletteFile(std::string("assets/temperat.pal"));
 
 	// then
-	REQUIRE(paletteFile.GetPaletteEntries().size() == 0);
+	REQUIRE(paletteFile.GetPaletteEntries().size() == 256);
 
 }
 

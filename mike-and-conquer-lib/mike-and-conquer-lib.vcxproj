@@ -138,7 +138,6 @@
     <ClCompile Include="ShpFile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dummy.h" />
     <ClInclude Include="ImageHeader.h" />
     <ClInclude Include="LCWCompression.h" />
     <ClInclude Include="LittleEndianNumberStream.h" />

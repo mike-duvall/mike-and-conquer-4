@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include "LittleEndianNumberStream.h"
+#include "PaletteEntry.h"
 
 PaletteFile::PaletteFile(std::string & filename) {
 
@@ -11,6 +12,15 @@ PaletteFile::PaletteFile(std::string & filename) {
 
 	allDataOffset = 0;
 	allData = ReadAllBytes(filename.c_str());
+
+
+	uint8_t red = ReadUInt8(allData, allDataOffset);
+	uint8_t green = ReadUInt8(allData, allDataOffset);
+	uint8_t blue = ReadUInt8(allData, allDataOffset);
+
+	PaletteEntry * paletteEntry = new PaletteEntry(red, green, blue);
+
+	paletteEntryList.push_back(paletteEntry);
 
 
 }
