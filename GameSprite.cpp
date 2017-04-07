@@ -10,6 +10,8 @@ GameSprite::~GameSprite() {
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
+
+	Figure out how to draw the texture from the Shp and Pallete instead of loading from file, here
 	this->InitializeTexture( file, transparentColor);
 	this->InitializeSprite(file);
 }
