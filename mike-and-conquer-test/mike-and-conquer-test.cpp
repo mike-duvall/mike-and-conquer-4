@@ -3,6 +3,7 @@
 #include "ShpFile.h"
 #include "PaletteFile.h"
 #include "ImageHeader.h"
+#include "PaletteEntry.h"
 
 
 
@@ -12,6 +13,22 @@ TEST_CASE("Can read palette entries", "[SHP]") {
 
 	// then
 	REQUIRE(paletteFile.GetPaletteEntries().size() == 256);
+
+	REQUIRE(paletteFile.GetPaletteEntries()[0]->GetRed() == 0);
+	REQUIRE(paletteFile.GetPaletteEntries()[0]->GetGreen() == 0);
+	REQUIRE(paletteFile.GetPaletteEntries()[0]->GetBlue() == 0);
+
+	REQUIRE(paletteFile.GetPaletteEntries()[1]->GetRed() == 0x2a);
+	REQUIRE(paletteFile.GetPaletteEntries()[1]->GetGreen() == 0);
+	REQUIRE(paletteFile.GetPaletteEntries()[1]->GetBlue() == 0x2a);
+
+	REQUIRE(paletteFile.GetPaletteEntries()[254]->GetRed() == 0x21);
+	REQUIRE(paletteFile.GetPaletteEntries()[254]->GetGreen() == 0x22);
+	REQUIRE(paletteFile.GetPaletteEntries()[254]->GetBlue() == 0x1d);
+
+	REQUIRE(paletteFile.GetPaletteEntries()[255]->GetRed() == 0x3f);
+	REQUIRE(paletteFile.GetPaletteEntries()[255]->GetGreen() == 0x3f);
+	REQUIRE(paletteFile.GetPaletteEntries()[255]->GetBlue() == 0x3f);
 
 }
 
