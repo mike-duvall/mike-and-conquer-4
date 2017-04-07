@@ -9,3 +9,7 @@ To debug remotely and have the game accept test drier Rest calls, the firewall m
 
 
 * To run unit tests, set mike-and-conquer-test as Startup project, and run with CTRL-F5
+
+* When loading Visual Studio for the first time, you may need to use NuGet to pull C++ Rest SDK.
+See here:  https://casablanca.codeplex.com/wikipage?title=Using%20NuGet%20to%20add%20the%20C%2B%2B%20REST%20SDK%20to%20a%20VS%20project
+for how to do this
