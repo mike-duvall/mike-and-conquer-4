@@ -5,9 +5,8 @@
 #include <iostream>
 
 #include "ImageHeader.h"
-
-
 #include "LittleEndianNumberStream.h"
+#include "LCWCompression.h"
 
 static std::vector<unsigned char> ReadAllBytes(char const* filename) {
 	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
@@ -29,11 +28,12 @@ static std::vector<unsigned char> ReadAllBytes(char const* filename) {
 
 
 ShpFile::ShpFile(std::string & filename) {
-	shpFileStream = new std::ifstream(filename, std::ios::binary | std::ios::ate);
+	std::ifstream * shpFileStream = new std::ifstream(filename, std::ios::binary | std::ios::ate);
 	std::ifstream::pos_type pos = shpFileStream->tellg();
 	shpFileStream->seekg(0, std::ios::beg);
 
-	charVector = ReadAllBytes(filename.c_str());
+	allDataOffset = 0;
+	allData = ReadAllBytes(filename.c_str());
 	
 
 	// write contents of file to text file
@@ -45,23 +45,108 @@ ShpFile::ShpFile(std::string & filename) {
 
 	//out.close();
 	
-	numberOfImages = ReadUInt16(*shpFileStream);  // 0, 1
-	ReadUInt16(*shpFileStream);  // 2, 3
-	ReadUInt16(*shpFileStream);  // 4, 5
+	numberOfImages = ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);  // 2, 3
+	ReadUInt16(allData, allDataOffset);  // 4, 5
 
-	width = ReadUInt16(*shpFileStream);  // 6, 7
-	height = ReadUInt16(*shpFileStream);  // 8, 9
+	width = ReadUInt16(allData, allDataOffset);  // 6, 7
+	height = ReadUInt16(allData, allDataOffset);  // 8, 9
 
-	ReadUInt16(*shpFileStream);  
-	ReadUInt16(*shpFileStream);  
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
 
 	for (int i = 0; i < numberOfImages; i++) {
-		ImageHeader * imageHeader = new ImageHeader(*shpFileStream);
+		ImageHeader * imageHeader = new ImageHeader(allData, allDataOffset);
 		imageHeaders.push_back(imageHeader);
 	}
 
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+	ReadUInt16(allData, allDataOffset);
+
+	shpBytesFileOffset = imageHeaders[0]->GetFileOffset();
+
+	int size = allData.size();
+	int countRemaining = size - allDataOffset;
+		
+	for (int i = 0; i < countRemaining; i++) {
+		//printf("i=%d", i);
+		shpBytes.push_back(allData[allDataOffset++]);
+	}
+
+	Decompress(imageHeaders[0]);
+
+	int x = 3;
+	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
+
 }
 
+
+void ShpFile::Decompress(ImageHeader * h) {
+	//// No extra work is required for empty frames
+	//if (h.Size.Width == 0 || h.Size.Height == 0)
+	//	return;
+
+	//if (recurseDepth > imageCount)
+	//	throw new InvalidDataException("Format20/40 headers contain infinite loop");
+
+	switch (h->GetFormat()) {
+		//case Format.XORPrev:
+		//case Format.XORLCW:
+		//{
+		//	if (h.RefImage.Data == null)
+		//	{
+		//		++recurseDepth;
+		//		Decompress(h.RefImage);
+		//		--recurseDepth;
+		//	}
+
+		//	h.Data = CopyImageData(h.RefImage.Data);
+		//	XORDeltaCompression.DecodeInto(shpBytes, h.Data, (int)(h.FileOffset - shpBytesFileOffset));
+		//	break;
+		//}
+
+		case LCW: {
+			//var imageBytes = new byte[Size.Width * Size.Height];
+			//LCWCompression.DecodeInto(shpBytes, imageBytes, (int)(h.FileOffset - shpBytesFileOffset));
+			//h.Data = imageBytes;
+
+			int count = this->Width() * this->Height();
+			//uint8_t * imageByes = new uint8_t[count];
+			//LCWCompression.DecodeInto(shpBytes, imageBytes, (int)(h.FileOffset - shpBytesFileOffset));
+
+			
+			std::vector<unsigned char> imageBytes(count);
+
+			LCWCompression::DecodeInto(shpBytes, imageBytes, (int)(h->GetFileOffset() - shpBytesFileOffset, false));
+			h->SetData(imageBytes);
+
+			
+
+			break;
+		}
+	}
+
+	//default:
+	//	throw new InvalidDataException();
+	//}
+}
+
+
+
+int ShpFile::GetShpBytesFileOffset() {
+	return shpBytesFileOffset;
+}
+
+
+std::vector<unsigned char> & ShpFile::GetShpBytes() {
+	return shpBytes;
+}
 
 int ShpFile::Width() {
 	return width;
@@ -72,7 +157,7 @@ int ShpFile::Height() {
 }
 
 long ShpFile::Size() {
-	return charVector.size();
+	return allData.size();
 }
 
 
