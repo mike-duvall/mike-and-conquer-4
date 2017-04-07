@@ -12,7 +12,6 @@
 #include <thread>
 #include "Minigunner.h"
 #include "TestModeRestHandler.h"
-#include "dummy.h"
 
 
 //Unit test todos:
@@ -43,8 +42,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     #endif
 
     MSG msg;
-
-	int fact = Factorial(1);
 
 	bool testMode = false;
 	std::string commandLine = std::string(lpCmdLine);
