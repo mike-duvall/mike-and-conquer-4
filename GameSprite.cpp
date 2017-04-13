@@ -1,7 +1,7 @@
 #include "GameSprite.h"
 
 #include "graphics.h"
-
+#include "Circle.h"
 
 
 GameSprite::~GameSprite() {
@@ -10,11 +10,76 @@ GameSprite::~GameSprite() {
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
-
-	Figure out how to draw the texture from the Shp and Pallete instead of loading from file, here
-		Get RenderToTex sample from book  project running
-	this->InitializeTexture( file, transparentColor);
+	//this->InitializeTexture( file, transparentColor);
+	this->InitializeTextureWithCircle();
 	this->InitializeSprite(file);
+}
+
+
+
+void GameSprite::InitializeTextureWithCircle() {
+	UINT usage = D3DUSAGE_RENDERTARGET;
+	width = 32;
+	height = 32;
+
+
+	//This is basically working, now read and render minigunner from image
+
+	HRESULT result = D3DXCreateTexture(
+		device,      // Associated Direct3D device.
+		width, height, // Dimensions of surface in pixels we render to.
+		1,      // Number of mipmap levels.
+
+		usage,           // How the texture will be used.
+		D3DFMT_UNKNOWN,      // Texture format (i.e., D3DFORMAT).
+		D3DPOOL_DEFAULT, // Render targets must be in default pool.
+		&texture);         // Returns pointer to texture.
+	if (result != D3D_OK) {
+		throw("Failed calling D3DXCreateTexture()");
+	}
+
+
+	LPDIRECT3DSURFACE9 g_renderSurface;
+	D3DSURFACE_DESC desc;
+	texture->GetSurfaceLevel(0, &g_renderSurface);
+	g_renderSurface->GetDesc(&desc);
+
+
+	ID3DXRenderToSurface * g_renderTarget;
+	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &g_renderTarget);
+	if(FAILED(result))
+		throw("Failed calling D3DXCreateRenderToSurface()");
+
+	g_renderTarget->BeginScene(g_renderSurface, NULL);
+	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	Circle myCircle(10, 10);
+	myCircle.Draw(device);
+	g_renderTarget->EndScene(0);
+
+
+	//ID3DXRenderToSurface* mRTS = 0;
+	//result = D3DXCreateRenderToSurface(
+	//	device,      // Associated Direct3D device.
+	//	width, height, // Dimensions of surface in pixels we render to.
+	//	D3DFMT_UNKNOWN,      // The surface format (i.e., D3DFORMAT).
+	//	false, // True if we want to use a depth buffer.
+	//	D3DFMT_UNKNOWN,    // Depth buffer format (if we are using one).
+	//	&mRTS);         // Returns pointer to instance.
+
+	//if (result != D3D_OK) {
+	//	throw("Failed calling D3DXCreateRenderToSurface()");
+	//}
+
+	//D3DVIEWPORT9 vp = { 0, 0, width, height, 0.0f, 1.0f };
+
+	//IDirect3DSurface9* mTopSurf = 0;
+	//texture->GetSurfaceLevel(0, &mTopSurf);
+
+	//mRTS->BeginScene(mTopSurf, &vp);
+	//Circle myCircle(10, 10);
+	//myCircle.Draw(device);
+	//mRTS->EndScene(D3DX_FILTER_NONE);
+
 }
 
 

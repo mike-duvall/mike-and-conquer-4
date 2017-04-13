@@ -13,6 +13,7 @@ public:
 private:
 
 	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
+	void InitializeTextureWithCircle();
 	bool InitializeSprite( std::string file);
 
 	LPD3DXSPRITE   sprite;
