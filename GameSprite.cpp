@@ -2,6 +2,7 @@
 
 #include "graphics.h"
 #include "Circle.h"
+#include "ShpFile.h"
 
 
 GameSprite::~GameSprite() {
@@ -11,17 +12,21 @@ GameSprite::~GameSprite() {
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
 	//this->InitializeTexture( file, transparentColor);
-	this->InitializeTextureWithCircle();
+	this->InitializeTextureWithShpFile();
+	//this->InitializeTextureWithCircle();
 	this->InitializeSprite(file);
 }
 
 
 
+
+
 void GameSprite::InitializeTextureWithCircle() {
 	UINT usage = D3DUSAGE_RENDERTARGET;
-	width = 32;
-	height = 32;
-
+	width = 16;
+	height = 16;
+	//Just changed this to 16 16
+	//	Figure out how 16,16 tranlates to 50,39, actual size of the shp file image
 
 	//This is basically working, now read and render minigunner from image
 
@@ -52,8 +57,101 @@ void GameSprite::InitializeTextureWithCircle() {
 
 	g_renderTarget->BeginScene(g_renderSurface, NULL);
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-	Circle myCircle(10, 10);
+	Circle myCircle(8, 8);
 	myCircle.Draw(device);
+	g_renderTarget->EndScene(0);
+
+
+}
+
+
+const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
+
+
+//const int g_width = 640;
+//const int g_height = 480;
+
+const int g_width = 16;
+const int g_height = 16;
+
+
+struct point_vertex {
+	float x, y, z, rhw;  // The transformed(screen space) position for the vertex.
+	DWORD colour;        // The vertex colour.
+};
+
+
+point_vertex random_data[g_width]; //A whole whack of data
+
+
+void initialize_data(void) {
+	int count;
+	float count_f;
+	unsigned char red, green, blue;
+	float y;
+
+	srand(GetTickCount());
+	for (count = 0; count<g_width; count++) {
+		random_data[count].x = (float)(rand() % g_width);
+		random_data[count].y = (float)(rand() % g_height);
+		random_data[count].z = 1.0f;
+		random_data[count].rhw = 1.0f;
+		random_data[count].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
+	}
+
+}
+
+
+void GameSprite::InitializeTextureWithShpFile() {
+
+
+//	ShpFile shpFile(std::string("assets/e1.shp"));
+
+
+	initialize_data();
+	UINT usage = D3DUSAGE_RENDERTARGET;
+	width = 16;
+	height = 16;
+
+	HRESULT result = D3DXCreateTexture(
+		device,      // Associated Direct3D device.
+		width, height, // Dimensions of surface in pixels we render to.
+		1,      // Number of mipmap levels.
+
+		usage,           // How the texture will be used.
+		D3DFMT_UNKNOWN,      // Texture format (i.e., D3DFORMAT).
+		D3DPOOL_DEFAULT, // Render targets must be in default pool.
+		&texture);         // Returns pointer to texture.
+	if (result != D3D_OK) {
+		throw("Failed calling D3DXCreateTexture()");
+	}
+
+
+	LPDIRECT3DSURFACE9 g_renderSurface;
+	D3DSURFACE_DESC desc;
+	texture->GetSurfaceLevel(0, &g_renderSurface);
+	g_renderSurface->GetDesc(&desc);
+
+
+	ID3DXRenderToSurface * g_renderTarget;
+	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &g_renderTarget);
+	if (FAILED(result))
+		throw("Failed calling D3DXCreateRenderToSurface()");
+
+	g_renderTarget->BeginScene(g_renderSurface, NULL);
+	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+
+	device->SetFVF(point_fvf);
+
+	void *data = random_data;
+
+	device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
+		g_width,                //PrimitiveCount
+		data,                   //pVertexStreamZeroData
+		sizeof(point_vertex));  //VertexStreamZeroStride
+
+
+
 	g_renderTarget->EndScene(0);
 
 
