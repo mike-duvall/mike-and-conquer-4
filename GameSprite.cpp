@@ -3,6 +3,9 @@
 #include "graphics.h"
 #include "Circle.h"
 #include "ShpFile.h"
+#include "PaletteFile.h"
+#include "ImageHeader.h"
+#include "PaletteEntry.h"
 
 
 GameSprite::~GameSprite() {
@@ -71,8 +74,8 @@ const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 //const int g_width = 640;
 //const int g_height = 480;
 
-const int g_width = 16;
-const int g_height = 16;
+const int g_width = 50;
+const int g_height = 39;
 
 
 struct point_vertex {
@@ -81,7 +84,7 @@ struct point_vertex {
 };
 
 
-point_vertex random_data[g_width]; //A whole whack of data
+point_vertex minigunnerImageData[g_width * g_height]; //A whole whack of data
 
 
 void initialize_data(void) {
@@ -92,26 +95,93 @@ void initialize_data(void) {
 
 	srand(GetTickCount());
 	for (count = 0; count<g_width; count++) {
-		random_data[count].x = (float)(rand() % g_width);
-		random_data[count].y = (float)(rand() % g_height);
-		random_data[count].z = 1.0f;
-		random_data[count].rhw = 1.0f;
-		random_data[count].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
+		minigunnerImageData[count].x = (float)(rand() % g_width);
+		minigunnerImageData[count].y = (float)(rand() % g_height);
+		minigunnerImageData[count].z = 1.0f;
+		minigunnerImageData[count].rhw = 1.0f;
+		minigunnerImageData[count].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
 	}
 
+}
+
+
+
+
+
+int mapColorIndex(int index) {
+	return index;
 }
 
 
 void GameSprite::InitializeTextureWithShpFile() {
 
 
-//	ShpFile shpFile(std::string("assets/e1.shp"));
+	ShpFile shpFile(std::string("assets/e1.shp"));
+
+	ImageHeader * header0 = shpFile.ImageHeaders()[0];
+	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
+
+	PaletteFile paletteFile(std::string("assets/temperat.pal"));
+	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
+
+	width = g_width;
+	height = g_height;
+
+	int currentIndex = 0;
+	int numPoints = 0;
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			//if (!byteBuffer0.hasRemaining()) {
+			//	continue;
+			//}
+
+			unsigned char nextByte = byteBuffer0[currentIndex];
+			if (nextByte != 0) {
+				//int index = Byte.toUnsignedInt(nextByte);
+				int index = nextByte;
+
+				index = mapColorIndex(index);
+				PaletteEntry * paletteEntry = paletteEntries[index];
+
+				//float red = paletteEntry->GetRed() / 63.0f;
+				//float green = paletteEntry->GetGreen() / 63.0f;
+				//float blue = paletteEntry->GetBlue() / 63.0f;
+
+				int intRed = paletteEntry->GetRed();
+				int intGreen = paletteEntry->GetGreen();
+				int intBlue = paletteEntry->GetBlue();
 
 
-	initialize_data();
+				//Color color = new Color(red, green, blue, 1);
+
+				//pixmap.setColor(color);
+
+				//pixmap.drawPixel(x, y);
+				minigunnerImageData[currentIndex].x = x;
+				minigunnerImageData[currentIndex].y = y;
+				minigunnerImageData[currentIndex].z = 1.0f;
+				minigunnerImageData[currentIndex].rhw = 1.0f;
+				minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
+				//minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
+				
+
+				int mike = 9;
+				numPoints++;
+
+
+			}
+			currentIndex++;
+		}
+	}
+
+
+	//initialize_data();
+
+
 	UINT usage = D3DUSAGE_RENDERTARGET;
-	width = 16;
-	height = 16;
+	width = g_width;
+	height = g_height;
 
 	HRESULT result = D3DXCreateTexture(
 		device,      // Associated Direct3D device.
@@ -143,10 +213,12 @@ void GameSprite::InitializeTextureWithShpFile() {
 
 	device->SetFVF(point_fvf);
 
-	void *data = random_data;
+	void *data = minigunnerImageData;
 
 	device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
-		g_width,                //PrimitiveCount
+		//g_width,                //PrimitiveCount
+		//numPoints,                //PrimitiveCount
+		g_width * g_height,
 		data,                   //pVertexStreamZeroData
 		sizeof(point_vertex));  //VertexStreamZeroStride
 
