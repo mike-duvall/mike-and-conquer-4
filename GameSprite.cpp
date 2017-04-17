@@ -152,6 +152,15 @@ void GameSprite::InitializeTextureWithShpFile() {
 				int intGreen = paletteEntry->GetGreen();
 				int intBlue = paletteEntry->GetBlue();
 
+				float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
+				float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
+				float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
+
+				intRed = fRed;
+				intGreen = fGreen;
+				intBlue = fBlue;
+
+
 
 				//Color color = new Color(red, green, blue, 1);
 
@@ -163,8 +172,15 @@ void GameSprite::InitializeTextureWithShpFile() {
 				minigunnerImageData[currentIndex].z = 1.0f;
 				minigunnerImageData[currentIndex].rhw = 1.0f;
 				minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
+				//minigunnerImageData[currentIndex].colour = D3DCOLOR_ARGB(255, intRed, intGreen, intBlue);
+				int red = rand() % 255;
+				int green = rand() % 255;
+				int blue = rand() % 255;
 				//minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
-				
+				//minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(red, green, blue);
+
+				//This is essentially working, but minigunner is way too dark
+				//	Figure out how to fix
 
 				int mike = 9;
 				numPoints++;
