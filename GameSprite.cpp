@@ -24,7 +24,7 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, in
 	this->InitializeSprite(file);
 }
 
-
+Now fix bounding box location and clicking to select
 
 void GameSprite::InitializeTextureWithCircle() {
 	UINT usage = D3DUSAGE_RENDERTARGET;
