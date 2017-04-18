@@ -14,17 +14,15 @@ GameSprite::~GameSprite() {
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
+	//this->InitializeTexture(file, transparentColor);
 	if (file.size() > 0) {
 		this->InitializeTexture( file, transparentColor);
 	}
 	else {
 		this->InitializeTextureWithShpFile();
 	}
-	//this->InitializeTextureWithCircle();
 	this->InitializeSprite(file);
 }
-
-
 
 
 
