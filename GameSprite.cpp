@@ -14,8 +14,12 @@ GameSprite::~GameSprite() {
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
 	this->device = device;
-	//this->InitializeTexture( file, transparentColor);
-	this->InitializeTextureWithShpFile();
+	if (file.size() > 0) {
+		this->InitializeTexture( file, transparentColor);
+	}
+	else {
+		this->InitializeTextureWithShpFile();
+	}
 	//this->InitializeTextureWithCircle();
 	this->InitializeSprite(file);
 }
@@ -106,8 +110,6 @@ void initialize_data(void) {
 
 
 
-
-
 int mapColorIndex(int index) {
 	return index;
 }
@@ -187,6 +189,13 @@ void GameSprite::InitializeTextureWithShpFile() {
 
 
 			}
+			else {
+				minigunnerImageData[currentIndex].x = x;
+				minigunnerImageData[currentIndex].y = y;
+				minigunnerImageData[currentIndex].z = 1.0f;
+				minigunnerImageData[currentIndex].rhw = 1.0f;
+				minigunnerImageData[currentIndex].colour = D3DCOLOR_RGBA(0, 0, 0, 0);
+			}
 			currentIndex++;
 		}
 	}
@@ -238,33 +247,8 @@ void GameSprite::InitializeTextureWithShpFile() {
 		data,                   //pVertexStreamZeroData
 		sizeof(point_vertex));  //VertexStreamZeroStride
 
-
-
 	g_renderTarget->EndScene(0);
 
-
-	//ID3DXRenderToSurface* mRTS = 0;
-	//result = D3DXCreateRenderToSurface(
-	//	device,      // Associated Direct3D device.
-	//	width, height, // Dimensions of surface in pixels we render to.
-	//	D3DFMT_UNKNOWN,      // The surface format (i.e., D3DFORMAT).
-	//	false, // True if we want to use a depth buffer.
-	//	D3DFMT_UNKNOWN,    // Depth buffer format (if we are using one).
-	//	&mRTS);         // Returns pointer to instance.
-
-	//if (result != D3D_OK) {
-	//	throw("Failed calling D3DXCreateRenderToSurface()");
-	//}
-
-	//D3DVIEWPORT9 vp = { 0, 0, width, height, 0.0f, 1.0f };
-
-	//IDirect3DSurface9* mTopSurf = 0;
-	//texture->GetSurfaceLevel(0, &mTopSurf);
-
-	//mRTS->BeginScene(mTopSurf, &vp);
-	//Circle myCircle(10, 10);
-	//myCircle.Draw(device);
-	//mRTS->EndScene(D3DX_FILTER_NONE);
 
 }
 
