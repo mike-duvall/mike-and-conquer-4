@@ -8,6 +8,18 @@
 #include "PaletteEntry.h"
 
 
+
+* Refactor code
+	* Use different ctors for ShpFile and image file
+	* Pull code into class
+* Use Shp File for UnitSelection cursor
+* Fix drawing of bounding box
+	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
+	* Graph out on graph paper
+
+
+//Now fix bounding box location and clicking to select
+
 GameSprite::~GameSprite() {
 }
 
@@ -24,7 +36,7 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, in
 	this->InitializeSprite(file);
 }
 
-Now fix bounding box location and clicking to select
+
 
 void GameSprite::InitializeTextureWithCircle() {
 	UINT usage = D3DUSAGE_RENDERTARGET;
