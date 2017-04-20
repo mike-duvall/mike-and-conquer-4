@@ -6,7 +6,7 @@
 
 class GameSprite {
 public:
-	GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor);
+	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
 	~GameSprite();
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
 

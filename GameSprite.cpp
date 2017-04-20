@@ -9,22 +9,18 @@
 
 
 
-* Refactor code
-	* Use different ctors for ShpFile and image file
-	* Pull code into class
-* Use Shp File for UnitSelection cursor
-* Fix drawing of bounding box
-	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
-	* Graph out on graph paper
+//* Refactor code
+//	* Use different ctors for ShpFile and image file
+//	* Pull code into class
+//* Use Shp File for UnitSelection cursor
+//* Fix drawing of bounding box
+//	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
+//	* Graph out on graph paper
 
 
-//Now fix bounding box location and clicking to select
-
-GameSprite::~GameSprite() {
-}
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, int height, D3DCOLOR transparentColor) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
 	//this->InitializeTexture(file, transparentColor);
 	if (file.size() > 0) {
@@ -34,6 +30,10 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, int width, in
 		this->InitializeTextureWithShpFile();
 	}
 	this->InitializeSprite(file);
+}
+
+
+GameSprite::~GameSprite() {
 }
 
 
