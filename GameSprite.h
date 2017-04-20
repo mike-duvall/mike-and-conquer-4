@@ -4,9 +4,13 @@
 #include <d3dx9.h>
 #include <string>
 
+
+class ShpFile;
+
 class GameSprite {
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
+	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor);
 	~GameSprite();
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
 
@@ -14,7 +18,7 @@ private:
 
 	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
 	void InitializeTextureWithCircle();
-	void InitializeTextureWithShpFile();
+	void InitializeTextureWithShpFile(ShpFile & shpFile);
 	bool InitializeSprite( std::string file);
 
 	LPD3DXSPRITE   sprite;

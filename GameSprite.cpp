@@ -19,16 +19,16 @@
 
 
 
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
+	this->device = device;
+	this->InitializeTextureWithShpFile(shpFile);
+	this->InitializeSprite("");
+}
+
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
-	//this->InitializeTexture(file, transparentColor);
-	if (file.size() > 0) {
-		this->InitializeTexture( file, transparentColor);
-	}
-	else {
-		this->InitializeTextureWithShpFile();
-	}
+	this->InitializeTexture( file, transparentColor);
 	this->InitializeSprite(file);
 }
 
@@ -125,10 +125,11 @@ int mapColorIndex(int index) {
 }
 
 
-void GameSprite::InitializeTextureWithShpFile() {
+
+void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 
 
-	ShpFile shpFile(std::string("assets/e1.shp"));
+//	ShpFile shpFile(std::string("assets/e1.shp"));
 
 	ImageHeader * header0 = shpFile.ImageHeaders()[0];
 	std::vector<unsigned char> & byteBuffer0 = header0->GetData();

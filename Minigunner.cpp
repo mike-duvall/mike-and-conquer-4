@@ -5,6 +5,7 @@
 #include "UnitSelectCursor.h"
 #include "input.h"
 #include "game.h"
+#include "ShpFile.h"
 
 const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
@@ -31,7 +32,9 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	velocity.y = 150.0;
 
 	//gameSprite = new GameSprite(graphics->Get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), "",  graphicsNS::WHITE);
+	//gameSprite = new GameSprite(graphics->Get3Ddevice(), "",  graphicsNS::WHITE);
+	ShpFile shpFile(std::string("assets/e1.shp"));
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
 }
 
 
