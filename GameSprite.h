@@ -17,7 +17,6 @@ public:
 private:
 
 	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
-	void InitializeTextureWithCircle();
 	void InitializeTextureWithShpFile(ShpFile & shpFile);
 	bool InitializeSprite( std::string file);
 

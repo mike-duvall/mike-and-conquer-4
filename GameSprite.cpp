@@ -10,7 +10,7 @@
 
 
 //* Refactor code
-//	* Use different ctors for ShpFile and image file
+// X	* Use different ctors for ShpFile and image file
 //	* Pull code into class
 //* Use Shp File for UnitSelection cursor
 //* Fix drawing of bounding box
@@ -37,56 +37,8 @@ GameSprite::~GameSprite() {
 }
 
 
-
-void GameSprite::InitializeTextureWithCircle() {
-	UINT usage = D3DUSAGE_RENDERTARGET;
-	width = 16;
-	height = 16;
-	//Just changed this to 16 16
-	//	Figure out how 16,16 tranlates to 50,39, actual size of the shp file image
-
-	//This is basically working, now read and render minigunner from image
-
-	HRESULT result = D3DXCreateTexture(
-		device,      // Associated Direct3D device.
-		width, height, // Dimensions of surface in pixels we render to.
-		1,      // Number of mipmap levels.
-
-		usage,           // How the texture will be used.
-		D3DFMT_UNKNOWN,      // Texture format (i.e., D3DFORMAT).
-		D3DPOOL_DEFAULT, // Render targets must be in default pool.
-		&texture);         // Returns pointer to texture.
-	if (result != D3D_OK) {
-		throw("Failed calling D3DXCreateTexture()");
-	}
-
-
-	LPDIRECT3DSURFACE9 g_renderSurface;
-	D3DSURFACE_DESC desc;
-	texture->GetSurfaceLevel(0, &g_renderSurface);
-	g_renderSurface->GetDesc(&desc);
-
-
-	ID3DXRenderToSurface * g_renderTarget;
-	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &g_renderTarget);
-	if(FAILED(result))
-		throw("Failed calling D3DXCreateRenderToSurface()");
-
-	g_renderTarget->BeginScene(g_renderSurface, NULL);
-	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-	Circle myCircle(8, 8);
-	myCircle.Draw(device);
-	g_renderTarget->EndScene(0);
-
-
-}
-
-
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 
-
-//const int g_width = 640;
-//const int g_height = 480;
 
 const int g_width = 50;
 const int g_height = 39;
@@ -101,35 +53,12 @@ struct point_vertex {
 point_vertex minigunnerImageData[g_width * g_height]; //A whole whack of data
 
 
-void initialize_data(void) {
-	int count;
-	float count_f;
-	unsigned char red, green, blue;
-	float y;
-
-	srand(GetTickCount());
-	for (count = 0; count<g_width; count++) {
-		minigunnerImageData[count].x = (float)(rand() % g_width);
-		minigunnerImageData[count].y = (float)(rand() % g_height);
-		minigunnerImageData[count].z = 1.0f;
-		minigunnerImageData[count].rhw = 1.0f;
-		minigunnerImageData[count].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
-	}
-
-}
-
-
-
 int mapColorIndex(int index) {
 	return index;
 }
 
 
-
 void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
-
-
-//	ShpFile shpFile(std::string("assets/e1.shp"));
 
 	ImageHeader * header0 = shpFile.ImageHeaders()[0];
 	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
@@ -145,21 +74,12 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			//if (!byteBuffer0.hasRemaining()) {
-			//	continue;
-			//}
-
 			unsigned char nextByte = byteBuffer0[currentIndex];
 			if (nextByte != 0) {
-				//int index = Byte.toUnsignedInt(nextByte);
 				int index = nextByte;
 
 				index = mapColorIndex(index);
 				PaletteEntry * paletteEntry = paletteEntries[index];
-
-				//float red = paletteEntry->GetRed() / 63.0f;
-				//float green = paletteEntry->GetGreen() / 63.0f;
-				//float blue = paletteEntry->GetBlue() / 63.0f;
 
 				int intRed = paletteEntry->GetRed();
 				int intGreen = paletteEntry->GetGreen();
@@ -173,31 +93,17 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 				intGreen = fGreen;
 				intBlue = fBlue;
 
-
-
-				//Color color = new Color(red, green, blue, 1);
-
-				//pixmap.setColor(color);
-
-				//pixmap.drawPixel(x, y);
 				minigunnerImageData[currentIndex].x = x;
 				minigunnerImageData[currentIndex].y = y;
 				minigunnerImageData[currentIndex].z = 1.0f;
 				minigunnerImageData[currentIndex].rhw = 1.0f;
 				minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
-				//minigunnerImageData[currentIndex].colour = D3DCOLOR_ARGB(255, intRed, intGreen, intBlue);
 				int red = rand() % 255;
 				int green = rand() % 255;
 				int blue = rand() % 255;
-				//minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(rand() % 255, rand() % 255, rand() % 255);
-				//minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(red, green, blue);
-
-				//This is essentially working, but minigunner is way too dark
-				//	Figure out how to fix
 
 				int mike = 9;
 				numPoints++;
-
 
 			}
 			else {
@@ -349,12 +255,6 @@ void GameSprite::Draw(float gameTime, D3DXVECTOR2 position) {
 	device3d->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 	device3d->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 
-
-
-	//int roundedX = x;
-	//int roundexY = y;
-	//	D3DXVECTOR2 translate = D3DXVECTOR2((float)x, (float)y);
-	//D3DXVECTOR2 translate = D3DXVECTOR2((float)roundedX, (float)roundexY);
 	D3DXVECTOR2 translate = position;
 	float xOffset = this->width / 2.0f;
 	float yOffset = this->height / 2.0f;
