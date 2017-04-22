@@ -44,20 +44,13 @@ int GameSprite::mapColorIndex(int index) {
 	return index;
 }
 
-
-void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
-
-	ImageHeader * header0 = shpFile.ImageHeaders()[0];
-	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
-
-	PaletteFile paletteFile(std::string("assets/temperat.pal"));
-	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
-	
-	width = shpFile.Width();
-	height = shpFile.Height();
+int mapColorIndex(int index) {
+	return index;
+}
 
 
-	minigunnerImageData = new point_vertex[width * height];
+point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries) {
+	point_vertex * minigunnerImageData = new point_vertex[width * height];
 
 	int currentIndex = 0;
 	int numPoints = 0;
@@ -105,6 +98,74 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 			}			currentIndex++;
 		}
 	}
+
+	return minigunnerImageData;
+
+
+}
+
+
+void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
+
+	ImageHeader * header0 = shpFile.ImageHeaders()[0];
+	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
+
+	PaletteFile paletteFile(std::string("assets/temperat.pal"));
+	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
+	
+	width = shpFile.Width();
+	height = shpFile.Height();
+
+	minigunnerImageData = mapImageData(width, height, byteBuffer0, paletteEntries);
+
+	//minigunnerImageData = new point_vertex[width * height];
+
+	//int currentIndex = 0;
+	//int numPoints = 0;
+
+	//for (int y = 0; y < height; y++) {
+	//	for (int x = 0; x < width; x++) {
+	//		unsigned char nextByte = byteBuffer0[currentIndex];
+	//		if (nextByte != 0) {
+	//			int index = nextByte;
+
+	//			index = mapColorIndex(index);
+	//			PaletteEntry * paletteEntry = paletteEntries[index];
+
+	//			int intRed = paletteEntry->GetRed();
+	//			int intGreen = paletteEntry->GetGreen();
+	//			int intBlue = paletteEntry->GetBlue();
+
+	//			float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
+	//			float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
+	//			float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
+
+	//			intRed = fRed;
+	//			intGreen = fGreen;
+	//			intBlue = fBlue;
+
+	//			minigunnerImageData[currentIndex].x = x;
+	//			minigunnerImageData[currentIndex].y = y;
+	//			minigunnerImageData[currentIndex].z = 1.0f;
+	//			minigunnerImageData[currentIndex].rhw = 1.0f;
+	//			minigunnerImageData[currentIndex].colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
+	//			int red = rand() % 255;
+	//			int green = rand() % 255;
+	//			int blue = rand() % 255;
+
+	//			int mike = 9;
+	//			numPoints++;
+
+	//		}
+	//		else {
+	//			minigunnerImageData[currentIndex].x = x;
+	//			minigunnerImageData[currentIndex].y = y;
+	//			minigunnerImageData[currentIndex].z = 1.0f;
+	//			minigunnerImageData[currentIndex].rhw = 1.0f;
+	//			minigunnerImageData[currentIndex].colour = D3DCOLOR_RGBA(0, 0, 0, 0);
+	//		}			currentIndex++;
+	//	}
+	//}
 
 
 	UINT usage = D3DUSAGE_RENDERTARGET;

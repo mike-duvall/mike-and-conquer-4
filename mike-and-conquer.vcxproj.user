@@ -3,8 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RemoteDebuggerCommand>c:\remotetemp\mike-and-conquer.exe</RemoteDebuggerCommand>
     <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
-    <RemoteDebuggerCommandArguments>
-    </RemoteDebuggerCommandArguments>
+    <RemoteDebuggerCommandArguments>TESTMODE</RemoteDebuggerCommandArguments>
     <RemoteDebuggerWorkingDirectory>c:\remotetemp</RemoteDebuggerWorkingDirectory>
     <RemoteDebuggerServerName>W540-WINDOWS7</RemoteDebuggerServerName>
     <RemoteDebuggerConnection>RemoteWithoutAuthentication</RemoteDebuggerConnection>
