@@ -12,6 +12,7 @@
 //* Refactor code
 // X	* Use different ctors for ShpFile and image file
 //	* Pull code into class
+//  * Unhard code width and height
 //* Use Shp File for UnitSelection cursor
 //* Fix drawing of bounding box
 //	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
@@ -40,17 +41,13 @@ GameSprite::~GameSprite() {
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 
 
-const int g_width = 50;
-const int g_height = 39;
-
-
 struct point_vertex {
 	float x, y, z, rhw;  // The transformed(screen space) position for the vertex.
 	DWORD colour;        // The vertex colour.
 };
 
 
-point_vertex minigunnerImageData[g_width * g_height]; //A whole whack of data
+point_vertex * minigunnerImageData;
 
 
 int mapColorIndex(int index) {
@@ -65,9 +62,12 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 
 	PaletteFile paletteFile(std::string("assets/temperat.pal"));
 	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
+	
+	width = shpFile.Width();
+	height = shpFile.Height();
 
-	width = g_width;
-	height = g_height;
+
+	minigunnerImageData = new point_vertex[width * height];
 
 	int currentIndex = 0;
 	int numPoints = 0;
@@ -112,18 +112,12 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 				minigunnerImageData[currentIndex].z = 1.0f;
 				minigunnerImageData[currentIndex].rhw = 1.0f;
 				minigunnerImageData[currentIndex].colour = D3DCOLOR_RGBA(0, 0, 0, 0);
-			}
-			currentIndex++;
+			}			currentIndex++;
 		}
 	}
 
 
-	//initialize_data();
-
-
 	UINT usage = D3DUSAGE_RENDERTARGET;
-	width = g_width;
-	height = g_height;
 
 	HRESULT result = D3DXCreateTexture(
 		device,      // Associated Direct3D device.
@@ -158,9 +152,7 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 	void *data = minigunnerImageData;
 
 	device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
-		//g_width,                //PrimitiveCount
-		//numPoints,                //PrimitiveCount
-		g_width * g_height,
+		width * height,    // Primitive count
 		data,                   //pVertexStreamZeroData
 		sizeof(point_vertex));  //VertexStreamZeroStride
 
