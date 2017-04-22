@@ -57,51 +57,43 @@ void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
 	point_vertex.colour = D3DCOLOR_RGBA(0, 0, 0, 0);
 }
 
+void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char nextByte, std::vector<PaletteEntry *> & paletteEntries) {
+	int index = nextByte;
+
+	index = mapColorIndex(index);
+	PaletteEntry * paletteEntry = paletteEntries[index];
+
+	int intRed = paletteEntry->GetRed();
+	int intGreen = paletteEntry->GetGreen();
+	int intBlue = paletteEntry->GetBlue();
+
+	float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
+	float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
+	float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
+
+	intRed = fRed;
+	intGreen = fGreen;
+	intBlue = fBlue;
+
+	point_vertex.x = x;
+	point_vertex.y = y;
+	point_vertex.z = 1.0f;
+	point_vertex.rhw = 1.0f;
+	point_vertex.colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
+}
 
 
 point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries) {
 	point_vertex * imageData = new point_vertex[width * height];
-
 	int currentIndex = 0;
-	int numPoints = 0;
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			unsigned char nextByte = byteBuffer0[currentIndex];
-			if (nextByte != 0) {
-				int index = nextByte;
-
-				index = mapColorIndex(index);
-				PaletteEntry * paletteEntry = paletteEntries[index];
-
-				int intRed = paletteEntry->GetRed();
-				int intGreen = paletteEntry->GetGreen();
-				int intBlue = paletteEntry->GetBlue();
-
-				float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
-				float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
-				float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
-
-				intRed = fRed;
-				intGreen = fGreen;
-				intBlue = fBlue;
-
-				imageData[currentIndex].x = x;
-				imageData[currentIndex].y = y;
-				imageData[currentIndex].z = 1.0f;
-				imageData[currentIndex].rhw = 1.0f;
-				imageData[currentIndex].colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
-				int red = rand() % 255;
-				int green = rand() % 255;
-				int blue = rand() % 255;
-
-				int mike = 9;
-				numPoints++;
-
-			}
-			else {
+			if (nextByte != 0) 
+				populateNonBlankPixel(imageData[currentIndex], x, y, nextByte, paletteEntries);
+			else 
 				populateBlankPixel(imageData[currentIndex], x, y);
-			}
 			currentIndex++;
 		}
 	}
