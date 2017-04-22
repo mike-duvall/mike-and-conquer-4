@@ -18,7 +18,7 @@ private:
 
 	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
 	void InitializeTextureWithShpFile(ShpFile & shpFile);
-	bool InitializeSprite( std::string file);
+	bool InitializeSprite();
 
 	LPD3DXSPRITE   sprite;
 	D3DXVECTOR2 spriteCenter;

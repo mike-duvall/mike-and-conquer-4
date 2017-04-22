@@ -22,14 +22,14 @@
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->InitializeTextureWithShpFile(shpFile);
-	this->InitializeSprite("");
+	this->InitializeSprite();
 }
 
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->InitializeTexture( file, transparentColor);
-	this->InitializeSprite(file);
+	this->InitializeSprite();
 }
 
 
@@ -204,7 +204,7 @@ void GameSprite::InitializeTexture(std::string filename, D3DCOLOR transparentCol
 
 }
 
-bool GameSprite::InitializeSprite(std::string file) {
+bool GameSprite::InitializeSprite() {
 
 	bool success = true;
 	try {
