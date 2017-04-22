@@ -11,8 +11,8 @@
 
 //* Refactor code
 // X	* Use different ctors for ShpFile and image file
-//	* Pull code into class
-//  * Unhard code width and height
+// X	* Pull code into class
+// X  * Unhard code width and height
 //* Use Shp File for UnitSelection cursor
 //* Fix drawing of bounding box
 //	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
@@ -38,19 +38,9 @@ GameSprite::~GameSprite() {
 }
 
 
-const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 
 
-struct point_vertex {
-	float x, y, z, rhw;  // The transformed(screen space) position for the vertex.
-	DWORD colour;        // The vertex colour.
-};
-
-
-point_vertex * minigunnerImageData;
-
-
-int mapColorIndex(int index) {
+int GameSprite::mapColorIndex(int index) {
 	return index;
 }
 

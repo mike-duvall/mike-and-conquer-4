@@ -7,6 +7,18 @@
 
 class ShpFile;
 
+
+const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
+
+
+struct point_vertex {
+	float x, y, z, rhw;  // The transformed(screen space) position for the vertex.
+	DWORD colour;        // The vertex colour.
+};
+
+
+
+
 class GameSprite {
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
@@ -18,6 +30,7 @@ private:
 
 	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
 	void InitializeTextureWithShpFile(ShpFile & shpFile);
+	int mapColorIndex(int index);
 	bool InitializeSprite();
 
 	LPD3DXSPRITE   sprite;
@@ -35,5 +48,7 @@ private:
 
 	int width;
 	int height;
+
+	point_vertex * minigunnerImageData;
 };
 
