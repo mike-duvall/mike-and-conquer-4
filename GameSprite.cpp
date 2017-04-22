@@ -49,6 +49,16 @@ int mapColorIndex(int index) {
 }
 
 
+void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
+	point_vertex.x = x;
+	point_vertex.y = y;
+	point_vertex.z = 1.0f;
+	point_vertex.rhw = 1.0f;
+	point_vertex.colour = D3DCOLOR_RGBA(0, 0, 0, 0);
+}
+
+
+
 point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries) {
 	point_vertex * imageData = new point_vertex[width * height];
 
@@ -90,19 +100,16 @@ point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & 
 
 			}
 			else {
-				imageData[currentIndex].x = x;
-				imageData[currentIndex].y = y;
-				imageData[currentIndex].z = 1.0f;
-				imageData[currentIndex].rhw = 1.0f;
-				imageData[currentIndex].colour = D3DCOLOR_RGBA(0, 0, 0, 0);
-			}			currentIndex++;
+				populateBlankPixel(imageData[currentIndex], x, y);
+			}
+			currentIndex++;
 		}
 	}
 
 	return imageData;
-
-
 }
+
+
 
 
 void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
