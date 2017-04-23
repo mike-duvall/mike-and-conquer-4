@@ -18,8 +18,8 @@ struct point_vertex {
 
 
 
-
 class GameSprite {
+
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
 	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor);
@@ -45,10 +45,9 @@ private:
 	D3DCOLOR color;
 	bool initialized;
 
-
 	int width;
 	int height;
 
-	point_vertex * minigunnerImageData;
+	//point_vertex * imageData;
 };
 

@@ -110,7 +110,7 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 	width = shpFile.Width();
 	height = shpFile.Height();
 
-	minigunnerImageData = mapImageData(width, height, byteBuffer0, paletteEntries);
+	point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
 
 	UINT usage = D3DUSAGE_RENDERTARGET;
 
@@ -128,31 +128,28 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 	}
 
 
-	LPDIRECT3DSURFACE9 g_renderSurface;
+	LPDIRECT3DSURFACE9 surfaceToRenderTo;
 	D3DSURFACE_DESC desc;
-	texture->GetSurfaceLevel(0, &g_renderSurface);
-	g_renderSurface->GetDesc(&desc);
+	texture->GetSurfaceLevel(0, &surfaceToRenderTo);
+	surfaceToRenderTo->GetDesc(&desc);
 
 
-	ID3DXRenderToSurface * g_renderTarget;
-	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &g_renderTarget);
+	ID3DXRenderToSurface * renderToSurface;
+	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &renderToSurface);
 	if (FAILED(result))
 		throw("Failed calling D3DXCreateRenderToSurface()");
 
-	g_renderTarget->BeginScene(g_renderSurface, NULL);
+	renderToSurface->BeginScene(surfaceToRenderTo, NULL);
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
 	device->SetFVF(point_fvf);
 
-	void *data = minigunnerImageData;
-
 	device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
 		width * height,    // Primitive count
-		data,                   //pVertexStreamZeroData
+		imageData,                   //pVertexStreamZeroData
 		sizeof(point_vertex));  //VertexStreamZeroStride
 
-	g_renderTarget->EndScene(0);
-
+	renderToSurface->EndScene(0);
 
 }
 
