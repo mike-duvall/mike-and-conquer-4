@@ -57,23 +57,18 @@ void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
 	point_vertex.colour = D3DCOLOR_RGBA(0, 0, 0, 0);
 }
 
-void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char nextByte, std::vector<PaletteEntry *> & paletteEntries) {
-	int index = nextByte;
+void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char colorIndex, std::vector<PaletteEntry *> & paletteEntries) {
 
-	index = mapColorIndex(index);
-	PaletteEntry * paletteEntry = paletteEntries[index];
-
-	int intRed = paletteEntry->GetRed();
-	int intGreen = paletteEntry->GetGreen();
-	int intBlue = paletteEntry->GetBlue();
+	int mappedColorIndex = mapColorIndex(colorIndex);
+	PaletteEntry * paletteEntry = paletteEntries[mappedColorIndex];
 
 	float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
 	float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
 	float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
 
-	intRed = fRed;
-	intGreen = fGreen;
-	intBlue = fBlue;
+	int intRed = fRed;
+	int intGreen = fGreen;
+	int intBlue = fBlue;
 
 	point_vertex.x = x;
 	point_vertex.y = y;
