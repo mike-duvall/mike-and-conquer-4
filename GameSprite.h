@@ -28,8 +28,10 @@ public:
 
 private:
 
-	void InitializeTexture( std::string filename, D3DCOLOR transparentColor);
-	void InitializeTextureWithShpFile(ShpFile & shpFile);
+	void InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
+	void InitializeTextureFromShpFile(ShpFile & shpFile);
+	void CreateTextureForDrawing();
+	void DrawImageDataToTexture(point_vertex * imageData);
 	int mapColorIndex(int index);
 	bool InitializeSprite();
 

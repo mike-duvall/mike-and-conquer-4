@@ -22,14 +22,14 @@
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
 	this->device = device;
-	this->InitializeTextureWithShpFile(shpFile);
+	this->InitializeTextureFromShpFile(shpFile);
 	this->InitializeSprite();
 }
 
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
-	this->InitializeTexture( file, transparentColor);
+	this->InitializeTextureFromPngFile( file, transparentColor);
 	this->InitializeSprite();
 }
 
@@ -97,21 +97,7 @@ point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & 
 }
 
 
-
-
-void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
-
-	ImageHeader * header0 = shpFile.ImageHeaders()[0];
-	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
-
-	PaletteFile paletteFile(std::string("assets/temperat.pal"));
-	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
-	
-	width = shpFile.Width();
-	height = shpFile.Height();
-
-	point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
-
+void GameSprite::CreateTextureForDrawing() {
 	UINT usage = D3DUSAGE_RENDERTARGET;
 
 	HRESULT result = D3DXCreateTexture(
@@ -126,8 +112,9 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 	if (result != D3D_OK) {
 		throw("Failed calling D3DXCreateTexture()");
 	}
+}
 
-
+void GameSprite::DrawImageDataToTexture(point_vertex * imageData) {
 	LPDIRECT3DSURFACE9 surfaceToRenderTo;
 	D3DSURFACE_DESC desc;
 	texture->GetSurfaceLevel(0, &surfaceToRenderTo);
@@ -135,7 +122,7 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 
 
 	ID3DXRenderToSurface * renderToSurface;
-	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &renderToSurface);
+	HRESULT result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &renderToSurface);
 	if (FAILED(result))
 		throw("Failed calling D3DXCreateRenderToSurface()");
 
@@ -154,7 +141,27 @@ void GameSprite::InitializeTextureWithShpFile(ShpFile & shpFile) {
 }
 
 
-void GameSprite::InitializeTexture(std::string filename, D3DCOLOR transparentColor) {
+
+void GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile) {
+
+	ImageHeader * header0 = shpFile.ImageHeaders()[0];
+	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
+
+	PaletteFile paletteFile(std::string("assets/temperat.pal"));
+	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
+	
+	width = shpFile.Width();
+	height = shpFile.Height();
+
+	point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
+
+	CreateTextureForDrawing();
+	DrawImageDataToTexture(imageData);
+
+}
+
+
+void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
