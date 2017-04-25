@@ -22,14 +22,14 @@ class GameSprite {
 
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
-	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor);
+	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex);
 	~GameSprite();
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
 
 private:
 
 	void InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
-	void InitializeTextureFromShpFile(ShpFile & shpFile);
+	void InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
 	void CreateTextureForDrawing();
 	void DrawImageDataToTexture(point_vertex * imageData);
 	int mapColorIndex(int index);

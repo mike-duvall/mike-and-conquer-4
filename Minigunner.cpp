@@ -34,7 +34,8 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	//gameSprite = new GameSprite(graphics->Get3Ddevice(), IMAGE_FILE, this->width, this->height, graphicsNS::WHITE);
 	//gameSprite = new GameSprite(graphics->Get3Ddevice(), "",  graphicsNS::WHITE);
 	ShpFile shpFile(std::string("assets/e1.shp"));
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
+	int imageIndex = 0;
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, imageIndex);
 }
 
 

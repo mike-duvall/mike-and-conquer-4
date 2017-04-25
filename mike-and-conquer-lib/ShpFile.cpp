@@ -80,6 +80,8 @@ ShpFile::ShpFile(std::string & filename) {
 	}
 
 	Decompress(imageHeaders[0]);
+	Decompress(imageHeaders[1]);
+	Decompress(imageHeaders[2]);
 
 	int x = 3;
 	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
@@ -122,11 +124,9 @@ void ShpFile::Decompress(ImageHeader * h) {
 
 			
 			std::vector<unsigned char> imageBytes(count);
-
-			LCWCompression::DecodeInto(shpBytes, imageBytes, (int)(h->GetFileOffset() - shpBytesFileOffset, false));
+			int offset = (int)(h->GetFileOffset() - shpBytesFileOffset);
+			LCWCompression::DecodeInto(shpBytes, imageBytes, offset, false);
 			h->SetData(imageBytes);
-
-			
 
 			break;
 		}

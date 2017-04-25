@@ -15,14 +15,16 @@
 // X  * Unhard code width and height
 //* Use Shp File for UnitSelection cursor
 //* Fix drawing of bounding box
+//  * Try drawing 50 x 39 bounding box, just see where it is
+//  * Try drawing tighter bounding that represents where clicking works
 //	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
 //	* Graph out on graph paper
 
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex) {
 	this->device = device;
-	this->InitializeTextureFromShpFile(shpFile);
+	this->InitializeTextureFromShpFile(shpFile,imageIndex);
 	this->InitializeSprite();
 }
 
@@ -142,10 +144,10 @@ void GameSprite::DrawImageDataToTexture(point_vertex * imageData) {
 
 
 
-void GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile) {
+void GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex) {
 
-	ImageHeader * header0 = shpFile.ImageHeaders()[0];
-	std::vector<unsigned char> & byteBuffer0 = header0->GetData();
+	ImageHeader * imageHeader = shpFile.ImageHeaders()[imageIndex];
+	std::vector<unsigned char> & byteBuffer0 = imageHeader->GetData();
 
 	PaletteFile paletteFile(std::string("assets/temperat.pal"));
 	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();

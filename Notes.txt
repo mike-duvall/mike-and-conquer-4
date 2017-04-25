@@ -1,5 +1,9 @@
 
-For extracting images from C&C MIX files, use XCC Mixer 1.47
+For extracting images from C&C MIX files, use XCC Mixer 1.47.  Can be downloaded from here:  http://xhp.xwis.net/
+Can be run by running:  D:\Program Files (x86)\XCC\Utilities\XCC Mixer.exe
+Some shp file are in: D:\OriginGames\CNC and The Covert Operations\CONQUER.MIX
+* Minigunner: e1.shp
+* Unit selection cursor: select.shp
 
 
 Test driver
