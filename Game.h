@@ -21,6 +21,7 @@ class Game;
 class Minigunner;
 class UnitSelectCursor;
 class Circle;
+class MikeRectangle;
 class GameEvent;
 
 
@@ -73,6 +74,7 @@ protected:
 	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;
+	MikeRectangle * rectangle;
 
 
 	HWND    hwnd;                   // window handle

@@ -4,6 +4,7 @@
 #include "Minigunner.h"
 #include "UnitSelectCursor.h"
 #include "Circle.h"
+#include "MikeRectangle.h"
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
 #include "GetNODMinigunnerGameEvent.h"
@@ -92,6 +93,7 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(500, 500);
+	rectangle = new MikeRectangle(-1,-1);
 
 }
 
@@ -232,6 +234,7 @@ void Game::Render() {
 	}
 
 	circle->Draw(graphics->Get3Ddevice());
+	rectangle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }

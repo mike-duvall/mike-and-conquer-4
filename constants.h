@@ -6,11 +6,11 @@
 
 const char CLASS_NAME[] = "Mike and Conquer";
 const char GAME_TITLE[] = "Mike and Conquer";
-const bool FULLSCREEN = true;              // windowed or fullscreen
+//const bool FULLSCREEN = true;              // windowed or fullscreen
 const UINT GAME_WIDTH = 1920;               // width of game in pixels
 const UINT GAME_HEIGHT = 1080;               // height of game in pixels
 
-//const bool FULLSCREEN = false;              // windowed or fullscreen
+const bool FULLSCREEN = false;              // windowed or fullscreen
 //const UINT GAME_WIDTH =  1280;               // width of game in pixels
 //const UINT GAME_HEIGHT = 1024;               // height of game in pixels
  
