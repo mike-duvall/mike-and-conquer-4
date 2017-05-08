@@ -66,6 +66,40 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 }
 
+
+LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;
+struct CUSTOMVERTEX { FLOAT X, Y, Z; DWORD COLOR; };
+#define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE)
+
+void init_graphics(Graphics * graphics)
+{
+	// create the vertices using the CUSTOMVERTEX struct
+	CUSTOMVERTEX vertices[] =
+	{
+		{ 3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(0, 0, 255), },
+		{ 0.0f, 3.0f, 0.0f, D3DCOLOR_XRGB(0, 255, 0), },
+		{ -3.0f, -3.0f, 0.0f, D3DCOLOR_XRGB(255, 0, 0), },
+	};
+
+	// create a vertex buffer interface called v_buffer
+
+	LPDIRECT3DDEVICE9 d3ddev = graphics->Get3Ddevice();
+	d3ddev->CreateVertexBuffer(3 * sizeof(CUSTOMVERTEX),
+		0,
+		CUSTOMFVF,
+		D3DPOOL_MANAGED,
+		&v_buffer,
+		NULL);
+
+	VOID* pVoid;    // a void pointer
+
+					// lock v_buffer and load the vertices into it
+	v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+	memcpy(pVoid, vertices, sizeof(vertices));
+	v_buffer->Unlock();
+}
+
+
 void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
@@ -95,6 +129,7 @@ void Game::Initialize(HWND hw) {
 	circle = new Circle(500, 500);
 	rectangle = new MikeRectangle(-1,-1);
 
+	init_graphics(this->GetGraphics());
 }
 
 
@@ -179,8 +214,6 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 			case WM_INPUT:
 			{
 				HandleMouseInput(lParam);
-
-
 				return 0;
 			} break;
 
@@ -219,8 +252,6 @@ void Game::Update() {
 }
 
 
-
-
 void Game::Render() {
 //	graphics->spriteBegin();                // begin drawing sprites
 	if (minigunner1 != NULL) {
@@ -244,10 +275,57 @@ void Game::RenderGame() {
     if (SUCCEEDED(graphics->BeginScene()))
     {
         Render();
+
+		//////////////////////////////////////////////////
+		// SET UP THE PIPELINE
+
+		D3DXMATRIX matRotateY;    // a matrix to store the rotation information
+
+		static float index = 0.0f;// index += 0.05f;    // an ever-increasing float value
+
+		LPDIRECT3DDEVICE9 d3ddev = graphics->Get3Ddevice();
+		d3ddev->SetFVF(CUSTOMFVF);
+													  // build a matrix to rotate the model based on the increasing float value
+		D3DXMatrixRotationY(&matRotateY, index);
+
+		// tell Direct3D about our matrix
+		d3ddev->SetTransform(D3DTS_WORLD, &matRotateY);
+
+		D3DXMATRIX matView;    // the view transform matrix
+
+		D3DXMatrixLookAtLH(&matView,
+			&D3DXVECTOR3(0.0f, 0.0f, 10.0f),    // the camera position
+			&D3DXVECTOR3(0.0f, 0.0f, 0.0f),    // the look-at position
+			&D3DXVECTOR3(0.0f, 1.0f, 0.0f));    // the up direction
+
+		d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+
+		D3DXMATRIX matProjection;     // the projection transform matrix
+
+		D3DXMatrixPerspectiveFovLH(&matProjection,
+			D3DXToRadian(45),    // the horizontal field of view
+			(FLOAT)GAME_WIDTH / (FLOAT)GAME_HEIGHT, // aspect ratio
+			1.0f,    // the near view-plane
+			100.0f);    // the far view-plane
+
+		d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);    // set the projection
+																   // select the vertex buffer to display
+		d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
+
+		// copy the vertex buffer to the back buffer
+		d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+
+
+		//////////////////////////////////////////////////
+
+
+
         graphics->endScene();
     }
 
     graphics->ShowBackbuffer();
+
+
 }
 
 void Game::Run(HWND hwnd) {

@@ -8,6 +8,8 @@ struct VERTEX_2D_DIF { // transformed colorized
 	float x, y, z, rhw;
 	D3DCOLOR color;
 	static const DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
+	//static const DWORD FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
 };
 
 
