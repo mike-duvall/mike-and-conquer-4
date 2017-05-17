@@ -219,15 +219,19 @@ bool GameSprite::InitializeSprite() {
 		// 400 is 83.33333 percent of 480
 		// So multiply desired scaling by 0.8333333 to get actual scaled height
 
-		float widthAdjustmentAmount = 400.0f / 480.0f;
-		float actualWidthScaling = overallScaling * widthAdjustmentAmount;
-		float actualHeightScaling = overallScaling;
+		//float widthAdjustmentAmount = 400.0f / 480.0f;
+		//float actualWidthScaling = overallScaling * widthAdjustmentAmount;
+		//float actualHeightScaling = overallScaling;
 		//scaling = D3DXVECTOR2(actualWidthScaling, actualHeightScaling);
 		scaling = D3DXVECTOR2(overallScaling, overallScaling);
 
-		spriteCenter = D3DXVECTOR2((float)(actualWidthScaling /  2),
-			(float)(actualHeightScaling / 2));
+		//spriteCenter = D3DXVECTOR2((float)(actualWidthScaling /  2),
+		//	(float)(actualHeightScaling / 2));
 
+		spriteCenter = D3DXVECTOR2((float)(width /  2),
+			(float)(height / 2));
+
+		//spriteCenter = D3DXVECTOR2(0, 0);
 
 
 	}

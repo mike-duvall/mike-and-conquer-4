@@ -15,48 +15,85 @@ struct VERTEX_2D_DIF { // transformed colorized
 
 
 
-MikeRectangle::MikeRectangle(int x, int y) {
+MikeRectangle::MikeRectangle(int x, int y, int width, int height) {
 	this->x = x;
 	this->y = y;
+	this->width = width;
+	this->height = height;
+	scale = 4;
 }
 
 void MikeRectangle::Draw(LPDIRECT3DDEVICE9 device) {
 
 	VERTEX_2D_DIF verts[5];
 
-	verts[0].x = 100;
-	verts[0].y = 100;
-	verts[0].z = 0;
+	//verts[0].x = x;
+	//verts[0].y = y;
+	//verts[0].z = 1;
+	//verts[0].rhw = 1;
+	//verts[0].color = graphicsNS::MAGENTA;
+
+	//verts[1].x = x + (width * scale);
+	//verts[1].y = y;
+	//verts[1].z = 1;
+	//verts[1].rhw = 1;
+	//verts[1].color = graphicsNS::MAGENTA;
+
+	//verts[2].x = x + (width * scale);
+	//verts[2].y = y + (height * scale);
+	//verts[2].z = 1;
+	//verts[2].rhw = 1;
+	//verts[2].color = graphicsNS::MAGENTA;
+
+	//verts[3].x = x;
+	//verts[3].y = y + (height * scale);
+	//verts[3].z = 1;
+	//verts[3].rhw = 1;
+	//verts[3].color = graphicsNS::MAGENTA;
+
+	//verts[4].x = x;
+	//verts[4].y = y;
+	//verts[4].z = 1;
+	//verts[4].rhw = 1;
+	//verts[4].color = graphicsNS::MAGENTA;
+
+	int xOffset = (width * scale) / 2;
+	int yOffset = (height * scale) / 2;
+
+	verts[0].x = x - xOffset;
+	verts[0].y = y - yOffset;
+	verts[0].z = 1;
 	verts[0].rhw = 1;
 	verts[0].color = graphicsNS::MAGENTA;
 
-	verts[1].x = 300;
-	verts[1].y = 100;
-	verts[1].z = 0;
+	verts[1].x = x + xOffset;
+	verts[1].y = y - yOffset;
+	verts[1].z = 1;
 	verts[1].rhw = 1;
 	verts[1].color = graphicsNS::MAGENTA;
 
-	verts[2].x = 300;
-	verts[2].y = 400;
-	verts[2].z = 0;
+	verts[2].x = x + xOffset;
+	verts[2].y = y + yOffset;
+	verts[2].z = 1;
 	verts[2].rhw = 1;
 	verts[2].color = graphicsNS::MAGENTA;
 
-	verts[3].x = 100;
-	verts[3].y = 400;
-	verts[3].z = 0;
+	verts[3].x = x - xOffset;
+	verts[3].y = y + yOffset;
+	verts[3].z = 1;
 	verts[3].rhw = 1;
 	verts[3].color = graphicsNS::MAGENTA;
 
-	verts[4].x = 100;
-	verts[4].y = 100;
-	verts[4].z = 0;
+	verts[4].x = x - xOffset;
+	verts[4].y = y - yOffset;
+	verts[4].z = 1;
 	verts[4].rhw = 1;
 	verts[4].color = graphicsNS::MAGENTA;
 
 
+
 	device->SetFVF(VERTEX_2D_DIF::FVF);
-	device->DrawPrimitiveUP(D3DPT_LINESTRIP, 4, &verts, sizeof(VERTEX_2D_DIF));
+	device->DrawPrimitiveUP(D3DPT_LINESTRIP,4, &verts, sizeof(VERTEX_2D_DIF));
 
 	//Figure out how to draw as transformed vertices:
 	//Read this: http://www.directxtutorial.com/Lesson.aspx?lessonid=9-4-4

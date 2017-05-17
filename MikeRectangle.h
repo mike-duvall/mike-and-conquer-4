@@ -17,7 +17,7 @@ class MikeRectangle {
 
 
 public:
-	MikeRectangle(int x, int y);
+	MikeRectangle(int x, int y, int width, int height);
 
 	void Draw(LPDIRECT3DDEVICE9 device);
 
@@ -29,6 +29,9 @@ public:
 private:
 	int x;
 	int y;
+	int width;
+	int height;
+	int scale;
 
 
 };
