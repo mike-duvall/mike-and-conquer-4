@@ -25,37 +25,11 @@ MikeRectangle::MikeRectangle(int x, int y, int width, int height) {
 
 void MikeRectangle::Draw(LPDIRECT3DDEVICE9 device) {
 
+
+// TODO: Make drawing of outline work for any game sprite
+// TODO: Fixup selection cursor
+
 	VERTEX_2D_DIF verts[5];
-
-	//verts[0].x = x;
-	//verts[0].y = y;
-	//verts[0].z = 1;
-	//verts[0].rhw = 1;
-	//verts[0].color = graphicsNS::MAGENTA;
-
-	//verts[1].x = x + (width * scale);
-	//verts[1].y = y;
-	//verts[1].z = 1;
-	//verts[1].rhw = 1;
-	//verts[1].color = graphicsNS::MAGENTA;
-
-	//verts[2].x = x + (width * scale);
-	//verts[2].y = y + (height * scale);
-	//verts[2].z = 1;
-	//verts[2].rhw = 1;
-	//verts[2].color = graphicsNS::MAGENTA;
-
-	//verts[3].x = x;
-	//verts[3].y = y + (height * scale);
-	//verts[3].z = 1;
-	//verts[3].rhw = 1;
-	//verts[3].color = graphicsNS::MAGENTA;
-
-	//verts[4].x = x;
-	//verts[4].y = y;
-	//verts[4].z = 1;
-	//verts[4].rhw = 1;
-	//verts[4].color = graphicsNS::MAGENTA;
 
 	int xOffset = (width * scale) / 2;
 	int yOffset = (height * scale) / 2;
