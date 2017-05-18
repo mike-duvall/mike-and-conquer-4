@@ -9,22 +9,9 @@
 
 
 
-//* Refactor code
-// X	* Use different ctors for ShpFile and image file
-// X	* Pull code into class
-// X  * Unhard code width and height
-// X * Use Shp File for UnitSelection cursor
-//* Fix drawing of bounding box
-
-  //Pick up here * Try drawing 50 x 39 bounding box, just see where it is, minigunner in one color, unit selection cursor in another color
-
-	 // Continue reading this tutorial: http://www.directxtutorial.com/Lesson.aspx?lessonid=9-4-3
-  //Create copy of Circle.cpp, Rectangle.cpp, use to draw bounding box
 
 //  * Try drawing tighter bounding that represents where clicking works
 //	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
-//	* Graph out on graph paper
-
 
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex) {

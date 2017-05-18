@@ -8,8 +8,6 @@ struct VERTEX_2D_DIF { // transformed colorized
 	float x, y, z, rhw;
 	D3DCOLOR color;
 	static const DWORD FVF = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
-	//static const DWORD FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
-
 };
 
 
@@ -25,7 +23,7 @@ MikeRectangle::MikeRectangle(int x, int y, int width, int height) {
 
 void MikeRectangle::Draw(LPDIRECT3DDEVICE9 device) {
 
-
+// TODO: Refactor and clean up this class, have better name
 // TODO: Make drawing of outline work for any game sprite
 // TODO: Fixup selection cursor
 
@@ -64,14 +62,8 @@ void MikeRectangle::Draw(LPDIRECT3DDEVICE9 device) {
 	verts[4].rhw = 1;
 	verts[4].color = graphicsNS::MAGENTA;
 
-
-
 	device->SetFVF(VERTEX_2D_DIF::FVF);
 	device->DrawPrimitiveUP(D3DPT_LINESTRIP,4, &verts, sizeof(VERTEX_2D_DIF));
-
-	//Figure out how to draw as transformed vertices:
-	//Read this: http://www.directxtutorial.com/Lesson.aspx?lessonid=9-4-4
-	//	and the next one
 
 }
 

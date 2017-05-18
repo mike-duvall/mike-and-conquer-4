@@ -50,6 +50,5 @@ private:
 	int width;
 	int height;
 
-	//point_vertex * imageData;
 };
 
