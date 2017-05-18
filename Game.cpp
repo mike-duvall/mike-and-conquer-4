@@ -4,6 +4,7 @@
 #include "Minigunner.h"
 #include "UnitSelectCursor.h"
 #include "Circle.h"
+#include "MikeRectangle.h"
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
 #include "GetNODMinigunnerGameEvent.h"
@@ -65,6 +66,8 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 }
 
+
+
 void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
@@ -91,8 +94,9 @@ void Game::Initialize(HWND hw) {
 		enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), 1000, 300, unitSelectCursor, input, true);
 	}
 
-	circle = new Circle(500, 500);
+	circle = new Circle(300, 900);
 
+	rectangle = new MikeRectangle(300, 900, 50, 39);
 }
 
 
@@ -177,8 +181,6 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 			case WM_INPUT:
 			{
 				HandleMouseInput(lParam);
-
-
 				return 0;
 			} break;
 
@@ -217,8 +219,6 @@ void Game::Update() {
 }
 
 
-
-
 void Game::Render() {
 //	graphics->spriteBegin();                // begin drawing sprites
 	if (minigunner1 != NULL) {
@@ -232,6 +232,7 @@ void Game::Render() {
 	}
 
 	circle->Draw(graphics->Get3Ddevice());
+	rectangle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }
@@ -241,10 +242,15 @@ void Game::RenderGame() {
     if (SUCCEEDED(graphics->BeginScene()))
     {
         Render();
+
+
+
         graphics->endScene();
     }
 
     graphics->ShowBackbuffer();
+
+
 }
 
 void Game::Run(HWND hwnd) {

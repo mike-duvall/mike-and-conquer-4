@@ -75,6 +75,12 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  
 	REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == 32768);
 
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[472] == 0);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[473] == 180);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[474] == 179);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[475] == 0);
+	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[1030] == 4);
+
 
 	REQUIRE(shpFile.ImageHeaders()[4]->GetFileOffset() == 4609);
 	REQUIRE(shpFile.ImageHeaders()[4]->GetFormat() == XORLCW);
@@ -90,6 +96,52 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders()[531]->GetFormat() == LCW);
 	REQUIRE(shpFile.ImageHeaders()[531]->GetRefOffset() == 0);
 	REQUIRE(shpFile.ImageHeaders()[531]->GetRefFormat() == NONE);
+
+}
+
+
+TEST_CASE("Can parse data from multiple frames in SHP file", "[SHP]") {
+	// Given
+	ShpFile shpFile(std::string("assets/select.shp"));
+
+	// then
+	REQUIRE(shpFile.Size() == 383);
+	REQUIRE(shpFile.NumberOfImages() == 4);
+	REQUIRE(shpFile.Width() == 24);
+	REQUIRE(shpFile.Height() == 21);
+
+	REQUIRE(shpFile.ImageHeaders().size() == 4);
+
+	REQUIRE(shpFile.ImageHeaders()[0]->GetFileOffset() == 62);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetFormat() == LCW);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetRefOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetRefFormat() == NONE);
+
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData().size() == 504);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[0] == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[81] == 0);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[82] == 15);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[83] == 15);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[84] == 15);
+	REQUIRE(shpFile.ImageHeaders()[0]->GetData()[85] == 0);
+
+
+	REQUIRE(shpFile.ImageHeaders()[1]->GetFileOffset() == 100);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetFormat() == LCW);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 0);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == NONE);
+
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData().size() == 504);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[0] == 0);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[54] == 0);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[55] == 15);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[56] == 15);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[57] == 15);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[58] == 15);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[59] == 15);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[60] == 0);
+
+
 
 }
 

@@ -86,10 +86,17 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         DestroyWindow(hwnd);
         MessageBox(NULL, err.getMessage(), "Error", MB_OK);
     }
+	catch (std::exception const& e) {
+		game->DeleteAll();
+		DestroyWindow(hwnd);
+		MessageBox(NULL, e.what(), "Error", MB_OK);
+
+	}
     catch(...) {
         game->DeleteAll();
         DestroyWindow(hwnd);
         MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
+		throw;
     }
 
     safeDelete(game);       // free memory before exit

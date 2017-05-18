@@ -68,11 +68,11 @@ void Graphics::Initialize(HWND hw, int w, int h, bool full) {
     if (FAILED(result))
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error creating Direct3D device"));
  
-
     // Configure for alpha blend of primitives
     device3d->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
     device3d->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     device3d->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	device3d->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 }
 
@@ -148,7 +148,7 @@ HRESULT Graphics::Reset() {
     device3d->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
     device3d->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     device3d->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
+	device3d->SetRenderState(D3DRS_LIGHTING, FALSE);
     return result;
 }
 
