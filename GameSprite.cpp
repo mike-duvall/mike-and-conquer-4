@@ -227,6 +227,12 @@ bool GameSprite::InitializeSprite() {
 	return success;
 }
 
+void GameSprite::SetSpriteCenter(int x, int y) {
+	spriteCenter = D3DXVECTOR2((float)x,
+		(float)y);
+}
+
+
 
 void GameSprite::Draw(float gameTime, D3DXVECTOR2 position) {
 

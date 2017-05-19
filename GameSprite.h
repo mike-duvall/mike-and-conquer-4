@@ -27,6 +27,7 @@ public:
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
+	void SetSpriteCenter(int x, int y);
 
 private:
 
