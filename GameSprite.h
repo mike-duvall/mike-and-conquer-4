@@ -25,6 +25,8 @@ public:
 	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex);
 	~GameSprite();
 	virtual void Draw(float gameTime, D3DXVECTOR2 position);
+	int GetWidth() { return width; }
+	int GetHeight() { return height; }
 
 private:
 

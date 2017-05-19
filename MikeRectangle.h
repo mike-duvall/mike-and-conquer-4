@@ -24,14 +24,11 @@ public:
 	void SetX(int x) { this->x = x; }
 	void SetY(int y) { this->y = y; }
 
-
-
 private:
 	int x;
 	int y;
 	int width;
 	int height;
 	int scale;
-
 
 };

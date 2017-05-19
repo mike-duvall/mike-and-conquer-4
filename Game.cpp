@@ -96,7 +96,6 @@ void Game::Initialize(HWND hw) {
 
 	circle = new Circle(300, 900);
 
-	rectangle = new MikeRectangle(300, 900, 50, 39);
 }
 
 
@@ -232,7 +231,6 @@ void Game::Render() {
 	}
 
 	circle->Draw(graphics->Get3Ddevice());
-	rectangle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }
