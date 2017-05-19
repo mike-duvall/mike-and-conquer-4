@@ -11,6 +11,8 @@ class GameSprite;
 class UnitSelectCursor;
 class Input;
 class Game;
+class MikeRectangle;
+
 
 
 class Minigunner
@@ -75,6 +77,9 @@ private:
 
 	void reduceHealth(int amount);
 	Minigunner * enemyAttacking;
+
+	MikeRectangle * shpBoundingRectangle;
+	boolean drawShpBoundingRectangle;
 
 };
 

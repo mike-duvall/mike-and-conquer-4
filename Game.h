@@ -74,8 +74,6 @@ protected:
 	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;
-	MikeRectangle * rectangle;
-
 
 	HWND    hwnd;                   // window handle
 	HRESULT hr;                     // standard return type
