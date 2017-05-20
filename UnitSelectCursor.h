@@ -22,8 +22,8 @@ private:
 	const int   TEXTURE_HEIGHT = 32; 
  
 
-	float       x;
-	float       y;
+	unsigned int	x;
+	unsigned int    y;
 	UINT         width;
 	UINT         height;
 	RECT        rect;
@@ -42,8 +42,8 @@ private:
 	virtual void Draw();
 
 	void update(float frameTime);
-	void setX(float newX) { this->x = newX; }
-	void setY(float newY) { this->y = newY; }
+	void setX(unsigned int newX) { this->x = newX; }
+	void setY(unsigned int newY) { this->y = newY; }
 
 	MikeRectangle * shpBoundingRectangle;
 	boolean drawShpBoundingRectangle;

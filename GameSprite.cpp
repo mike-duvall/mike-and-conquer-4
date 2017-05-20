@@ -38,8 +38,8 @@ int mapColorIndex(int index) {
 
 
 void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
-	point_vertex.x = x;
-	point_vertex.y = y;
+	point_vertex.x = (float)x;
+	point_vertex.y = (float)y;
 	point_vertex.z = 1.0f;
 	point_vertex.rhw = 1.0f;
 	point_vertex.colour = D3DCOLOR_RGBA(0, 0, 0, 0);
@@ -54,12 +54,12 @@ void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned c
 	float fGreen = (float)paletteEntry->GetGreen() / 63.0f * 255.0f;
 	float fBlue = (float)paletteEntry->GetBlue() / 63.0f  * 255.0f;
 
-	int intRed = fRed;
-	int intGreen = fGreen;
-	int intBlue = fBlue;
+	unsigned int intRed = (unsigned int)fRed;
+	unsigned int intGreen = (unsigned int)fGreen;
+	unsigned int intBlue = (unsigned int)fBlue;
 
-	point_vertex.x = x;
-	point_vertex.y = y;
+	point_vertex.x = (float)x;
+	point_vertex.y = (float)y;
 	point_vertex.z = 1.0f;
 	point_vertex.rhw = 1.0f;
 	point_vertex.colour = D3DCOLOR_XRGB(intRed, intGreen, intBlue);
@@ -226,7 +226,11 @@ void GameSprite::SetSpriteCenter(int x, int y) {
 }
 
 
-void GameSprite::Draw(float gameTime, D3DXVECTOR2 position) {
+void GameSprite::Draw(float gameTime, unsigned int x, unsigned int y) {
+
+	D3DXVECTOR2 position;
+	position.x = (float)x;
+	position.y = (float)y;
 
 	D3DCOLOR color = graphicsNS::WHITE;
 

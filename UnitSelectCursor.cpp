@@ -51,17 +51,9 @@ UnitSelectCursor::~UnitSelectCursor()
 
 void UnitSelectCursor::Draw()
 {
-    if ( graphics == NULL)
-        return;
 
-	D3DXVECTOR2 position;
+	gameSprite->Draw(0, x, y);
 
-	int roundedX = (int) x;
-	int roundexY = (int) y;
-
-	position.x = (float)roundedX;
-	position.y = (float)roundexY;
-	gameSprite->Draw(0, position);
 
 	if (drawShpBoundingRectangle) {
 		shpBoundingRectangle->SetX(this->x);

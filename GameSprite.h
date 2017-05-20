@@ -24,7 +24,7 @@ public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
 	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex);
 	~GameSprite();
-	virtual void Draw(float gameTime, D3DXVECTOR2 position);
+	virtual void Draw(float gameTime, unsigned int x, unsigned int y);
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	void SetSpriteCenter(int x, int y);
