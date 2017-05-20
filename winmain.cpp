@@ -97,7 +97,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         game->DeleteAll();
         DestroyWindow(hwnd);
         MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
-		throw;
     }
 
     safeDelete(game);       // free memory before exit
