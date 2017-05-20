@@ -129,6 +129,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
-    <Text Include="readme.txt" />
   </ItemGroup>
 </Project>

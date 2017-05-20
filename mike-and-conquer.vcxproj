@@ -133,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
-    <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="mike-and-conquer-lib\mike-and-conquer-lib.vcxproj">
