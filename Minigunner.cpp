@@ -72,12 +72,6 @@ void Minigunner::handleIdleState(float frameTime) {
 
 }
 
-//xxx Figure out how to write a UI test to test the app behaviour
-//
-//Investigate these: 
-//	* https://engineering.riotgames.com/news/automated-testing-league-legends
-//	* https://blog.testfort.com/automated-testing/video-game-test-automation
-//	* http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.php
 
 void Minigunner::moveTowardsDestination(float frameTime) {
 	int buffer = 2;
@@ -191,10 +185,12 @@ bool Minigunner::pointIsWithin(int x, int y)
 	int boundingBoxWidth = WIDTH * scale;
 	int boundingBoxHeight = HEIGHT * scale;
 
+
+	int yAdjustment = 14;
 	int boundingBoxLeftX = int(this->x - (boundingBoxWidth / 2));
 	int boundingBoxRightX = int(this->x + (boundingBoxWidth / 2));
-	int boundingBoxTopY = int(this->y - (boundingBoxHeight / 2));
-	int boundingBoxBottomY = int(this->y + (boundingBoxHeight / 2));
+	int boundingBoxTopY = int(this->y - yAdjustment - (boundingBoxHeight / 2));
+	int boundingBoxBottomY = int(this->y - yAdjustment + (boundingBoxHeight / 2));
 
 	if (x >= boundingBoxLeftX &&
 		x <= boundingBoxRightX &&
