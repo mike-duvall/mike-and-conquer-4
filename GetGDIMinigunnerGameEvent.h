@@ -15,12 +15,8 @@ class GetGDIMinigunnerGameEvent : public GameEvent {
 		Minigunner * GetMinigunner();
 		virtual void Process();
 
-
-
 	private:
 		std::condition_variable condition;
-
-
 
 
 };

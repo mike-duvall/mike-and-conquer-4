@@ -9,11 +9,6 @@
 
 
 
-
-//  * Try drawing tighter bounding that represents where clicking works
-//	* Consider just selecting center of image, whatever the size, and just drawing it, minigunner and unit selection curos
-
-
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex) {
 	this->device = device;
 	this->InitializeTextureFromShpFile(shpFile,imageIndex);
@@ -32,9 +27,8 @@ GameSprite::~GameSprite() {
 }
 
 
+int GameSprite::MapColorIndex(int index) {
 
-
-int GameSprite::mapColorIndex(int index) {
 	return index;
 }
 
@@ -218,7 +212,6 @@ bool GameSprite::InitializeSprite() {
 		spriteCenter = D3DXVECTOR2((float)(width /  2),
 			(float)(height / 2));
 
-		//spriteCenter = D3DXVECTOR2(0, 0);
 
 
 	}
@@ -231,7 +224,6 @@ void GameSprite::SetSpriteCenter(int x, int y) {
 	spriteCenter = D3DXVECTOR2((float)x,
 		(float)y);
 }
-
 
 
 void GameSprite::Draw(float gameTime, D3DXVECTOR2 position) {

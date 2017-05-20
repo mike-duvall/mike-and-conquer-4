@@ -35,13 +35,12 @@ private:
 	void InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
 	void CreateTextureForDrawing();
 	void DrawImageDataToTexture(point_vertex * imageData);
-	int mapColorIndex(int index);
+	int MapColorIndex(int index);
 	bool InitializeSprite();
 
 	LPD3DXSPRITE   sprite;
 	D3DXVECTOR2 spriteCenter;
 	D3DXVECTOR2 scaling;
-
 
 	LPDIRECT3DTEXTURE9 texture;
 	LPDIRECT3DDEVICE9 device;

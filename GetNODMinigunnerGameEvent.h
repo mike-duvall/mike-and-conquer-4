@@ -15,12 +15,7 @@ public:
 	Minigunner * GetMinigunner();
 	virtual void Process();
 
-
-
 private:
 	std::condition_variable condition;
-
-
-
 
 }; 
