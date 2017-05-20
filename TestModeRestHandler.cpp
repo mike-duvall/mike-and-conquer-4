@@ -119,8 +119,8 @@ std::pair<int, int>  TestModeRestHandler::ParseMinigunnerRequest(http_request me
 
 void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
 	json::value obj;
-	obj[L"x"] = json::value::number(minigunner->getX());
-	obj[L"y"] = json::value::number(minigunner->getY());
+	obj[L"x"] = json::value::number(minigunner->GetX());
+	obj[L"y"] = json::value::number(minigunner->GetY());
 	obj[L"health"] = json::value::number(minigunner->GetHealth());
 	message.reply(status_codes::OK, obj);
 }

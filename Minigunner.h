@@ -24,18 +24,18 @@ class Minigunner
     virtual ~Minigunner();
 
 
-	virtual void draw();
+	virtual void Draw();
 
-	void update(float frameTime);
-	virtual const D3DXVECTOR2 getVelocity() const { return velocity; }
-	virtual void  setVelocity(D3DXVECTOR2 v) { velocity = v; }
-	void setX(float newX) { this->x = newX; }
-	void setY(float newY) { this->y = newY; }
-	int getX() { return (int)this->x; }
-	int getY() { return (int)this->y; }
-	bool pointIsWithin(int x, int y);
-	void setSelected(bool selected) { this->isSelected = selected; }
-	bool getIsSelected() { return this->isSelected; }
+	void Update(float frameTime);
+	virtual const D3DXVECTOR2 GetVelocity() const { return velocity; }
+	virtual void  SetVelocity(D3DXVECTOR2 v) { velocity = v; }
+	void SetX(float newX) { this->x = newX; }
+	void SetY(float newY) { this->y = newY; }
+	int GetX() { return (int)this->x; }
+	int GetY() { return (int)this->y; }
+	bool PointIsWithin(int x, int y);
+	void SetSelected(bool selected) { this->isSelected = selected; }
+	bool GetIsSelected() { return this->isSelected; }
 	void MoveTo(int x, int y);
 	int GetHealth() { return this->health; }
 
@@ -64,22 +64,24 @@ private:
 
 	bool isEnemy;
 
-	std::string state;
-	void handleIdleState(float frameTime);
-	void handleMovingState(float frameTime);
-	void handleAttackingState(float frameTime);
-
-	bool isInAttackRange();
-	void moveTowardsDestination(float frameTime);
-	int calculateDistanceToTarget();
-
 	int health;
 
-	void reduceHealth(int amount);
-	Minigunner * enemyAttacking;
+	Minigunner * currentAttackTarget;
 
 	MikeRectangle * shpBoundingRectangle;
 	boolean drawShpBoundingRectangle;
+
+
+	std::string state;
+
+	void HandleIdleState(float frameTime);
+	void HandleMovingState(float frameTime);
+	void HandleAttackingState(float frameTime);
+
+	bool IsInAttackRange();
+	void MoveTowardsDestination(float frameTime);
+	int CalculateDistanceToTarget();
+	void ReduceHealth(int amount);
 
 };
 

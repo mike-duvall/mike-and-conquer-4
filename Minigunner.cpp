@@ -35,7 +35,7 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, imageIndex);
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
-	setSelected(false);
+	SetSelected(false);
 
 }
 
@@ -50,20 +50,20 @@ void Minigunner::MoveTo(int x, int y) {
 	this->destinationY = y;
 }
 
-void Minigunner::handleIdleState(float frameTime) {
+void Minigunner::HandleIdleState(float frameTime) {
 	if (input->isLeftMouseDown()) {
 		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
-				setSelected(true);
+				SetSelected(true);
 			}
 			else {
 				// It's the enemy
 				state = "ATTACKING";
-				enemyAttacking = foundMinigunner;
+				currentAttackTarget = foundMinigunner;
 			}
 		}
-		else if (getIsSelected()) {
+		else if (GetIsSelected()) {
 			state = "MOVING";
 			MoveTo(input->getMouseX(), input->getMouseY());
 		}
@@ -73,7 +73,7 @@ void Minigunner::handleIdleState(float frameTime) {
 }
 
 
-void Minigunner::moveTowardsDestination(float frameTime) {
+void Minigunner::MoveTowardsDestination(float frameTime) {
 	int buffer = 2;
 
 	if (this->x < (this->destinationX - buffer)) {
@@ -92,28 +92,28 @@ void Minigunner::moveTowardsDestination(float frameTime) {
 
 }
 
-void Minigunner::handleMovingState(float frameTime) {
+void Minigunner::HandleMovingState(float frameTime) {
 
 	if (input->isLeftMouseDown()) {
 		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
 			if (foundMinigunner == this) {
-				setSelected(true);
+				SetSelected(true);
 			}
 			else {
 				// It's the enemy
 				state = "ATTACKING";
-				enemyAttacking = foundMinigunner;
+				currentAttackTarget = foundMinigunner;
 			}
 		}
-		else if (getIsSelected()) {
+		else if (GetIsSelected()) {
 			state = "MOVING";
 			MoveTo(input->getMouseX(), input->getMouseY());
 		}
 
 	}
 
-	moveTowardsDestination(frameTime);
+	MoveTowardsDestination(frameTime);
 
 }
 
@@ -122,12 +122,12 @@ double Distance(double dX0, double dY0, double dX1, double dY1)
 	return sqrt((dX1 - dX0)*(dX1 - dX0) + (dY1 - dY0)*(dY1 - dY0));
 }
 
-int Minigunner::calculateDistanceToTarget() {
-	return (int)Distance(this->x, this->y, this->enemyAttacking->getX(), this->enemyAttacking->getY());
+int Minigunner::CalculateDistanceToTarget() {
+	return (int)Distance(this->x, this->y, this->currentAttackTarget->GetX(), this->currentAttackTarget->GetY());
 }
 
-bool Minigunner::isInAttackRange() {
-	int distanceToTarget = calculateDistanceToTarget();
+bool Minigunner::IsInAttackRange() {
+	int distanceToTarget = CalculateDistanceToTarget();
 
 	if (distanceToTarget < 200) {
 		return true;
@@ -138,48 +138,48 @@ bool Minigunner::isInAttackRange() {
 }
 
 
-void Minigunner::reduceHealth(int amount) {
+void Minigunner::ReduceHealth(int amount) {
 	if (health > 0) {
 		this->health -= amount;
 	}
 }
 
-void Minigunner::handleAttackingState(float frameTime) {
-	if (isInAttackRange()) {
-		enemyAttacking->reduceHealth(10);
+void Minigunner::HandleAttackingState(float frameTime) {
+	if (IsInAttackRange()) {
+		currentAttackTarget->ReduceHealth(10);
 	}
 	else {
-		MoveTo(enemyAttacking->getX(), enemyAttacking->getY());
-		moveTowardsDestination(frameTime);
+		MoveTo(currentAttackTarget->GetX(), currentAttackTarget->GetY());
+		MoveTowardsDestination(frameTime);
 	}
 
 
 }
 
 
-void Minigunner::update(float frameTime) {
+void Minigunner::Update(float frameTime) {
 
 	if (isEnemy) {
 		return;
 	}
 
 	if (state == "IDLE") {
-		handleIdleState(frameTime);
+		HandleIdleState(frameTime);
 	}
 	else if (state == "MOVING") {
-		handleMovingState(frameTime);
+		HandleMovingState(frameTime);
 	}
 	else if (state == "ATTACKING") {
-		handleAttackingState(frameTime);
+		HandleAttackingState(frameTime);
 	}
 
 	if (input->isRightMouseDown()) {
-		setSelected(false);
+		SetSelected(false);
 	}
 
 }
 
-bool Minigunner::pointIsWithin(int x, int y)
+bool Minigunner::PointIsWithin(int x, int y)
 {
 	int scale = 4;
 	int boundingBoxWidth = WIDTH * scale;
@@ -205,7 +205,7 @@ bool Minigunner::pointIsWithin(int x, int y)
 
 
 
-void Minigunner::draw()
+void Minigunner::Draw()
 {
     if ( graphics == NULL)
         return;
@@ -226,8 +226,8 @@ void Minigunner::draw()
 	}
 
 	if (drawShpBoundingRectangle) {
-		shpBoundingRectangle->SetX(this->getX());
-		shpBoundingRectangle->SetY(this->getY());
+		shpBoundingRectangle->SetX(this->GetX());
+		shpBoundingRectangle->SetY(this->GetY());
 		shpBoundingRectangle->Draw(graphics->Get3Ddevice());
 	}
 

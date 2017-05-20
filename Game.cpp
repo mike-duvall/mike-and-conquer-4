@@ -98,10 +98,10 @@ void Game::Initialize(HWND hw) {
 
 
 Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
-	if (minigunner1->pointIsWithin(x, y)) {
+	if (minigunner1->PointIsWithin(x, y)) {
 		return minigunner1;
 	}
-	else if (enemyMinigunner1 != NULL && enemyMinigunner1->pointIsWithin(x, y)) {
+	else if (enemyMinigunner1 != NULL && enemyMinigunner1->PointIsWithin(x, y)) {
 		return enemyMinigunner1;
 	}
 	else {
@@ -198,10 +198,10 @@ void Game::Update() {
 
 	ProcessGameEvents();
 	if (minigunner1 != NULL) {
-		minigunner1->update(frameTime);
+		minigunner1->Update(frameTime);
 	}
 	if (enemyMinigunner1 != NULL) {
-		enemyMinigunner1->update(frameTime);
+		enemyMinigunner1->Update(frameTime);
 	}
 	if (input->isLeftMouseDown()) {
 		circle->SetX(input->getMouseX());
@@ -214,12 +214,12 @@ void Game::Update() {
 void Game::Render() {
 //	graphics->spriteBegin();                // begin drawing sprites
 	if (minigunner1 != NULL) {
-		minigunner1->draw();
+		minigunner1->Draw();
 	}
 
 	if (enemyMinigunner1 != NULL) {
 		if (enemyMinigunner1->GetHealth() > 0) {
-			enemyMinigunner1->draw();
+			enemyMinigunner1->Draw();
 		}
 	}
 
