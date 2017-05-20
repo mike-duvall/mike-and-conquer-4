@@ -8,8 +8,6 @@
 #include "ShpFile.h"
 #include "MikeRectangle.h"
 
-const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
-
 
 
 Minigunner::Minigunner(Game * game,  int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
