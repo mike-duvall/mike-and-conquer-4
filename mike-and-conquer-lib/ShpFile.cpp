@@ -8,23 +8,6 @@
 #include "LittleEndianNumberStream.h"
 #include "LCWCompression.h"
 
-static std::vector<unsigned char> ReadAllBytes(char const* filename) {
-	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
-	std::ifstream::pos_type pos = ifs.tellg();
-
-	std::vector<char>  result(pos);
-
-	ifs.seekg(0, std::ios::beg);
-	ifs.read(&result[0], pos);
-
-	std::vector<unsigned char> unsignedResult;
-	for (std::vector<char>::iterator it = result.begin(); it != result.end(); ++it) {
-		unsignedResult.push_back(*it);
-	}
-
-	return unsignedResult;
-}
-
 
 
 ShpFile::ShpFile(std::string & filename) {

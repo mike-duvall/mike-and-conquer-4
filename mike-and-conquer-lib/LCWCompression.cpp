@@ -23,7 +23,7 @@ void CopyTo(std::vector<uint8_t> & sourceArray, int sourceIndex, std::vector<uin
 	int LCWCompression::DecodeInto(std::vector<uint8_t> & src, std::vector<uint8_t> & dest, int srcOffset, bool reverse) {
 	//var ctx = new FastByteReader(src, srcOffset);
 	
-	int destIndex = 0;
+	unsigned int destIndex = 0;
 	while (true)
 	{
 		//var i = ctx.ReadByte();
@@ -34,7 +34,7 @@ void CopyTo(std::vector<uint8_t> & sourceArray, int sourceIndex, std::vector<uin
 			//var secondByte = ctx.ReadByte();
 			uint8_t secondByte = ReadUInt8(src, srcOffset);
 			//var count = ((i & 0x70) >> 4) + 3;
-			int count = ((i & 0x70) >> 4) + 3;
+			unsigned int count = ((i & 0x70) >> 4) + 3;
 			//var rpos = ((i & 0xf) << 8) + secondByte;
 			int rpos = ((i & 0xf) << 8) + secondByte;
 
