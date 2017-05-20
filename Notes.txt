@@ -30,3 +30,16 @@ Remote debugging
 ****************
 
 (Add remote debugging notes here)
+
+
+
+Next steps
+***********
+* Fix detecting when to mark unit as selected(need to move the detection box up a bit)
+* Pull back, look at overall design, do some refactoring
+* Then, animate minigunner when moving
+* Animate minigunner when shooting
+* Add barracks for both sides
+* Make barracks able to generate minigunners
+* Make computer controller continually spit out minigunners and have them attack
+

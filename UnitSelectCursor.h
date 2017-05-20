@@ -8,6 +8,7 @@
 class Graphics;
 class Game;
 class GameSprite;
+class MikeRectangle;
 
 
 class UnitSelectCursor
@@ -43,6 +44,10 @@ private:
 	void update(float frameTime);
 	void setX(float newX) { this->x = newX; }
 	void setY(float newY) { this->y = newY; }
+
+	MikeRectangle * shpBoundingRectangle;
+	boolean drawShpBoundingRectangle;
+
 
 	
 };
