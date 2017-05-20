@@ -30,7 +30,7 @@ std::vector<unsigned char> ReadAllBytes(char const* filename) {
 	std::ifstream ifs(filename, std::ios::binary | std::ios::ate);
 	std::ifstream::pos_type pos = ifs.tellg();
 
-	std::vector<char>  result(pos);
+	std::vector<char>  result((unsigned int)pos);
 
 	ifs.seekg(0, std::ios::beg);
 	ifs.read(&result[0], pos);
