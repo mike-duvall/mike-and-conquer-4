@@ -82,11 +82,9 @@ protected:
 	LARGE_INTEGER timerFreq;        // Performance Counter frequency
 	float   frameTime;              // time required for last frame
 	DWORD   sleepTime;              // number of milli-seconds to sleep between frames
+
 	bool    initialized;
-
-
-
-	void HandleMouseInput(LPARAM lParam);
+		void HandleMouseInput(LPARAM lParam);
 
 
 

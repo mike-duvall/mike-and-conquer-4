@@ -81,9 +81,6 @@ void Game::Initialize(HWND hw) {
 
 	QueryPerformanceCounter(&timeStart);        // get starting time
 
-	initialized = true;
-
-
 	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
 
 	minigunner1 = NULL;
@@ -95,7 +92,7 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(300, 900);
-
+	initialized = true;
 }
 
 
