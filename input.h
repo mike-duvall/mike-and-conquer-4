@@ -23,17 +23,17 @@ class Input
 
 public:
 	Input();
-	void keyDown(WPARAM);
-	void keyUp(WPARAM);
-	bool isKeyDown(UCHAR vkey) const;
-	void leftMouseDown();
-	void leftMouseUp();
-	void rightMouseDown();
-	void rightMouseUp();
+	void KeyDown(WPARAM);
+	void KeyUp(WPARAM);
+	bool IsKeyDown(UCHAR vkey) const;
+	void LeftMouseDown();
+	void LeftMouseUp();
+	void RightMouseDown();
+	void RightMouseUp();
 
 	bool isLeftMouseDown() { return leftMouseButtonDown; }
 	bool isRightMouseDown() { return rightMouseButtonDown; }
-	void mousePosition(int x, int y);
+	void MousePosition(int x, int y);
 	int getMouseX() { return mouseX;  }
 	int getMouseY() { return mouseY; }
 

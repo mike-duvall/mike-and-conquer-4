@@ -2,12 +2,6 @@
 
 
 
-//Clean up mouse code
-//Have clicking the minigunner select him
-//click elsewhere delsects? 
-//Then left click to move to position
-
-
 Input::Input()
 {
 
@@ -24,7 +18,7 @@ Input::Input()
 
 
 
-void Input::keyDown(WPARAM wParam)
+void Input::KeyDown(WPARAM wParam)
 {
     // make sure key code is within buffer range
     if (wParam < inputNS::KEYS_ARRAY_LEN)
@@ -35,7 +29,7 @@ void Input::keyDown(WPARAM wParam)
     }
 }
 
-void Input::keyUp(WPARAM wParam)
+void Input::KeyUp(WPARAM wParam)
 {
     // make sure key code is within buffer range
     if (wParam < inputNS::KEYS_ARRAY_LEN)
@@ -44,7 +38,7 @@ void Input::keyUp(WPARAM wParam)
 }
 
 
-bool Input::isKeyDown(UCHAR vkey) const
+bool Input::IsKeyDown(UCHAR vkey) const
 {
     if (vkey < inputNS::KEYS_ARRAY_LEN)
         return keysDown[vkey];
@@ -52,28 +46,28 @@ bool Input::isKeyDown(UCHAR vkey) const
         return false;
 }
 
-void Input::leftMouseDown()
+void Input::LeftMouseDown()
 {
 	leftMouseButtonDown = true;
 }
 
-void Input::leftMouseUp()
+void Input::LeftMouseUp()
 {
 	leftMouseButtonDown = false;
 }
 
-void Input::rightMouseDown()
+void Input::RightMouseDown()
 {
 	rightMouseButtonDown = true;
 }
 
-void Input::rightMouseUp()
+void Input::RightMouseUp()
 {
 	rightMouseButtonDown = false;
 }
 
 
-void Input::mousePosition(int x, int y)
+void Input::MousePosition(int x, int y)
 {
 	this->mouseX = x;
 	this->mouseY = y;

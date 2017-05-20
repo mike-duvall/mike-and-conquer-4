@@ -36,7 +36,7 @@ class Minigunner
 	bool PointIsWithin(int x, int y);
 	void SetSelected(bool selected) { this->isSelected = selected; }
 	bool GetIsSelected() { return this->isSelected; }
-	void MoveTo(int x, int y);
+	void SetDestination(int x, int y);
 	int GetHealth() { return this->health; }
 
 private:

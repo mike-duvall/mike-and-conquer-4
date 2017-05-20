@@ -45,21 +45,21 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 		POINT mousePos;
 		GetCursorPos(&mousePos);
-		input->mousePosition(mousePos.x, mousePos.y);
+		input->MousePosition(mousePos.x, mousePos.y);
 
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_DOWN) {
-			input->leftMouseDown();
+			input->LeftMouseDown();
 		}
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_LEFT_BUTTON_UP) {
-			input->leftMouseUp();
+			input->LeftMouseUp();
 		}
 
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_RIGHT_BUTTON_DOWN) {
-			input->rightMouseDown();
+			input->RightMouseDown();
 
 		}
 		if (inputData.data.mouse.usButtonFlags == RI_MOUSE_RIGHT_BUTTON_UP) {
-			input->rightMouseUp();
+			input->RightMouseUp();
 		}
 
 	}
@@ -164,10 +164,10 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
                 PostQuitMessage(0);        //tell Windows to kill this program
                 return 0;
             case WM_KEYDOWN: case WM_SYSKEYDOWN:    // key down
-                input->keyDown(wParam);
+                input->KeyDown(wParam);
                 return 0;
             case WM_KEYUP: case WM_SYSKEYUP:        // key up
-                input->keyUp(wParam);
+                input->KeyUp(wParam);
                 return 0;
 
 			case WM_INPUT:
@@ -256,7 +256,7 @@ void Game::ExecuteGameCycle() {
     Update(); 
     RenderGame(); 
 
-    if (input->isKeyDown(ESC_KEY))
+    if (input->IsKeyDown(ESC_KEY))
 		PostQuitMessage(0);
 
 }

@@ -6,7 +6,6 @@
 #include "ShpFile.h"
 #include "MikeRectangle.h"
 
-const std::string IMAGE_FILE = "pictures\\cursor.png";  // game textures
 
 UnitSelectCursor::UnitSelectCursor(Graphics *g)
 {
@@ -50,7 +49,7 @@ UnitSelectCursor::~UnitSelectCursor()
 
 
 
-void UnitSelectCursor::draw()
+void UnitSelectCursor::Draw()
 {
     if ( graphics == NULL)
         return;

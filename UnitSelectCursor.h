@@ -39,7 +39,7 @@ private:
     virtual ~UnitSelectCursor();
 
 
-	virtual void draw();
+	virtual void Draw();
 
 	void update(float frameTime);
 	void setX(float newX) { this->x = newX; }

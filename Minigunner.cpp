@@ -43,7 +43,7 @@ Minigunner::~Minigunner()
 }
 
 
-void Minigunner::MoveTo(int x, int y) {
+void Minigunner::SetDestination(int x, int y) {
 	this->destinationX = x;
 	this->destinationY = y;
 }
@@ -63,7 +63,7 @@ void Minigunner::HandleIdleState(float frameTime) {
 		}
 		else if (GetIsSelected()) {
 			state = "MOVING";
-			MoveTo(input->getMouseX(), input->getMouseY());
+			SetDestination(input->getMouseX(), input->getMouseY());
 		}
 
 	}
@@ -106,7 +106,7 @@ void Minigunner::HandleMovingState(float frameTime) {
 		}
 		else if (GetIsSelected()) {
 			state = "MOVING";
-			MoveTo(input->getMouseX(), input->getMouseY());
+			SetDestination(input->getMouseX(), input->getMouseY());
 		}
 
 	}
@@ -147,7 +147,7 @@ void Minigunner::HandleAttackingState(float frameTime) {
 		currentAttackTarget->ReduceHealth(10);
 	}
 	else {
-		MoveTo(currentAttackTarget->GetX(), currentAttackTarget->GetY());
+		SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
 		MoveTowardsDestination(frameTime);
 	}
 
@@ -205,9 +205,6 @@ bool Minigunner::PointIsWithin(int x, int y)
 
 void Minigunner::Draw()
 {
-    if ( graphics == NULL)
-        return;
-
 	D3DXVECTOR2 position;
 
 	int roundedX = (int) x;
@@ -220,7 +217,7 @@ void Minigunner::Draw()
 	if (isSelected) {
 		unitSelectCursor->setX(position.x);
 		unitSelectCursor->setY(position.y);
-		unitSelectCursor->draw();
+		unitSelectCursor->Draw();
 	}
 
 	if (drawShpBoundingRectangle) {
