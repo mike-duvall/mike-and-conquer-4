@@ -12,12 +12,12 @@ const std::string IMAGE_FILE = "pictures\\m3.png";  // game textures
 
 
 
-Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
+Minigunner::Minigunner(Game * game,  int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
 	this->health = 1000;
 	this->state = "IDLE";
 	this->game = game;
-	this->graphics = graphics;
+	this->graphics = game->GetGraphics();
 	this->input = input;
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;

@@ -87,8 +87,8 @@ void Game::Initialize(HWND hw) {
 	enemyMinigunner1 = NULL;
 
 	if (!testMode) {
-		minigunner1 = new Minigunner(this, this->GetGraphics(), 300, 900, unitSelectCursor, input, false);
-		enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), 1000, 300, unitSelectCursor, input, true);
+		minigunner1 = new Minigunner(this,  300, 900, unitSelectCursor, input, false);
+		enemyMinigunner1 = new Minigunner(this,  1000, 300, unitSelectCursor, input, true);
 	}
 
 	circle = new Circle(300, 900);
@@ -112,7 +112,7 @@ Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
 
 void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
-	minigunner1 = new Minigunner(this, this->GetGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	minigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
 
 void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
@@ -144,7 +144,7 @@ Minigunner * Game::GetNODMinigunnerViaEvent() {
 
 void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
-	enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	enemyMinigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
 }
 
 void Game::AddCreateNODMinigunnerEvent(int x, int y) {

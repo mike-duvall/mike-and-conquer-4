@@ -20,7 +20,7 @@ class Minigunner
 
   public:
 
-	Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
+	Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
     virtual ~Minigunner();
 
 
