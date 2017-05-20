@@ -33,9 +33,9 @@ Minigunner::Minigunner(Game * game, Graphics * graphics, int x, int y, UnitSelec
 	ShpFile shpFile(std::string("assets/e1.shp"));
 	int imageIndex = 0;
 	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, imageIndex);
-	drawShpBoundingRectangle = true;
+	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
-	setSelected(true);
+	setSelected(false);
 
 }
 
