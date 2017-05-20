@@ -35,7 +35,7 @@ public:
 
     virtual void Initialize(HWND hwnd);
 
-    virtual void Run(HWND);
+    virtual void ExecuteGameCycle();
 
     virtual void ReleaseAll();
     virtual void ResetAll();
@@ -50,7 +50,6 @@ public:
     Graphics* GetGraphics() {return graphics;}
     Input* GetInput()       {return input;}
     void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
-	void InitializeStuff();
 	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
 	void AddCreateGDIMinigunnerEvent(int x, int y);

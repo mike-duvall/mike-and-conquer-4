@@ -109,10 +109,6 @@ Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
 	}
 }
 
-void Game::InitializeStuff() {
-	minigunner1 = new Minigunner(this, this->GetGraphics(), 300, 900, unitSelectCursor, input, false);
-	enemyMinigunner1 = new Minigunner(this, this->GetGraphics(), 1000, 300, unitSelectCursor, input, true);
-}
 
 void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
@@ -237,18 +233,14 @@ void Game::RenderGame() {
     if (SUCCEEDED(graphics->BeginScene()))
     {
         Render();
-
-
-
         graphics->endScene();
     }
 
     graphics->ShowBackbuffer();
 
-
 }
 
-void Game::Run(HWND hwnd) {
+void Game::ExecuteGameCycle() {
     if(graphics == NULL)            // if graphics not initialized
         return;
 
@@ -256,16 +248,6 @@ void Game::Run(HWND hwnd) {
     QueryPerformanceCounter(&timeEnd);
     frameTime = (float)(timeEnd.QuadPart - timeStart.QuadPart ) / (float)timerFreq.QuadPart;
 
-    //// Power saving code, requires winmm.lib
-    //// if not enough time has elapsed for desired frame rate
-    //if (frameTime < MIN_FRAME_TIME) 
-    //{
-    //    sleepTime = (DWORD)((MIN_FRAME_TIME - frameTime)*1000);
-    //    timeBeginPeriod(1);         // Request 1mS resolution for windows timer
-    //    Sleep(sleepTime);           // release cpu for sleepTime
-    //    timeEndPeriod(1);           // End 1mS timer resolution
-    //    return;
-    //}
 
     if (frameTime > MAX_FRAME_TIME) // if frame rate is very slow
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
