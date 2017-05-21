@@ -29,6 +29,7 @@ public:
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	void SetSpriteCenter(int x, int y);
+	void SetAnimate(boolean animate) { this->animate = animate; }
 
 private:
 
@@ -45,15 +46,12 @@ private:
 	D3DXVECTOR2 scaling;
 
 	std::vector<LPDIRECT3DTEXTURE9> textureList;
-	//LPDIRECT3DTEXTURE9 texture1;
-	//LPDIRECT3DTEXTURE9 texture2;
 	int textureTimer = 0;
 	boolean animate;
 
 	LPDIRECT3DTEXTURE9 currentTexture;
 	LPDIRECT3DDEVICE9 device;
 
-	//Attributes
 	D3DCOLOR color;
 	bool initialized;
 

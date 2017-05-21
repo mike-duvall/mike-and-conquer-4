@@ -79,6 +79,7 @@ private:
 	void HandleAttackingState(float frameTime);
 
 	bool IsInAttackRange();
+	bool IsAtDestination();
 	void MoveTowardsDestination(float frameTime);
 	int CalculateDistanceToTarget();
 	void ReduceHealth(int amount);
