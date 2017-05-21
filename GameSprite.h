@@ -22,7 +22,7 @@ class GameSprite {
 
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
-	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex);
+	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, boolean animate,  int imageIndex);
 	~GameSprite();
 	virtual void Draw(float gameTime, int x, int y);
 	int GetWidth() { return width; }
@@ -31,18 +31,23 @@ public:
 
 private:
 
-	void InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
-	void InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
-	void CreateTextureForDrawing();
-	void DrawImageDataToTexture(point_vertex * imageData);
+	LPDIRECT3DTEXTURE9 InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
+	LPDIRECT3DTEXTURE9 InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
+	LPDIRECT3DTEXTURE9 CreateTextureForDrawing();
+	void DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData);
 	int MapColorIndex(int index);
-	bool InitializeSprite();
+	bool InitializeDirectXSpriteInterface();
 
 	LPD3DXSPRITE   sprite;
 	D3DXVECTOR2 spriteCenter;
 	D3DXVECTOR2 scaling;
 
-	LPDIRECT3DTEXTURE9 texture;
+	LPDIRECT3DTEXTURE9 texture1;
+	LPDIRECT3DTEXTURE9 texture2;
+	int textureTimer = 0;
+	boolean animate;
+
+	LPDIRECT3DTEXTURE9 currentTexture;
 	LPDIRECT3DDEVICE9 device;
 
 	//Attributes

@@ -50,12 +50,22 @@ X  * Fix bug where clicking enemy always initiates attack, even in player minigu
 	X * Write failing test for XORLCW format for second minigunner image
 	X * Update file parsing to handle all frames and to handle XORDelta compression
 	* Update GameSprite to handle a sequence of frames
+	  X * Animate sequence of two frames
+	  * Animate sequence of any number of frames
 	* Determine what frames to use in walking animation
 
 
   * Animate minigunner when shooting
+	* Support multiple animation sequences
   * Have computer randomly move NOD minigunner and attack
   * Add barracks for both sides
   * Make barracks able to generate minigunners
   * Make computer controller continually spit out minigunners and have them attack
 
+Refactoring
+***********
+	* GameSprite should have work with a single texture with all it's sprite images on it
+	* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
+	  just be the sprite sheet image from above
+	* Create class that is responsible for parsing Shpfile into a single sprite sheet
+	

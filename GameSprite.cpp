@@ -9,17 +9,28 @@
 
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, int imageIndex) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, boolean animate, int imageIndex) {
 	this->device = device;
-	this->InitializeTextureFromShpFile(shpFile,imageIndex);
-	this->InitializeSprite();
+	this->animate = animate;
+
+	// Temporary hack to handle Minigunner and pointer
+	// Fix this up later
+	if (animate) {
+		texture1 = this->InitializeTextureFromShpFile(shpFile, 0);
+		texture2 = this->InitializeTextureFromShpFile(shpFile, 3);
+	}
+	else {
+		texture1 = this->InitializeTextureFromShpFile(shpFile, imageIndex);
+	}
+	currentTexture = texture1;
+	this->InitializeDirectXSpriteInterface();
 }
 
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->InitializeTextureFromPngFile( file, transparentColor);
-	this->InitializeSprite();
+	this->InitializeDirectXSpriteInterface();
 }
 
 
@@ -85,7 +96,8 @@ point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & 
 }
 
 
-void GameSprite::CreateTextureForDrawing() {
+LPDIRECT3DTEXTURE9 GameSprite::CreateTextureForDrawing() {
+	LPDIRECT3DTEXTURE9 textureX;
 	UINT usage = D3DUSAGE_RENDERTARGET;
 
 	HRESULT result = D3DXCreateTexture(
@@ -96,16 +108,18 @@ void GameSprite::CreateTextureForDrawing() {
 		usage,           // How the texture will be used.
 		D3DFMT_UNKNOWN,      // Texture format (i.e., D3DFORMAT).
 		D3DPOOL_DEFAULT, // Render targets must be in default pool.
-		&texture);         // Returns pointer to texture.
+		&textureX);         // Returns pointer to texture.
 	if (result != D3D_OK) {
 		throw("Failed calling D3DXCreateTexture()");
 	}
+
+	return textureX;
 }
 
-void GameSprite::DrawImageDataToTexture(point_vertex * imageData) {
+void GameSprite::DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData) {
 	LPDIRECT3DSURFACE9 surfaceToRenderTo;
 	D3DSURFACE_DESC desc;
-	texture->GetSurfaceLevel(0, &surfaceToRenderTo);
+	textureX->GetSurfaceLevel(0, &surfaceToRenderTo);
 	surfaceToRenderTo->GetDesc(&desc);
 
 
@@ -130,7 +144,7 @@ void GameSprite::DrawImageDataToTexture(point_vertex * imageData) {
 
 
 
-void GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex) {
+LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex) {
 
 	ImageHeader * imageHeader = shpFile.ImageHeaders()[imageIndex];
 	std::vector<unsigned char> & byteBuffer0 = imageHeader->GetData();
@@ -143,13 +157,15 @@ void GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex)
 
 	point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
 
-	CreateTextureForDrawing();
-	DrawImageDataToTexture(imageData);
+	LPDIRECT3DTEXTURE9 texture = CreateTextureForDrawing();
+	DrawImageDataToTexture(texture, imageData);
+
+	return texture;
 
 }
 
 
-void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
+LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
@@ -161,6 +177,7 @@ void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR tra
 	width = info.Width;
 	height = info.Height;
 
+	LPDIRECT3DTEXTURE9 textureX;
 	// Create the new texture by loading from file
 	result = D3DXCreateTextureFromFileEx(
 		device,           //3D device
@@ -176,14 +193,16 @@ void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR tra
 		transparentColor,
 		&info,              //bitmap file info (from loaded file)
 		NULL,               //color palette
-		&texture);         //destination texture
+		&textureX);         //destination texture
 	if (FAILED(result)) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXCreateTextureFromFileEx()"));
 	}
 
+	return textureX;
+
 }
 
-bool GameSprite::InitializeSprite() {
+bool GameSprite::InitializeDirectXSpriteInterface() {
 
 	bool success = true;
 	try {
@@ -234,8 +253,6 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	D3DCOLOR color = graphicsNS::WHITE;
 
-	if (texture == NULL)
-		return;
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -264,7 +281,20 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	sprite->SetTransform(&matrix);
 
-	sprite->Draw(texture, NULL, NULL, NULL, color);
+	if (animate) {
+		textureTimer++;
+		if (textureTimer > 50) {
+			textureTimer = 0;
+			if (currentTexture == texture1) {
+				currentTexture = texture2;
+			}
+			else {
+				currentTexture = texture1;
+			}
+
+		}
+	}
+	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 
 }

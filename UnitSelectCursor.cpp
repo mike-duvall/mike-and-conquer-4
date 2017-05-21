@@ -25,7 +25,8 @@ UnitSelectCursor::UnitSelectCursor(Graphics *g)
 
 	ShpFile shpFile(std::string("assets/select.shp"));
 	int imageIndex = 1;
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, imageIndex);
+	boolean animate = false;
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, animate, imageIndex);
 
 	gameSprite->SetSpriteCenter(15, 15);
 
