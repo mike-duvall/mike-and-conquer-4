@@ -10,7 +10,7 @@
 
 
 
-Minigunner::Minigunner(Game * game,  int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
+Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
 	this->health = 1000;
 	this->state = "IDLE";
@@ -20,8 +20,8 @@ Minigunner::Minigunner(Game * game,  int x, int y, UnitSelectCursor * unitSelect
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
 	this->isEnemy = isEnemy;
-	this->x = (float)x;
-	this->y = (float)y;
+	this->x = x;
+	this->y = y;
 	this->destinationX = int(this->x);
 	this->destinationY = int(this->y);
 
@@ -75,17 +75,17 @@ void Minigunner::MoveTowardsDestination(float frameTime) {
 	int buffer = 2;
 
 	if (this->x < (this->destinationX - buffer)) {
-		x += frameTime * velocity.x;
+		x += (int)(frameTime * velocity.x);
 	}
 	else if (this->x >(this->destinationX + buffer)) {
-		x -= frameTime * velocity.x;
+		x -= (int)(frameTime * velocity.x);
 	}
 
 	if (this->y < (this->destinationY - buffer)) {
-		y += frameTime * velocity.y;
+		y += (int) (frameTime * velocity.y);
 	}
 	else if (this->y >(this->destinationY + buffer)) {
-		y -= frameTime * velocity.y;
+		y -= (int) (frameTime * velocity.y);
 	}
 
 }
@@ -205,18 +205,11 @@ bool Minigunner::PointIsWithin(int x, int y)
 
 void Minigunner::Draw()
 {
-	D3DXVECTOR2 position;
-
-	int roundedX = (int) x;
-	int roundexY = (int) y;
-
-	position.x = (float)roundedX;
-	position.y = (float)roundexY;
-	gameSprite->Draw(0, position);
+	gameSprite->Draw(0, x, y);
 
 	if (isSelected) {
-		unitSelectCursor->setX(position.x);
-		unitSelectCursor->setY(position.y);
+		unitSelectCursor->setX(x);
+		unitSelectCursor->setY(y);
 		unitSelectCursor->Draw();
 	}
 

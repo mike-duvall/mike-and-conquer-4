@@ -29,10 +29,10 @@ class Minigunner
 	void Update(float frameTime);
 	virtual const D3DXVECTOR2 GetVelocity() const { return velocity; }
 	virtual void  SetVelocity(D3DXVECTOR2 v) { velocity = v; }
-	void SetX(float newX) { this->x = newX; }
-	void SetY(float newY) { this->y = newY; }
-	int GetX() { return (int)this->x; }
-	int GetY() { return (int)this->y; }
+	void SetX(int newX) { this->x = newX; }
+	void SetY(int newY) { this->y = newY; }
+	int GetX() { return this->x; }
+	int GetY() { return this->y; }
 	bool PointIsWithin(int x, int y);
 	void SetSelected(bool selected) { this->isSelected = selected; }
 	bool GetIsSelected() { return this->isSelected; }
@@ -50,8 +50,8 @@ private:
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height
 
-	float       x;
-	float       y;
+	int	x;
+	int	y;
 	UINT         width;
 	UINT         height;
 	D3DXVECTOR2 velocity;
