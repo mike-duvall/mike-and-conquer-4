@@ -55,7 +55,7 @@ void Minigunner::HandleIdleState(float frameTime) {
 			if (foundMinigunner == this) {
 				SetSelected(true);
 			}
-			else {
+			else if (GetIsSelected()) {
 				// It's the enemy
 				state = "ATTACKING";
 				currentAttackTarget = foundMinigunner;

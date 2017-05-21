@@ -43,8 +43,9 @@ http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.ph
 
 Next steps
 ***********
-X * Fix detecting when to mark unit as selected(need to move the detection box up a bit)
-  * Pull back, look at overall design, do some refactoring
+X  * Fix detecting when to mark unit as selected(need to move the detection box up a bit)
+X  * Pull back, look at overall design, do some refactoring
+X  * Fix bug where clicking enemy always initiates attack, even in player minigunner is not selected
   * Animate minigunner when moving
   * Animate minigunner when shooting
   * Have computer randomly move his minigunner and attack
