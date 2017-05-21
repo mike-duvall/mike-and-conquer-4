@@ -2,11 +2,6 @@
 
 #include "LittleEndianNumberStream.h"
 
-//void CopyTo(byte[] dest, int offset, int count)
-//{
-//	Array.Copy(src, this.offset, dest, offset, count);
-//	this.offset += count;
-//}
 
 
 //void Copy(Array sourceArray, int sourceIndex, Array destinationArray, int destinationIndex, int length);

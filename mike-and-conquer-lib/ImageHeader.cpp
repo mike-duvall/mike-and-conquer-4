@@ -20,10 +20,9 @@ ImageHeader::ImageHeader(std::vector<unsigned char> & data, int & dataOffset) {
 	fileOffset = readData & 0xffffff;
 	format = (Format)(readData >> 24);
 
-
+	refImageHeader = NULL;
 	refOffset = ReadUInt16(data, dataOffset);
 	refFormat = (Format)ReadUInt16(data, dataOffset);
-
 
 }
 

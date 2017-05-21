@@ -29,7 +29,7 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	velocity.y = 150.0;
 
 	ShpFile shpFile(std::string("assets/e1.shp"));
-	int imageIndex = 0;
+	int imageIndex = 4;
 	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, imageIndex);
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());

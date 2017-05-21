@@ -19,6 +19,8 @@ public:
 	Format GetRefFormat();
 	std::vector<unsigned char> & GetData();
 	void SetData(std::vector<unsigned char> & dataToSet);
+	void SetRefImageHeader(ImageHeader * imageHeader) { this->refImageHeader = imageHeader; }
+	ImageHeader * GetRefImageHeader() { return this->refImageHeader; }
 
 
 private:
@@ -27,6 +29,7 @@ private:
 	uint32_t fileOffset;
 	uint16_t refOffset;
 	Format refFormat;
+	ImageHeader * refImageHeader;
 
 	std::vector<unsigned char> data;
 

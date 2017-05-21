@@ -3,10 +3,13 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <map>
 
 #include "ImageHeader.h"
 #include "LittleEndianNumberStream.h"
 #include "LCWCompression.h"
+#include "XORDeltaCompression.h"
+
 
 
 
@@ -62,9 +65,27 @@ ShpFile::ShpFile(std::string & filename) {
 		shpBytes.push_back(allData[allDataOffset++]);
 	}
 
-	Decompress(imageHeaders[0]);
-	Decompress(imageHeaders[1]);
-	Decompress(imageHeaders[2]);
+	std::map<unsigned int, ImageHeader *> offsetToImageHeaderMap;
+	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+		ImageHeader * imageHeader = *it;
+		offsetToImageHeaderMap[imageHeader->GetFileOffset()] = *it;
+	}
+
+	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+		ImageHeader * imageHeader = *it;
+		if (imageHeader->GetFormat() == XORLCW) {
+			ImageHeader * refImage = offsetToImageHeaderMap.at(imageHeader->GetRefOffset());
+			imageHeader->SetRefImageHeader(refImage);
+		}
+	}
+
+	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+		Decompress(*it);
+	}
+
+	//Decompress(imageHeaders[0]);
+	//Decompress(imageHeaders[1]);
+	//Decompress(imageHeaders[2]);
 
 	int x = 3;
 	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
@@ -95,6 +116,23 @@ void ShpFile::Decompress(ImageHeader * h) {
 		//	XORDeltaCompression.DecodeInto(shpBytes, h.Data, (int)(h.FileOffset - shpBytesFileOffset));
 		//	break;
 		//}
+
+		case XORLCW: {
+			//	h.Data = CopyImageData(h.RefImage.Data);
+			std::vector<unsigned char> & data = h->GetRefImageHeader()->GetData();
+
+			std::vector<unsigned char> imageBytes(data);
+
+			int offset = (int)(h->GetFileOffset() - shpBytesFileOffset);
+			//LCWCompression::DecodeInto(shpBytes, imageBytes, offset, false);
+			XORDeltaCompression::DecodeInto(shpBytes, imageBytes, offset);
+			h->SetData(imageBytes);
+
+			
+			//	XORDeltaCompression.DecodeInto(shpBytes, h.Data, (int)(h.FileOffset - shpBytesFileOffset));
+
+			break;
+		}
 
 		case LCW: {
 			//var imageBytes = new byte[Size.Width * Size.Height];

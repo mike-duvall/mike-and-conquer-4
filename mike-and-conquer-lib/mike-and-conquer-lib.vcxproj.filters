@@ -36,6 +36,9 @@
     <ClCompile Include="PaletteEntry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="XORDeltaCompression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShpFile.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PaletteEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XORDeltaCompression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -75,11 +75,12 @@ TEST_CASE("Can parse width and height from SHP file", "[SHP]") {
 	REQUIRE(shpFile.ImageHeaders()[1]->GetRefOffset() == 4286);  
 	REQUIRE(shpFile.ImageHeaders()[1]->GetRefFormat() == 32768);
 
-	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[472] == 0);
-	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[473] == 180);
-	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[474] == 179);
-	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[475] == 0);
-	//REQUIRE(shpFile.ImageHeaders()[1]->GetData()[1030] == 4);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData().size() == 1950);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[472] == 0);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[473] == 180);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[474] == 179);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[475] == 0);
+	REQUIRE(shpFile.ImageHeaders()[1]->GetData()[1030] == 4);
 
 
 	REQUIRE(shpFile.ImageHeaders()[4]->GetFileOffset() == 4609);

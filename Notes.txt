@@ -47,8 +47,14 @@ X  * Fix detecting when to mark unit as selected(need to move the detection box 
 X  * Pull back, look at overall design, do some refactoring
 X  * Fix bug where clicking enemy always initiates attack, even in player minigunner is not selected
   * Animate minigunner when moving
+	X * Write failing test for XORLCW format for second minigunner image
+	X * Update file parsing to handle all frames and to handle XORDelta compression
+	* Update GameSprite to handle a sequence of frames
+	* Determine what frames to use in walking animation
+
+
   * Animate minigunner when shooting
-  * Have computer randomly move his minigunner and attack
+  * Have computer randomly move NOD minigunner and attack
   * Add barracks for both sides
   * Make barracks able to generate minigunners
   * Make computer controller continually spit out minigunners and have them attack
