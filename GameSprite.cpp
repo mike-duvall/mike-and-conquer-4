@@ -226,7 +226,7 @@ void GameSprite::SetSpriteCenter(int x, int y) {
 }
 
 
-void GameSprite::Draw(float gameTime, unsigned int x, unsigned int y) {
+void GameSprite::Draw(float gameTime, int x, int y) {
 
 	D3DXVECTOR2 position;
 	position.x = (float)x;

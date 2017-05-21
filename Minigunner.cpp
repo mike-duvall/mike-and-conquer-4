@@ -10,7 +10,7 @@
 
 
 
-Minigunner::Minigunner(Game * game, unsigned int x, unsigned int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
+Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
 {
 	this->health = 1000;
 	this->state = "IDLE";
@@ -75,17 +75,17 @@ void Minigunner::MoveTowardsDestination(float frameTime) {
 	int buffer = 2;
 
 	if (this->x < (this->destinationX - buffer)) {
-		x += (unsigned int)(frameTime * velocity.x);
+		x += (int)(frameTime * velocity.x);
 	}
 	else if (this->x >(this->destinationX + buffer)) {
-		x -= (unsigned int)(frameTime * velocity.x);
+		x -= (int)(frameTime * velocity.x);
 	}
 
 	if (this->y < (this->destinationY - buffer)) {
-		y += (unsigned int) (frameTime * velocity.y);
+		y += (int) (frameTime * velocity.y);
 	}
 	else if (this->y >(this->destinationY + buffer)) {
-		y -= (unsigned int) (frameTime * velocity.y);
+		y -= (int) (frameTime * velocity.y);
 	}
 
 }

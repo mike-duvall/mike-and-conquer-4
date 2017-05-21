@@ -29,8 +29,8 @@ void MikeRectangle::Draw(LPDIRECT3DDEVICE9 device) {
 
 	VERTEX_2D_DIF verts[5];
 
-	unsigned int xOffset = (width * scale) / 2;
-	unsigned int yOffset = (height * scale) / 2;
+	int xOffset = (width * scale) / 2;
+	int yOffset = (height * scale) / 2;
 
 	verts[0].x = (float)(x - xOffset);
 	verts[0].y = (float)(y - yOffset);

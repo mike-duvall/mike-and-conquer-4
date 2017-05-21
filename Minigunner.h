@@ -20,7 +20,7 @@ class Minigunner
 
   public:
 
-	Minigunner(Game * game, unsigned int x, unsigned int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
+	Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
     virtual ~Minigunner();
 
 
@@ -29,10 +29,10 @@ class Minigunner
 	void Update(float frameTime);
 	virtual const D3DXVECTOR2 GetVelocity() const { return velocity; }
 	virtual void  SetVelocity(D3DXVECTOR2 v) { velocity = v; }
-	void SetX(unsigned int newX) { this->x = newX; }
-	void SetY(unsigned int newY) { this->y = newY; }
-	unsigned int GetX() { return this->x; }
-	unsigned int GetY() { return this->y; }
+	void SetX(int newX) { this->x = newX; }
+	void SetY(int newY) { this->y = newY; }
+	int GetX() { return this->x; }
+	int GetY() { return this->y; }
 	bool PointIsWithin(int x, int y);
 	void SetSelected(bool selected) { this->isSelected = selected; }
 	bool GetIsSelected() { return this->isSelected; }
@@ -50,8 +50,8 @@ private:
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height
 
-	unsigned int	x;
-	unsigned int	y;
+	int	x;
+	int	y;
 	UINT         width;
 	UINT         height;
 	D3DXVECTOR2 velocity;
@@ -59,8 +59,8 @@ private:
 	bool    initialized;
 	bool isSelected;
 
-	unsigned int destinationX;
-	unsigned int destinationY;
+	int destinationX;
+	int destinationY;
 
 	bool isEnemy;
 

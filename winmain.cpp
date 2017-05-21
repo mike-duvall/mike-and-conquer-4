@@ -76,8 +76,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
+			else {
+				game->ExecuteGameCycle();
+			}
 
-			game->ExecuteGameCycle();
         }
         safeDelete(game);          
         return msg.wParam;
