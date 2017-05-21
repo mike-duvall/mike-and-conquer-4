@@ -51,7 +51,7 @@ X  * Fix bug where clicking enemy always initiates attack, even in player minigu
 	X * Update file parsing to handle all frames and to handle XORDelta compression
 	* Update GameSprite to handle a sequence of frames
 	  X * Animate sequence of two frames
-	  * Animate sequence of any number of frames
+--->  * Animate sequence of any number of frames
 	* Determine what frames to use in walking animation
 
 

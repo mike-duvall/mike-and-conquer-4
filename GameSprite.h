@@ -4,6 +4,7 @@
 #include <d3dx9.h>
 #include <string>
 
+#include <vector>
 
 class ShpFile;
 
@@ -33,6 +34,7 @@ private:
 
 	LPDIRECT3DTEXTURE9 InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
 	LPDIRECT3DTEXTURE9 InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
+	void LoadAllTexturesFromShpFile(ShpFile & shpFile);
 	LPDIRECT3DTEXTURE9 CreateTextureForDrawing();
 	void DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData);
 	int MapColorIndex(int index);
@@ -42,8 +44,9 @@ private:
 	D3DXVECTOR2 spriteCenter;
 	D3DXVECTOR2 scaling;
 
-	LPDIRECT3DTEXTURE9 texture1;
-	LPDIRECT3DTEXTURE9 texture2;
+	std::vector<LPDIRECT3DTEXTURE9> textureList;
+	//LPDIRECT3DTEXTURE9 texture1;
+	//LPDIRECT3DTEXTURE9 texture2;
 	int textureTimer = 0;
 	boolean animate;
 

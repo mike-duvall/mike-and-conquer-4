@@ -71,24 +71,28 @@ ShpFile::ShpFile(std::string & filename) {
 		offsetToImageHeaderMap[imageHeader->GetFileOffset()] = *it;
 	}
 
+	ImageHeader * previousImageHeader = NULL;
 	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+
 		ImageHeader * imageHeader = *it;
-		if (imageHeader->GetFormat() == XORLCW) {
+
+		if (imageHeader->GetFormat() == XORPrev) {
+			//h.RefImage = headers[i - 1];
+			imageHeader->SetRefImageHeader(previousImageHeader);
+
+		}
+		else if (imageHeader->GetFormat() == XORLCW) {
 			ImageHeader * refImage = offsetToImageHeaderMap.at(imageHeader->GetRefOffset());
 			imageHeader->SetRefImageHeader(refImage);
 		}
+		previousImageHeader = imageHeader;
 	}
 
 	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
 		Decompress(*it);
 	}
 
-	//Decompress(imageHeaders[0]);
-	//Decompress(imageHeaders[1]);
-	//Decompress(imageHeaders[2]);
-
 	int x = 3;
-	//shpBytes = ReadRestOfStream(*shpFileStream, shpBytesFileOffset);
 
 }
 
@@ -117,6 +121,7 @@ void ShpFile::Decompress(ImageHeader * h) {
 		//	break;
 		//}
 
+		case XORPrev:
 		case XORLCW: {
 			//	h.Data = CopyImageData(h.RefImage.Data);
 			std::vector<unsigned char> & data = h->GetRefImageHeader()->GetData();

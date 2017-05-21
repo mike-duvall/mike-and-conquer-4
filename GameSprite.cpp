@@ -15,14 +15,15 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 
 	// Temporary hack to handle Minigunner and pointer
 	// Fix this up later
-	if (animate) {
-		texture1 = this->InitializeTextureFromShpFile(shpFile, 0);
-		texture2 = this->InitializeTextureFromShpFile(shpFile, 3);
-	}
-	else {
-		texture1 = this->InitializeTextureFromShpFile(shpFile, imageIndex);
-	}
-	currentTexture = texture1;
+	//if (animate) {
+	//	texture1 = this->InitializeTextureFromShpFile(shpFile, 0);
+	//	texture2 = this->InitializeTextureFromShpFile(shpFile, 3);
+	//}
+	//else {
+	//	texture1 = this->InitializeTextureFromShpFile(shpFile, imageIndex);
+	//}
+	LoadAllTexturesFromShpFile(shpFile);
+	currentTexture = textureList[0];
 	this->InitializeDirectXSpriteInterface();
 }
 
@@ -142,6 +143,28 @@ void GameSprite::DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_verte
 
 }
 
+
+void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
+
+	width = shpFile.Width();
+	height = shpFile.Height();
+
+	PaletteFile paletteFile(std::string("assets/temperat.pal"));
+	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
+
+	int x = 0;
+	std::vector<ImageHeader *> &  imageHeaders = shpFile.ImageHeaders();
+	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+		ImageHeader * imageHeader = *it;
+		std::vector<unsigned char> & byteBuffer0 = imageHeader->GetData();
+		point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
+		LPDIRECT3DTEXTURE9 texture = CreateTextureForDrawing();
+		DrawImageDataToTexture(texture, imageData);
+
+		textureList.push_back(texture);
+		x++;
+	}
+}
 
 
 LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex) {
@@ -281,19 +304,19 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	sprite->SetTransform(&matrix);
 
-	if (animate) {
-		textureTimer++;
-		if (textureTimer > 50) {
-			textureTimer = 0;
-			if (currentTexture == texture1) {
-				currentTexture = texture2;
-			}
-			else {
-				currentTexture = texture1;
-			}
+	//if (animate) {
+	//	textureTimer++;
+	//	if (textureTimer > 50) {
+	//		textureTimer = 0;
+	//		if (currentTexture == texture1) {
+	//			currentTexture = texture2;
+	//		}
+	//		else {
+	//			currentTexture = texture1;
+	//		}
 
-		}
-	}
+	//	}
+	//}
 	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 
