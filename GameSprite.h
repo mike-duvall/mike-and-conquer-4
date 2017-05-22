@@ -48,6 +48,8 @@ private:
 	std::vector<LPDIRECT3DTEXTURE9> textureList;
 	int textureTimer = 0;
 	boolean animate;
+	unsigned int currentAnimationFrame;
+	unsigned int numFrames;
 
 	LPDIRECT3DTEXTURE9 currentTexture;
 	LPDIRECT3DDEVICE9 device;

@@ -18,6 +18,9 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 	// Temporary hack to handle animating Minigunner but not unit selection pointer
 	// Fix this up later
 
+	//currentAnimationFrame = 0;
+	currentAnimationFrame = 16;
+	numFrames = shpFile.NumberOfImages();
 	if (animate) {
 		currentTexture = textureList[0];
 	}
@@ -25,6 +28,7 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 		currentTexture = textureList[imageIndex];
 	}
 	this->InitializeDirectXSpriteInterface();
+
 }
 
 
@@ -306,19 +310,21 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	// Temporary hack to handle animating Minigunner but not unit selection pointer
 	// Fix this up later
+
+
 	if (animate) {
-		textureTimer++;
+//		textureTimer++;
 		if (textureTimer > 50) {
 			textureTimer = 0;
-			if (currentTexture == textureList[0]) {
-				currentTexture = textureList[1];
-			}
-			else {
-				currentTexture = textureList[0];
+			currentTexture = textureList[currentAnimationFrame];
+			currentAnimationFrame++;
+			if (currentAnimationFrame >= 22) {
+				currentAnimationFrame = 16;
 			}
 
 		}
 	}
+	textureTimer++;
 	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 

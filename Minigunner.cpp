@@ -35,7 +35,7 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
 	SetSelected(false);
-	gameSprite->SetAnimate(false);
+	gameSprite->SetAnimate(true);
 
 }
 
