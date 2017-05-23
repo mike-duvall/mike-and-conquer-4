@@ -5,6 +5,7 @@
 #include <string>
 
 #include <vector>
+#include <map>
 
 class ShpFile;
 
@@ -30,6 +31,9 @@ public:
 	int GetHeight() { return height; }
 	void SetSpriteCenter(int x, int y);
 	void SetAnimate(boolean animate) { this->animate = animate; }
+	void IncrementFrame();
+	void DecrementFrame();
+	void SetAnimationSequence(std::string key, std::vector<unsigned int> animationSequence);
 
 private:
 
@@ -50,6 +54,7 @@ private:
 	boolean animate;
 	unsigned int currentAnimationFrame;
 	unsigned int numFrames;
+	std::map < std::string, std::vector<unsigned int> > animationSequenceMap;
 
 	LPDIRECT3DTEXTURE9 currentTexture;
 	LPDIRECT3DDEVICE9 device;

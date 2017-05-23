@@ -35,7 +35,16 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
 	SetSelected(false);
-	gameSprite->SetAnimate(true);
+	gameSprite->SetAnimate(false);
+	std::vector<unsigned int> walkingUpAnimationSequence;
+	walkingUpAnimationSequence.push_back(16);
+	walkingUpAnimationSequence.push_back(17);
+	walkingUpAnimationSequence.push_back(18);
+	walkingUpAnimationSequence.push_back(19);
+	walkingUpAnimationSequence.push_back(20);
+	walkingUpAnimationSequence.push_back(21);
+
+	gameSprite->SetAnimationSequence("WALKING_UP", walkingUpAnimationSequence);
 
 }
 
@@ -180,6 +189,18 @@ void Minigunner::Update(float frameTime) {
 
 	if (isEnemy) {
 		return;
+	}
+
+	static int switchTimer = 0;
+	switchTimer++;
+	if (switchTimer > 30) {
+		switchTimer = 0;
+		if (input->IsKeyDown(VK_RIGHT)) {
+			gameSprite->IncrementFrame();
+		}
+		else if (input->IsKeyDown(VK_LEFT)) {
+			gameSprite->DecrementFrame();
+		}
 	}
 
 	if (state == "IDLE") {

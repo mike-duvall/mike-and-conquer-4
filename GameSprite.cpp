@@ -18,8 +18,7 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 	// Temporary hack to handle animating Minigunner but not unit selection pointer
 	// Fix this up later
 
-	//currentAnimationFrame = 0;
-	currentAnimationFrame = 16;
+	currentAnimationFrame = 0;
 	numFrames = shpFile.NumberOfImages();
 	if (animate) {
 		currentTexture = textureList[0];
@@ -313,20 +312,43 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 
 	if (animate) {
-//		textureTimer++;
-		if (textureTimer > 50) {
+		if (textureTimer > 10) {
 			textureTimer = 0;
-			currentTexture = textureList[currentAnimationFrame];
+			std::vector<unsigned int> animationSequence = animationSequenceMap["WALKING_UP"];
+			unsigned int currentTextureIndex = animationSequence[currentAnimationFrame];
+			currentTexture = textureList[currentTextureIndex];
 			currentAnimationFrame++;
-			if (currentAnimationFrame >= 22) {
-				currentAnimationFrame = 16;
+			if (currentAnimationFrame >= animationSequence.size()) {
+				currentAnimationFrame = 0;
 			}
 
 		}
+		textureTimer++;
 	}
-	textureTimer++;
+	//else {
+	//	currentTexture = textureList[0];
+	//}
+
+
+	//currentTexture = textureList[currentAnimationFrame];
 	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 
 }
+
+//Look at frames 16 to 21
+
+void GameSprite::SetAnimationSequence(std::string key, std::vector<unsigned int> animationSequence) {
+	animationSequenceMap[key] = animationSequence;
+}
+
+void GameSprite::IncrementFrame() {
+	currentAnimationFrame++;
+}
+
+
+void GameSprite::DecrementFrame() {
+	currentAnimationFrame--;
+}
+
 
