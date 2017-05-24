@@ -223,7 +223,7 @@ void Game::Render() {
 		}
 	}
 
-	wcircle->Draw(graphics->Get3Ddevice());
+	circle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 
 }

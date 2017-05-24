@@ -9,9 +9,8 @@
 
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, boolean animate, int imageIndex) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
 	this->device = device;
-	this->animate = animate;
 
 	LoadAllTexturesFromShpFile(shpFile);
 
@@ -20,12 +19,6 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 
 	currentAnimationFrame = 0;
 	numFrames = shpFile.NumberOfImages();
-	if (animate) {
-		currentTexture = textureList[0];
-	}
-	else {
-		currentTexture = textureList[imageIndex];
-	}
 	this->InitializeDirectXSpriteInterface();
 
 }
@@ -311,10 +304,10 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 	// Fix this up later
 
 
-	if (animate) {
+//	if (animate) {
 		if (textureTimer > 10) {
 			textureTimer = 0;
-			std::vector<unsigned int> animationSequence = animationSequenceMap["WALKING_UP"];
+			std::vector<unsigned int> animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
 			unsigned int currentTextureIndex = animationSequence[currentAnimationFrame];
 			currentTexture = textureList[currentTextureIndex];
 			currentAnimationFrame++;
@@ -324,7 +317,7 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 		}
 		textureTimer++;
-	}
+//	}
 	//else {
 	//	currentTexture = textureList[0];
 	//}
@@ -336,9 +329,22 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 }
 
+void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequenceIndex){
+	if (currentAnimationSequenceIndex == aniatmionSequenceIndex) {
+		return;
+	}
+
+	currentAnimationSequenceIndex = aniatmionSequenceIndex;
+	currentAnimationFrame = 0;
+
+	std::vector<unsigned int> animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	unsigned int currentTextureIndex = animationSequence[currentAnimationFrame];
+	currentTexture = textureList[currentTextureIndex];
+}
+
 //Look at frames 16 to 21
 
-void GameSprite::SetAnimationSequence(std::string key, std::vector<unsigned int> animationSequence) {
+void GameSprite::AddAnimationSequence(unsigned int key, std::vector<unsigned int> animationSequence) {
 	animationSequenceMap[key] = animationSequence;
 }
 
