@@ -323,10 +323,6 @@ void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequence
 }
 
 
-//void GameSprite::AddAnimationSequence(unsigned int key, std::vector<unsigned int> animationSequence) {
-//	animationSequenceMap[key] = animationSequence;
-//}
-
 void GameSprite::AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence) {
 	animationSequenceMap[key] = animationSequence;
 }
