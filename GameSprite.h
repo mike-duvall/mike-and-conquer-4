@@ -8,6 +8,7 @@
 #include <map>
 
 class ShpFile;
+class AnimationSequence;
 
 
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
@@ -30,9 +31,7 @@ public:
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	void SetSpriteCenter(int x, int y);
-	void IncrementFrame();
-	void DecrementFrame();
-	void AddAnimationSequence(unsigned int key, std::vector<unsigned int> animationSequence);
+	void AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence);
 	void SetCurrentAnimationSequenceIndex(unsigned int animationSequence);
 	unsigned int GetCurrentAnimationSequenceIndex() { return currentAnimationSequenceIndex; }
 
@@ -51,10 +50,9 @@ private:
 	D3DXVECTOR2 scaling;
 
 	std::vector<LPDIRECT3DTEXTURE9> textureList;
-	int textureTimer = 0;
-	unsigned int currentAnimationFrame;
-	unsigned int numFrames;
-	std::map < unsigned int , std::vector<unsigned int> > animationSequenceMap;
+
+	std::map < unsigned int, AnimationSequence * > animationSequenceMap;
+
 	unsigned int currentAnimationSequenceIndex;
 
 	LPDIRECT3DTEXTURE9 currentTexture;

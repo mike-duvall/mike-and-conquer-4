@@ -7,6 +7,7 @@
 #include "game.h"
 #include "ShpFile.h"
 #include "MikeRectangle.h"
+#include "AnimationSequence.h"
 
 
 
@@ -37,19 +38,20 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
 	SetSelected(false);
-//	gameSprite->SetAnimate(false);
 
-	std::vector<unsigned int> walkingUpAnimationSequence;
-	walkingUpAnimationSequence.push_back(16);
-	walkingUpAnimationSequence.push_back(17);
-	walkingUpAnimationSequence.push_back(18);
-	walkingUpAnimationSequence.push_back(19);
-	walkingUpAnimationSequence.push_back(20);
-	walkingUpAnimationSequence.push_back(21);
+	AnimationSequence * walkingUpAnimationSequence = new AnimationSequence(10);
+	walkingUpAnimationSequence->AddFrame(16);
+	walkingUpAnimationSequence->AddFrame(17);
+	walkingUpAnimationSequence->AddFrame(18);
+	walkingUpAnimationSequence->AddFrame(19);
+	walkingUpAnimationSequence->AddFrame(20);
+	walkingUpAnimationSequence->AddFrame(21);
+
 	gameSprite->AddAnimationSequence(WALKING_UP, walkingUpAnimationSequence);
 
-	std::vector<unsigned int> standingStillAnimationSequence;
-	standingStillAnimationSequence.push_back(0);
+	AnimationSequence * standingStillAnimationSequence = new AnimationSequence(10);
+	standingStillAnimationSequence->AddFrame(0);
+
 	gameSprite->AddAnimationSequence(STANDING_STILL, standingStillAnimationSequence);
 	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
 
@@ -179,8 +181,8 @@ void Minigunner::ReduceHealth(int amount) {
 }
 
 void Minigunner::HandleAttackingState(float frameTime) {
-	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
 	if (IsInAttackRange()) {
+		gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
 		currentAttackTarget->ReduceHealth(10);
 	}
 	else {
@@ -199,17 +201,17 @@ void Minigunner::Update(float frameTime) {
 		return;
 	}
 
-	static int switchTimer = 0;
-	switchTimer++;
-	if (switchTimer > 30) {
-		switchTimer = 0;
-		if (input->IsKeyDown(VK_RIGHT)) {
-			gameSprite->IncrementFrame();
-		}
-		else if (input->IsKeyDown(VK_LEFT)) {
-			gameSprite->DecrementFrame();
-		}
-	}
+	//static int switchTimer = 0;
+	//switchTimer++;
+	//if (switchTimer > 30) {
+	//	switchTimer = 0;
+	//	if (input->IsKeyDown(VK_RIGHT)) {
+	//		gameSprite->IncrementFrame();
+	//	}
+	//	else if (input->IsKeyDown(VK_LEFT)) {
+	//		gameSprite->DecrementFrame();
+	//	}
+	//}
 
 	if (state == "IDLE") {
 		HandleIdleState(frameTime);

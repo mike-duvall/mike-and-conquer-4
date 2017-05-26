@@ -6,6 +6,7 @@
 #include "PaletteFile.h"
 #include "ImageHeader.h"
 #include "PaletteEntry.h"
+#include "AnimationSequence.h"
 
 
 
@@ -14,11 +15,7 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR tra
 
 	LoadAllTexturesFromShpFile(shpFile);
 
-	// Temporary hack to handle animating Minigunner but not unit selection pointer
-	// Fix this up later
-
-	currentAnimationFrame = 0;
-	numFrames = shpFile.NumberOfImages();
+	
 	this->InitializeDirectXSpriteInterface();
 
 }
@@ -300,30 +297,12 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	sprite->SetTransform(&matrix);
 
-	// Temporary hack to handle animating Minigunner but not unit selection pointer
-	// Fix this up later
+	AnimationSequence * currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	currentAnimationSequence->Update();
+	int currentTextureIndex = currentAnimationSequence->GetCurrentFrame();
+	currentTexture = textureList[currentTextureIndex];
 
 
-//	if (animate) {
-		if (textureTimer > 10) {
-			textureTimer = 0;
-			std::vector<unsigned int> animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
-			unsigned int currentTextureIndex = animationSequence[currentAnimationFrame];
-			currentTexture = textureList[currentTextureIndex];
-			currentAnimationFrame++;
-			if (currentAnimationFrame >= animationSequence.size()) {
-				currentAnimationFrame = 0;
-			}
-
-		}
-		textureTimer++;
-//	}
-	//else {
-	//	currentTexture = textureList[0];
-	//}
-
-
-	//currentTexture = textureList[currentAnimationFrame];
 	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 
@@ -335,26 +314,19 @@ void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequence
 	}
 
 	currentAnimationSequenceIndex = aniatmionSequenceIndex;
-	currentAnimationFrame = 0;
 
-	std::vector<unsigned int> animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
-	unsigned int currentTextureIndex = animationSequence[currentAnimationFrame];
+	AnimationSequence * animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	animationSequence->SetCurrentFrameIndex(0);
+
+	unsigned int currentTextureIndex = animationSequence->GetCurrentFrame();
 	currentTexture = textureList[currentTextureIndex];
 }
 
-//Look at frames 16 to 21
 
-void GameSprite::AddAnimationSequence(unsigned int key, std::vector<unsigned int> animationSequence) {
+//void GameSprite::AddAnimationSequence(unsigned int key, std::vector<unsigned int> animationSequence) {
+//	animationSequenceMap[key] = animationSequence;
+//}
+
+void GameSprite::AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence) {
 	animationSequenceMap[key] = animationSequence;
 }
-
-void GameSprite::IncrementFrame() {
-	currentAnimationFrame++;
-}
-
-
-void GameSprite::DecrementFrame() {
-	currentAnimationFrame--;
-}
-
-

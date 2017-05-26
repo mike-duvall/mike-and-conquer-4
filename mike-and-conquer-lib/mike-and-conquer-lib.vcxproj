@@ -130,6 +130,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationSequence.cpp" />
     <ClCompile Include="ImageHeader.cpp" />
     <ClCompile Include="LCWCompression.cpp" />
     <ClCompile Include="LittleEndianNumberStream.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="XORDeltaCompression.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationSequence.h" />
     <ClInclude Include="ImageHeader.h" />
     <ClInclude Include="LCWCompression.h" />
     <ClInclude Include="LittleEndianNumberStream.h" />

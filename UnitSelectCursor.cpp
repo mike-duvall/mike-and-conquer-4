@@ -5,6 +5,7 @@
 #include "GameSprite.h"
 #include "ShpFile.h"
 #include "MikeRectangle.h"
+#include "AnimationSequence.h"
 
 
 UnitSelectCursor::UnitSelectCursor(Graphics *g)
@@ -28,8 +29,8 @@ UnitSelectCursor::UnitSelectCursor(Graphics *g)
 	boolean animate = false;
 	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
 
-	std::vector<unsigned int> standingStillAnimationSequence;
-	standingStillAnimationSequence.push_back(1);
+	AnimationSequence * standingStillAnimationSequence = new AnimationSequence(10);
+	standingStillAnimationSequence->AddFrame(1);
 	gameSprite->AddAnimationSequence(0, standingStillAnimationSequence);
 	gameSprite->SetCurrentAnimationSequenceIndex(0);
 
