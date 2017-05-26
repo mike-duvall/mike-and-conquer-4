@@ -31,9 +31,4 @@ unsigned int AnimationSequence::GetCurrentFrame() {
 	return frames[currentAnimationFrameIndex];
 }
 
-//private:
-//
-//	std::vector<unsigned int> frames;
-//	int frameSwitchTimer = 0;
-//	int frameSwitchThreshold;
-//	unsigned int currentAnimationFrame;
+
