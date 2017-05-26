@@ -72,6 +72,9 @@ private:
 	boolean drawShpBoundingRectangle;
 
 
+
+	enum AnimationSequences { STANDING_STILL, WALKING_UP };
+
 	std::string state;
 
 	void HandleIdleState(float frameTime);

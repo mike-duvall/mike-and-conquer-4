@@ -6,25 +6,18 @@
 #include "PaletteFile.h"
 #include "ImageHeader.h"
 #include "PaletteEntry.h"
+#include "AnimationSequence.h"
 
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, boolean animate, int imageIndex) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
 	this->device = device;
-	this->animate = animate;
 
 	LoadAllTexturesFromShpFile(shpFile);
 
-	// Temporary hack to handle animating Minigunner but not unit selection pointer
-	// Fix this up later
-
-	if (animate) {
-		currentTexture = textureList[0];
-	}
-	else {
-		currentTexture = textureList[imageIndex];
-	}
+	
 	this->InitializeDirectXSpriteInterface();
+
 }
 
 
@@ -304,23 +297,32 @@ void GameSprite::Draw(float gameTime, int x, int y) {
 
 	sprite->SetTransform(&matrix);
 
-	// Temporary hack to handle animating Minigunner but not unit selection pointer
-	// Fix this up later
-	if (animate) {
-		textureTimer++;
-		if (textureTimer > 50) {
-			textureTimer = 0;
-			if (currentTexture == textureList[0]) {
-				currentTexture = textureList[1];
-			}
-			else {
-				currentTexture = textureList[0];
-			}
+	AnimationSequence * currentAnimationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	currentAnimationSequence->Update();
+	int currentTextureIndex = currentAnimationSequence->GetCurrentFrame();
+	currentTexture = textureList[currentTextureIndex];
 
-		}
-	}
+
 	sprite->Draw(currentTexture, NULL, NULL, NULL, color);
 	sprite->End();
 
 }
 
+void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequenceIndex){
+	if (currentAnimationSequenceIndex == aniatmionSequenceIndex) {
+		return;
+	}
+
+	currentAnimationSequenceIndex = aniatmionSequenceIndex;
+
+	AnimationSequence * animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	animationSequence->SetCurrentFrameIndex(0);
+
+	unsigned int currentTextureIndex = animationSequence->GetCurrentFrame();
+	currentTexture = textureList[currentTextureIndex];
+}
+
+
+void GameSprite::AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence) {
+	animationSequenceMap[key] = animationSequence;
+}

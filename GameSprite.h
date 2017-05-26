@@ -5,8 +5,10 @@
 #include <string>
 
 #include <vector>
+#include <map>
 
 class ShpFile;
+class AnimationSequence;
 
 
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
@@ -23,13 +25,15 @@ class GameSprite {
 
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
-	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor, boolean animate,  int imageIndex);
+	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor);
 	~GameSprite();
 	virtual void Draw(float gameTime, int x, int y);
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	void SetSpriteCenter(int x, int y);
-	void SetAnimate(boolean animate) { this->animate = animate; }
+	void AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence);
+	void SetCurrentAnimationSequenceIndex(unsigned int animationSequence);
+	unsigned int GetCurrentAnimationSequenceIndex() { return currentAnimationSequenceIndex; }
 
 private:
 
@@ -46,8 +50,10 @@ private:
 	D3DXVECTOR2 scaling;
 
 	std::vector<LPDIRECT3DTEXTURE9> textureList;
-	int textureTimer = 0;
-	boolean animate;
+
+	std::map < unsigned int, AnimationSequence * > animationSequenceMap;
+
+	unsigned int currentAnimationSequenceIndex;
 
 	LPDIRECT3DTEXTURE9 currentTexture;
 	LPDIRECT3DDEVICE9 device;

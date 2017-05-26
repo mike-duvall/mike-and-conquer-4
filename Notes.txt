@@ -49,14 +49,26 @@ X  * Fix bug where clicking enemy always initiates attack, even in player minigu
   * Animate minigunner when moving
 	X * Write failing test for XORLCW format for second minigunner image
 	X * Update file parsing to handle all frames and to handle XORDelta compression
-	* Update GameSprite to handle a sequence of frames
+	X * Update GameSprite to handle a sequence of frames
 	  X * Animate sequence of two frames
---->  * Animate sequence of any number of frames
-	* Determine what frames to use in walking animation
+    X * Animate sequence of any number of frames
+	X * Determine what frames to use in walking animation
+	X	* Properly handle idle state
+    X	            * Refactor and cleanup code, naming
+	X * Properly handle sprites with no animation(unit selection cursor)
+	X * Make MoveToEnemyAndAttack show proper movement animation
 
 
-  * Animate minigunner when shooting
-	* Support multiple animation sequences
+--->  * Animate minigunner when shooting
+	X * Support multiple animation sequences
+  * Consider if clicking an enemy unit that is out of range is:
+	* One command (MoveToEnemeyAndAttack)
+	vs
+	* Two commands
+		1.  MoveToEnemy
+		2.  Attack
+  * Consider if MoveToEnemy is a separate thing from MoveToLocation
+	* MoveToLocation, the location never changes, but an enemy location could change
   * Have computer randomly move NOD minigunner and attack
   * Add barracks for both sides
   * Make barracks able to generate minigunners

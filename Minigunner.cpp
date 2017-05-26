@@ -7,6 +7,7 @@
 #include "game.h"
 #include "ShpFile.h"
 #include "MikeRectangle.h"
+#include "AnimationSequence.h"
 
 
 
@@ -31,11 +32,29 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	ShpFile shpFile(std::string("assets/e1.shp"));
 	int imageIndex = 4;
 	boolean animate = true;
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE, animate, imageIndex);
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
+
+
 	drawShpBoundingRectangle = false;
 	shpBoundingRectangle = new MikeRectangle(x, y, gameSprite->GetWidth(), gameSprite->GetHeight());
 	SetSelected(false);
-	gameSprite->SetAnimate(false);
+
+	AnimationSequence * walkingUpAnimationSequence = new AnimationSequence(10);
+	walkingUpAnimationSequence->AddFrame(16);
+	walkingUpAnimationSequence->AddFrame(17);
+	walkingUpAnimationSequence->AddFrame(18);
+	walkingUpAnimationSequence->AddFrame(19);
+	walkingUpAnimationSequence->AddFrame(20);
+	walkingUpAnimationSequence->AddFrame(21);
+
+	gameSprite->AddAnimationSequence(WALKING_UP, walkingUpAnimationSequence);
+
+	AnimationSequence * standingStillAnimationSequence = new AnimationSequence(10);
+	standingStillAnimationSequence->AddFrame(0);
+
+	gameSprite->AddAnimationSequence(STANDING_STILL, standingStillAnimationSequence);
+	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
+
 
 }
 
@@ -51,7 +70,7 @@ void Minigunner::SetDestination(int x, int y) {
 }
 
 void Minigunner::HandleIdleState(float frameTime) {
-	gameSprite->SetAnimate(false);
+	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
 	if (input->isLeftMouseDown()) {
 		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
@@ -95,7 +114,7 @@ void Minigunner::MoveTowardsDestination(float frameTime) {
 
 void Minigunner::HandleMovingState(float frameTime) {
 
-	gameSprite->SetAnimate(true);
+	gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
 	if (input->isLeftMouseDown()) {
 		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
 		if (foundMinigunner != NULL) {
@@ -162,12 +181,12 @@ void Minigunner::ReduceHealth(int amount) {
 }
 
 void Minigunner::HandleAttackingState(float frameTime) {
-	gameSprite->SetAnimate(false);
 	if (IsInAttackRange()) {
+		gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
 		currentAttackTarget->ReduceHealth(10);
 	}
 	else {
-		gameSprite->SetAnimate(true);
+		gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
 		SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
 		MoveTowardsDestination(frameTime);
 	}
@@ -181,6 +200,18 @@ void Minigunner::Update(float frameTime) {
 	if (isEnemy) {
 		return;
 	}
+
+	//static int switchTimer = 0;
+	//switchTimer++;
+	//if (switchTimer > 30) {
+	//	switchTimer = 0;
+	//	if (input->IsKeyDown(VK_RIGHT)) {
+	//		gameSprite->IncrementFrame();
+	//	}
+	//	else if (input->IsKeyDown(VK_LEFT)) {
+	//		gameSprite->DecrementFrame();
+	//	}
+	//}
 
 	if (state == "IDLE") {
 		HandleIdleState(frameTime);
