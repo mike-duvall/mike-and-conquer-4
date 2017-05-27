@@ -99,6 +99,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Minigunner.cpp" />
     <ClCompile Include="MikeRectangle.cpp" />
+    <ClCompile Include="ShpImageExplorer.cpp" />
     <ClCompile Include="TestModeRestHandler.cpp" />
     <ClCompile Include="UnitSelectCursor.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Minigunner.h" />
+    <ClInclude Include="ShpImageExplorer.h" />
     <ClInclude Include="TestModeRestHandler.h" />
     <ClInclude Include="UnitSelectCursor.h" />
   </ItemGroup>
@@ -133,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
+    <Text Include="Todos.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="mike-and-conquer-lib\mike-and-conquer-lib.vcxproj">

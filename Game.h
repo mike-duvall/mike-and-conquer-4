@@ -23,6 +23,7 @@ class UnitSelectCursor;
 class Circle;
 class MikeRectangle;
 class GameEvent;
+class ShpImageExplorer;
 
 
 class Game {
@@ -73,6 +74,7 @@ protected:
 	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;
+	ShpImageExplorer * shpImageExplorer;
 
 	HWND    hwnd;                   // window handle
 	HRESULT hr;                     // standard return type

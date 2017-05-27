@@ -10,6 +10,7 @@
 #include "GetNODMinigunnerGameEvent.h"
 #include "CreateGDIMinigunnerGameEvent.h"
 #include "CreateNODMinigunnerGameEvent.h"
+#include "ShpImageExplorer.h"
 
 
 
@@ -92,6 +93,7 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(300, 900);
+	shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	initialized = true;
 }
 
@@ -208,6 +210,8 @@ void Game::Update() {
 		circle->SetY(input->getMouseY());
 	}
 
+	shpImageExplorer->Update(frameTime);
+
 }
 
 
@@ -223,6 +227,7 @@ void Game::Render() {
 		}
 	}
 
+	shpImageExplorer->Draw();
 	circle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 

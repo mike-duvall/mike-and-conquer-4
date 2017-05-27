@@ -60,6 +60,9 @@
     <ClCompile Include="MikeRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShpImageExplorer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -113,6 +116,9 @@
     <ClInclude Include="MikeRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShpImageExplorer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="icon1.ico">
@@ -129,5 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
+    <Text Include="Todos.txt" />
   </ItemGroup>
 </Project>

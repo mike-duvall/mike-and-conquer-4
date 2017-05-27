@@ -41,43 +41,4 @@ http ://www.gamasutra.com/view/feature/130682/automated_tests_and_continuous_.ph
 
 
 
-Next steps
-***********
-X  * Fix detecting when to mark unit as selected(need to move the detection box up a bit)
-X  * Pull back, look at overall design, do some refactoring
-X  * Fix bug where clicking enemy always initiates attack, even in player minigunner is not selected
-  * Animate minigunner when moving
-	X * Write failing test for XORLCW format for second minigunner image
-	X * Update file parsing to handle all frames and to handle XORDelta compression
-	X * Update GameSprite to handle a sequence of frames
-	  X * Animate sequence of two frames
-    X * Animate sequence of any number of frames
-	X * Determine what frames to use in walking animation
-	X	* Properly handle idle state
-    X	            * Refactor and cleanup code, naming
-	X * Properly handle sprites with no animation(unit selection cursor)
-	X * Make MoveToEnemyAndAttack show proper movement animation
-
-
---->  * Animate minigunner when shooting
-	X * Support multiple animation sequences
-  * Consider if clicking an enemy unit that is out of range is:
-	* One command (MoveToEnemeyAndAttack)
-	vs
-	* Two commands
-		1.  MoveToEnemy
-		2.  Attack
-  * Consider if MoveToEnemy is a separate thing from MoveToLocation
-	* MoveToLocation, the location never changes, but an enemy location could change
-  * Have computer randomly move NOD minigunner and attack
-  * Add barracks for both sides
-  * Make barracks able to generate minigunners
-  * Make computer controller continually spit out minigunners and have them attack
-
-Refactoring
-***********
-	* GameSprite should have work with a single texture with all it's sprite images on it
-	* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
-	  just be the sprite sheet image from above
-	* Create class that is responsible for parsing Shpfile into a single sprite sheet
 	

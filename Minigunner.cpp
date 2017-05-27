@@ -201,18 +201,6 @@ void Minigunner::Update(float frameTime) {
 		return;
 	}
 
-	//static int switchTimer = 0;
-	//switchTimer++;
-	//if (switchTimer > 30) {
-	//	switchTimer = 0;
-	//	if (input->IsKeyDown(VK_RIGHT)) {
-	//		gameSprite->IncrementFrame();
-	//	}
-	//	else if (input->IsKeyDown(VK_LEFT)) {
-	//		gameSprite->DecrementFrame();
-	//	}
-	//}
-
 	if (state == "IDLE") {
 		HandleIdleState(frameTime);
 	}
