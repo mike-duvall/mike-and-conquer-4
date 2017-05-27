@@ -93,7 +93,8 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(300, 900);
-	shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
+	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
+	shpImageExplorer = NULL;
 	initialized = true;
 }
 
@@ -210,7 +211,9 @@ void Game::Update() {
 		circle->SetY(input->getMouseY());
 	}
 
-	shpImageExplorer->Update(frameTime);
+	if (shpImageExplorer != NULL) {
+		shpImageExplorer->Update(frameTime);
+	}
 
 }
 
@@ -227,7 +230,9 @@ void Game::Render() {
 		}
 	}
 
-	shpImageExplorer->Draw();
+	if (shpImageExplorer != NULL) {
+		shpImageExplorer->Draw();
+	}
 	circle->Draw(graphics->Get3Ddevice());
 //	graphics->spriteEnd();                  // end drawing sprites
 

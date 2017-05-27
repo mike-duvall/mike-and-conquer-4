@@ -51,9 +51,20 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 
 	AnimationSequence * standingStillAnimationSequence = new AnimationSequence(10);
 	standingStillAnimationSequence->AddFrame(0);
-
 	gameSprite->AddAnimationSequence(STANDING_STILL, standingStillAnimationSequence);
 	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
+
+
+	AnimationSequence * shootinUpAnimationSequence = new AnimationSequence(10);
+	shootinUpAnimationSequence->AddFrame(65);
+	shootinUpAnimationSequence->AddFrame(66);
+	shootinUpAnimationSequence->AddFrame(67);
+	shootinUpAnimationSequence->AddFrame(68);
+	shootinUpAnimationSequence->AddFrame(69);
+	shootinUpAnimationSequence->AddFrame(70);
+	shootinUpAnimationSequence->AddFrame(71);
+	shootinUpAnimationSequence->AddFrame(72);
+	gameSprite->AddAnimationSequence(SHOOTING_UP, shootinUpAnimationSequence);
 
 
 }
@@ -182,7 +193,7 @@ void Minigunner::ReduceHealth(int amount) {
 
 void Minigunner::HandleAttackingState(float frameTime) {
 	if (IsInAttackRange()) {
-		gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
+		gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
 		currentAttackTarget->ReduceHealth(10);
 	}
 	else {

@@ -73,7 +73,7 @@ private:
 
 
 
-	enum AnimationSequences { STANDING_STILL, WALKING_UP };
+	enum AnimationSequences { STANDING_STILL, WALKING_UP, SHOOTING_UP };
 
 	std::string state;
 
