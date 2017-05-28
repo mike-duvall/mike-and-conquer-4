@@ -7,11 +7,13 @@
 #include "ImageHeader.h"
 #include "PaletteEntry.h"
 #include "AnimationSequence.h"
+#include "ShpFileColorMapper.h"
 
 
 
-GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor) {
+GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
+	this->shpFileColorMapper = shpFileColorMapper;
 
 	LoadAllTexturesFromShpFile(shpFile);
 
@@ -32,14 +34,14 @@ GameSprite::~GameSprite() {
 }
 
 
-int GameSprite::MapColorIndex(int index) {
+//int GameSprite::MapColorIndex(int index) {
+//
+//	return index;
+//}
 
-	return index;
-}
-
-int mapColorIndex(int index) {
-	return index;
-}
+//int mapColorIndex(int index) {
+//	return index;
+//}
 
 
 void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
@@ -50,9 +52,11 @@ void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
 	point_vertex.colour = D3DCOLOR_RGBA(0, 0, 0, 0);
 }
 
-void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char colorIndex, std::vector<PaletteEntry *> & paletteEntries) {
+void GameSprite::populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char colorIndex, std::vector<PaletteEntry *> & paletteEntries) {
 
-	int mappedColorIndex = mapColorIndex(colorIndex);
+//	int mappedColorIndex = mapColorIndex(colorIndex);
+	int mappedColorIndex = shpFileColorMapper->MapColorIndex(colorIndex);
+
 	PaletteEntry * paletteEntry = paletteEntries[mappedColorIndex];
 
 	float fRed = (float)paletteEntry->GetRed() / 63.0f * 255.0f;
@@ -71,7 +75,7 @@ void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned c
 }
 
 
-point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries) {
+point_vertex * GameSprite::mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries) {
 	point_vertex * imageData = new point_vertex[width * height];
 	int currentIndex = 0;
 

@@ -6,13 +6,14 @@
 #include "input.h"
 #include "game.h"
 #include "ShpFile.h"
+#include "GdiShpFileColorMapper.h"
+#include "NodShpFileColorMapper.h"
 #include "MikeRectangle.h"
 #include "AnimationSequence.h"
 
 
 
-Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy)
-{
+Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy, ShpFileColorMapper * shpFileColorMapper) {
 	this->health = 1000;
 	this->state = "IDLE";
 	this->game = game;
@@ -32,7 +33,7 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	ShpFile shpFile(std::string("assets/e1.shp"));
 	int imageIndex = 4;
 	boolean animate = true;
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, shpFileColorMapper, graphicsNS::WHITE);
 
 
 	drawShpBoundingRectangle = false;

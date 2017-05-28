@@ -16,12 +16,16 @@ X  * Fix bug where clicking enemy always initiates attack, even in player minigu
 	X * Make MoveToEnemyAndAttack show proper movement animation
 
 
---->  * Animate minigunner when shooting
-		* Determine frames
+X * Animate minigunner when shooting
+ 		X * Determine frames
 			X * Run XCC Mixer in Windows XP, see if can export frames
 		 	X	* Install Windows XP on Virtual Box
----> 			* Build SpriteExperimenter class
+X	* Build SpriteExperimenter class
 	X * Support multiple animation sequences
+
+->* Make NOD minigunner have correct colors
+  * Make game end after killing NOD minigunner
+
   * Consider if clicking an enemy unit that is out of range is:
 	* One command (MoveToEnemeyAndAttack)
 	vs

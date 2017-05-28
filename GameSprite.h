@@ -8,7 +8,11 @@
 #include <map>
 
 class ShpFile;
+class ShpFileColorMapper;
+class PaletteEntry;
 class AnimationSequence;
+
+
 
 
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
@@ -25,7 +29,7 @@ class GameSprite {
 
 public:
 	GameSprite(LPDIRECT3DDEVICE9 device, std::string file,  D3DCOLOR transparentColor);
-	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, D3DCOLOR transparentColor);
+	GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor);
 	~GameSprite();
 	virtual void Draw(float gameTime, int x, int y);
 	int GetWidth() { return width; }
@@ -42,7 +46,14 @@ private:
 	void LoadAllTexturesFromShpFile(ShpFile & shpFile);
 	LPDIRECT3DTEXTURE9 CreateTextureForDrawing();
 	void DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData);
-	int MapColorIndex(int index);
+	//int MapColorIndex(int index);
+
+	ShpFileColorMapper * shpFileColorMapper;
+
+	void populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char colorIndex, std::vector<PaletteEntry *> & paletteEntries);
+	point_vertex * mapImageData(int width, int height, std::vector<unsigned char> & byteBuffer0, std::vector<PaletteEntry *> & paletteEntries);
+
+
 	bool InitializeDirectXSpriteInterface();
 
 	LPD3DXSPRITE   sprite;

@@ -4,8 +4,10 @@
 
 #include "GameSprite.h"
 #include "ShpFile.h"
+#include "GdiShpFileColorMapper.h"
 #include "MikeRectangle.h"
 #include "AnimationSequence.h"
+
 
 
 UnitSelectCursor::UnitSelectCursor(Graphics *g)
@@ -27,7 +29,8 @@ UnitSelectCursor::UnitSelectCursor(Graphics *g)
 	ShpFile shpFile(std::string("assets/select.shp"));
 	int imageIndex = 1;
 	boolean animate = false;
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
+	GdiShpFileColorMapper * colorMapper = new GdiShpFileColorMapper();
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, colorMapper, graphicsNS::WHITE);
 
 	AnimationSequence * standingStillAnimationSequence = new AnimationSequence(10);
 	standingStillAnimationSequence->AddFrame(1);
