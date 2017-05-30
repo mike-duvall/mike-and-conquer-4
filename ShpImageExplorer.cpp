@@ -4,6 +4,7 @@
 #include "input.h"
 #include "game.h"
 #include "ShpFile.h"
+#include "GdiShpFileColorMapper.h"
 #include "GameSprite.h"
 #include "MikeRectangle.h"
 #include "AnimationSequence.h"
@@ -21,7 +22,8 @@ ShpImageExplorer::ShpImageExplorer(Game * game, int x, int y, Input * input) {
 	ShpFile shpFile(std::string("assets/e1.shp"));
 	int imageIndex = 4;
 	boolean animate = true;
-	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, graphicsNS::WHITE);
+	GdiShpFileColorMapper * colorMapper = new GdiShpFileColorMapper();
+	gameSprite = new GameSprite(graphics->Get3Ddevice(), shpFile, colorMapper, graphicsNS::WHITE);
 
 
 	drawShpBoundingRectangle = false;

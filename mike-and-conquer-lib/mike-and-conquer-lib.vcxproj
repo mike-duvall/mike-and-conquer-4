@@ -134,6 +134,7 @@
     <ClCompile Include="ImageHeader.cpp" />
     <ClCompile Include="LCWCompression.cpp" />
     <ClCompile Include="LittleEndianNumberStream.cpp" />
+    <ClCompile Include="NodShpFileColorMapper.cpp" />
     <ClCompile Include="PaletteEntry.cpp" />
     <ClCompile Include="PaletteFile.cpp" />
     <ClCompile Include="ShpFile.cpp" />
@@ -141,12 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationSequence.h" />
+    <ClInclude Include="GdiShpFileColorMapper.h" />
     <ClInclude Include="ImageHeader.h" />
     <ClInclude Include="LCWCompression.h" />
     <ClInclude Include="LittleEndianNumberStream.h" />
+    <ClInclude Include="NodShpFileColorMapper.h" />
     <ClInclude Include="PaletteEntry.h" />
     <ClInclude Include="PaletteFile.h" />
     <ClInclude Include="ShpFile.h" />
+    <ClInclude Include="ShpFileColorMapper.h" />
     <ClInclude Include="XORDeltaCompression.h" />
   </ItemGroup>
   <ItemGroup>

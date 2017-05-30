@@ -12,6 +12,7 @@ class UnitSelectCursor;
 class Input;
 class Game;
 class MikeRectangle;
+class ShpFileColorMapper;
 
 
 
@@ -20,7 +21,7 @@ class Minigunner
 
   public:
 
-	Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy);
+	Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectionCursor, Input * input, bool isEnemy, ShpFileColorMapper * shpFileColorMapper);
     virtual ~Minigunner();
 
 
@@ -39,6 +40,8 @@ class Minigunner
 	void SetDestination(int x, int y);
 	int GetHealth() { return this->health; }
 
+
+
 private:
 
 	Graphics * graphics;
@@ -46,6 +49,7 @@ private:
 	UnitSelectCursor * unitSelectCursor;
 	Input * input;
 	Game * game;
+
 
 	const int   WIDTH = 16;                // image width
 	const int   HEIGHT = 16;               // image height

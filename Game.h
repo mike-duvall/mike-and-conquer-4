@@ -24,6 +24,8 @@ class Circle;
 class MikeRectangle;
 class GameEvent;
 class ShpImageExplorer;
+class GdiShpFileColorMapper;
+class NodShpFileColorMapper;
 
 
 class Game {
@@ -85,7 +87,11 @@ protected:
 	DWORD   sleepTime;              // number of milli-seconds to sleep between frames
 
 	bool    initialized;
-		void HandleMouseInput(LPARAM lParam);
+	void HandleMouseInput(LPARAM lParam);
+
+	GdiShpFileColorMapper * gdiShpFileColorMapper;
+	NodShpFileColorMapper * nodShpFileColorMapper;
+
 
 
 

@@ -11,6 +11,8 @@
 #include "CreateGDIMinigunnerGameEvent.h"
 #include "CreateNODMinigunnerGameEvent.h"
 #include "ShpImageExplorer.h"
+#include "GdiShpFileColorMapper.h"
+#include "NodShpFileColorMapper.h"
 
 
 
@@ -87,9 +89,13 @@ void Game::Initialize(HWND hw) {
 	minigunner1 = NULL;
 	enemyMinigunner1 = NULL;
 
+	gdiShpFileColorMapper = new GdiShpFileColorMapper();
+	nodShpFileColorMapper = new NodShpFileColorMapper();
+
 	if (!testMode) {
-		minigunner1 = new Minigunner(this,  300, 900, unitSelectCursor, input, false);
-		enemyMinigunner1 = new Minigunner(this,  1000, 300, unitSelectCursor, input, true);
+
+		minigunner1 = new Minigunner(this,  300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		enemyMinigunner1 = new Minigunner(this,  1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
 	}
 
 	circle = new Circle(300, 900);
@@ -115,7 +121,7 @@ Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
 
 void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
-	minigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	minigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
 }
 
 void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
@@ -147,7 +153,7 @@ Minigunner * Game::GetNODMinigunnerViaEvent() {
 
 void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
-	enemyMinigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy);
+	enemyMinigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, nodShpFileColorMapper);
 }
 
 void Game::AddCreateNODMinigunnerEvent(int x, int y) {
