@@ -46,7 +46,6 @@ private:
 	void LoadAllTexturesFromShpFile(ShpFile & shpFile);
 	LPDIRECT3DTEXTURE9 CreateTextureForDrawing();
 	void DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData);
-	//int MapColorIndex(int index);
 
 	ShpFileColorMapper * shpFileColorMapper;
 

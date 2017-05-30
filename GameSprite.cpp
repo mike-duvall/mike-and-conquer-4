@@ -16,12 +16,10 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColor
 	this->shpFileColorMapper = shpFileColorMapper;
 
 	LoadAllTexturesFromShpFile(shpFile);
-
 	
 	this->InitializeDirectXSpriteInterface();
 
 }
-
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
 	this->device = device;
@@ -34,16 +32,6 @@ GameSprite::~GameSprite() {
 }
 
 
-//int GameSprite::MapColorIndex(int index) {
-//
-//	return index;
-//}
-
-//int mapColorIndex(int index) {
-//	return index;
-//}
-
-
 void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
 	point_vertex.x = (float)x;
 	point_vertex.y = (float)y;
@@ -54,7 +42,6 @@ void populateBlankPixel(point_vertex & point_vertex, int x, int y) {
 
 void GameSprite::populateNonBlankPixel(point_vertex & point_vertex, int x, int y, unsigned char colorIndex, std::vector<PaletteEntry *> & paletteEntries) {
 
-//	int mappedColorIndex = mapColorIndex(colorIndex);
 	int mappedColorIndex = shpFileColorMapper->MapColorIndex(colorIndex);
 
 	PaletteEntry * paletteEntry = paletteEntries[mappedColorIndex];

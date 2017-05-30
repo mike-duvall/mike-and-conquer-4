@@ -1,47 +1,42 @@
+
+
 Next steps
 ***********
-X  * Fix detecting when to mark unit as selected(need to move the detection box up a bit)
-X  * Pull back, look at overall design, do some refactoring
-X  * Fix bug where clicking enemy always initiates attack, even in player minigunner is not selected
-  * Animate minigunner when moving
-	X * Write failing test for XORLCW format for second minigunner image
-	X * Update file parsing to handle all frames and to handle XORDelta compression
-	X * Update GameSprite to handle a sequence of frames
-	  X * Animate sequence of two frames
-    X * Animate sequence of any number of frames
-	X * Determine what frames to use in walking animation
-	X	* Properly handle idle state
-    X	            * Refactor and cleanup code, naming
-	X * Properly handle sprites with no animation(unit selection cursor)
-	X * Make MoveToEnemyAndAttack show proper movement animation
+		* Make game end after killing NOD minigunner
 
+Backlog
+********
+********
 
-X * Animate minigunner when shooting
- 		X * Determine frames
-			X * Run XCC Mixer in Windows XP, see if can export frames
-		 	X	* Install Windows XP on Virtual Box
-X	* Build SpriteExperimenter class
-	X * Support multiple animation sequences
+	* Features
+		* Make game end after killing NOD minigunner
+			* Make game end after GDI minigunner is killed
+		* Have computer randomly move NOD minigunner and attack
+		* Add barracks for both sides
+		* Make barracks able to generate minigunners
+			* Add toolbar with minigunner on it
+			* Build minigunner when clicked
+		* Make computer controller continually spit out minigunners and have them attack
 
-->* Make NOD minigunner have correct colors
-  * Make game end after killing NOD minigunner
+	* Refactoring
 
-  * Consider if clicking an enemy unit that is out of range is:
-	* One command (MoveToEnemeyAndAttack)
-	vs
-	* Two commands
-		1.  MoveToEnemy
-		2.  Attack
-  * Consider if MoveToEnemy is a separate thing from MoveToLocation
-	* MoveToLocation, the location never changes, but an enemy location could change
-  * Have computer randomly move NOD minigunner and attack
-  * Add barracks for both sides
-  * Make barracks able to generate minigunners
-  * Make computer controller continually spit out minigunners and have them attack
+		* Revisit what claases snould handle mapping ShpFile to textures
+		* Make Minigunner class not create new ShpFile instances every time.  Initialize ShpFile instances up front,
+		  use same one over and over
 
-Refactoring
-***********
-	* GameSprite should have work with a single texture with all it's sprite images on it
-	* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
-	  just be the sprite sheet image from above
-	* Create class that is responsible for parsing Shpfile into a single sprite sheet
+		* Grouping ShpFile images into animation sequences
+		* Other thoughts
+			* GameSprite should have work with a single texture with all it's sprite images on it
+			* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
+			just be the sprite sheet image from above
+			* Create class that is responsible for parsing Shpfile into a single sprite sheet
+
+	* Misc
+		 * Consider if clicking an enemy unit that is out of range is:
+			* One command (MoveToEnemeyAndAttack)
+			vs
+			* Two commands
+				1.  MoveToEnemy
+				2.  Attack
+		* Consider if MoveToEnemy is a separate thing from MoveToLocation
+		* MoveToLocation, the location never changes, but an enemy location could change
