@@ -3,6 +3,12 @@
 Next steps
 ***********
 		* Make game end after killing NOD minigunner
+			* Add Gamestates:
+				* Playing
+					* Existing gameplay
+				* GameOver
+					* Diplsay "Game Over"
+					* Add option to restart
 
 Backlog
 ********

@@ -13,6 +13,7 @@
 #include "ShpImageExplorer.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
+#include "GameState.h"
 
 
 
@@ -99,8 +100,12 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(300, 900);
+
+
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = NULL;
+
+	currentGameState = new GameState(*this);
 	initialized = true;
 }
 
@@ -205,21 +210,23 @@ void Game::ProcessGameEvents() {
 
 void Game::Update() {
 
-	ProcessGameEvents();
-	if (minigunner1 != NULL) {
-		minigunner1->Update(frameTime);
-	}
-	if (enemyMinigunner1 != NULL) {
-		enemyMinigunner1->Update(frameTime);
-	}
-	if (input->isLeftMouseDown()) {
-		circle->SetX(input->getMouseX());
-		circle->SetY(input->getMouseY());
-	}
+	currentGameState->Update(frameTime);
 
-	if (shpImageExplorer != NULL) {
-		shpImageExplorer->Update(frameTime);
-	}
+	//ProcessGameEvents();
+	//if (minigunner1 != NULL) {
+	//	minigunner1->Update(frameTime);
+	//}
+	//if (enemyMinigunner1 != NULL) {
+	//	enemyMinigunner1->Update(frameTime);
+	//}
+	//if (input->isLeftMouseDown()) {
+	//	circle->SetX(input->getMouseX());
+	//	circle->SetY(input->getMouseY());
+	//}
+
+	//if (shpImageExplorer != NULL) {
+	//	shpImageExplorer->Update(frameTime);
+	//}
 
 }
 
