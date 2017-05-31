@@ -10,6 +10,11 @@ Next steps
 					* Diplsay "Game Over"
 					* Add option to restart
 
+//	Then add GameOverGame state, and switch to it when Nod Dies
+	//	Then allow restart of game
+	//	Update tests to do this
+
+
 Backlog
 ********
 ********
@@ -26,6 +31,8 @@ Backlog
 
 	* Refactoring
 
+		* Group files in subclasses or packages or namespaces
+			* Research current C++ standards for this
 		* Revisit what claases snould handle mapping ShpFile to textures
 		* Make Minigunner class not create new ShpFile instances every time.  Initialize ShpFile instances up front,
 		  use same one over and over

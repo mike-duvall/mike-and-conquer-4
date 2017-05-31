@@ -100,6 +100,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Minigunner.cpp" />
     <ClCompile Include="MikeRectangle.cpp" />
+    <ClCompile Include="PlayingGameState.cpp" />
     <ClCompile Include="ShpImageExplorer.cpp" />
     <ClCompile Include="TestModeRestHandler.cpp" />
     <ClCompile Include="UnitSelectCursor.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="GetNODMinigunnerGameEvent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="MikeRectangle.h" />
+    <ClInclude Include="PlayingGameState.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Minigunner.h" />

@@ -6,8 +6,9 @@ class Game;
 class GameState {
 public:
 	GameState(Game & game);
-	virtual void Update(float frameTime);
+	virtual void Update(float frameTime) = 0;
+	virtual void Render() = 0;
 
-private:
+protected:
 	Game & game;
 };

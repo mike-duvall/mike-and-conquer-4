@@ -13,7 +13,7 @@
 #include "ShpImageExplorer.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
-#include "GameState.h"
+#include "PlayingGameState.h"
 
 
 
@@ -105,7 +105,7 @@ void Game::Initialize(HWND hw) {
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = NULL;
 
-	currentGameState = new GameState(*this);
+	currentGameState = new PlayingGameState(*this);
 	initialized = true;
 }
 
@@ -232,22 +232,22 @@ void Game::Update() {
 
 
 void Game::Render() {
-//	graphics->spriteBegin();                // begin drawing sprites
-	if (minigunner1 != NULL) {
-		minigunner1->Draw();
-	}
 
-	if (enemyMinigunner1 != NULL) {
-		if (enemyMinigunner1->GetHealth() > 0) {
-			enemyMinigunner1->Draw();
-		}
-	}
+	//if (minigunner1 != NULL) {
+	//	minigunner1->Draw();
+	//}
 
-	if (shpImageExplorer != NULL) {
-		shpImageExplorer->Draw();
-	}
-	circle->Draw(graphics->Get3Ddevice());
-//	graphics->spriteEnd();                  // end drawing sprites
+	//if (enemyMinigunner1 != NULL) {
+	//	if (enemyMinigunner1->GetHealth() > 0) {
+	//		enemyMinigunner1->Draw();
+	//	}
+	//}
+
+	//if (shpImageExplorer != NULL) {
+	//	shpImageExplorer->Draw();
+	//}
+	//circle->Draw(graphics->Get3Ddevice());
+
 
 }
 
@@ -255,7 +255,8 @@ void Game::Render() {
 void Game::RenderGame() {
     if (SUCCEEDED(graphics->BeginScene()))
     {
-        Render();
+        //Render();
+		currentGameState->Render();
         graphics->endScene();
     }
 
