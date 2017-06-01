@@ -7,9 +7,9 @@
 
 class PlayingGameState : public GameState {
 
-
 public:
 	PlayingGameState(Game & game);
-	virtual void Update(float frameTime);
+	virtual GameState * Update(float frameTime);
 	virtual void Render();
+
 };

@@ -208,46 +208,9 @@ void Game::ProcessGameEvents() {
 
 }
 
-void Game::Update() {
+GameState * Game::Update() {
 
-	currentGameState->Update(frameTime);
-
-	//ProcessGameEvents();
-	//if (minigunner1 != NULL) {
-	//	minigunner1->Update(frameTime);
-	//}
-	//if (enemyMinigunner1 != NULL) {
-	//	enemyMinigunner1->Update(frameTime);
-	//}
-	//if (input->isLeftMouseDown()) {
-	//	circle->SetX(input->getMouseX());
-	//	circle->SetY(input->getMouseY());
-	//}
-
-	//if (shpImageExplorer != NULL) {
-	//	shpImageExplorer->Update(frameTime);
-	//}
-
-}
-
-
-void Game::Render() {
-
-	//if (minigunner1 != NULL) {
-	//	minigunner1->Draw();
-	//}
-
-	//if (enemyMinigunner1 != NULL) {
-	//	if (enemyMinigunner1->GetHealth() > 0) {
-	//		enemyMinigunner1->Draw();
-	//	}
-	//}
-
-	//if (shpImageExplorer != NULL) {
-	//	shpImageExplorer->Draw();
-	//}
-	//circle->Draw(graphics->Get3Ddevice());
-
+	return currentGameState->Update(frameTime);
 
 }
 
@@ -277,11 +240,14 @@ void Game::ExecuteGameCycle() {
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-    Update(); 
+    GameState * newGameState = Update(); 
     RenderGame(); 
+
+	currentGameState = newGameState;
 
     if (input->IsKeyDown(ESC_KEY))
 		PostQuitMessage(0);
+
 
 }
 

@@ -12,7 +12,7 @@ PlayingGameState::PlayingGameState(Game & game)  : GameState(game) {
 }
 
 
-void PlayingGameState::Update(float frameTime) {
+GameState * PlayingGameState::Update(float frameTime) {
 
 	game.ProcessGameEvents();
 	Minigunner * minigunner1 = game.GetGDIMinigunner();
@@ -37,6 +37,15 @@ void PlayingGameState::Update(float frameTime) {
 	if (shpImageExplorer != NULL) {
 		shpImageExplorer->Update(frameTime);
 	}
+
+	//if (enemyMinigunner1->GetHealth() <= 0) {
+	//	return new GameOverGameState();
+	//}
+	//else {
+	//	return this;
+	//}
+
+	return this;
 
 }
 
