@@ -4,16 +4,19 @@ Next steps
 ***********
 		* Make game end after killing NOD minigunner
 			* Add Gamestates:
-				* Playing
-					* Existing gameplay
+				X * Playing
+				X	* Existing gameplay
 				* GameOver
-					* Diplsay "Game Over"
-					* Add option to restart
+--->		 * Display "Mission Accomplished"
+				* Only allow press of ESC to exit at this time
 
-//	Then add GameOverGame state, and switch to it when Nod Dies
-	//	Then allow restart of game
-	//	Update tests to do this
 
+
+Next Next steps
+***************
+	* Have computer randomly move NOD minigunner and attack
+		* Do Mission Failed if NOD minigunner kills GDI
+	
 
 Backlog
 ********
@@ -43,6 +46,8 @@ Backlog
 			* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
 			just be the sprite sheet image from above
 			* Create class that is responsible for parsing Shpfile into a single sprite sheet
+
+		* See if animation sequences are coded in INI files in original C&C
 
 	* Misc
 		 * Consider if clicking an enemy unit that is out of range is:

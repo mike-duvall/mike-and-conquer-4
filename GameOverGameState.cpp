@@ -1,12 +1,21 @@
 #include "GameOverGameState.h"
 
-
+#include "graphics.h"
+#include "Game.h"
 
 GameOverGameState::GameOverGameState(Game & game) : GameState(game) {
 
 }
 
 GameState * GameOverGameState::Update(float frameTime) {
+
+	game.ProcessGameEvents();
+	Graphics * graphics = game.GetGraphics();
+	graphics->BeginScene(graphicsNS::CYAN);
+	this->Render();
+	graphics->endScene();
+	graphics->ShowBackbuffer();
+
 	return this;
 
 }

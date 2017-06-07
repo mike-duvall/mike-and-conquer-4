@@ -4,6 +4,7 @@
 #include "Minigunner.h"
 #include "Circle.h"
 #include "ShpImageExplorer.h"
+#include "GameOverGameState.h"
 
 
 
@@ -38,12 +39,22 @@ GameState * PlayingGameState::Update(float frameTime) {
 		shpImageExplorer->Update(frameTime);
 	}
 
-	//if (enemyMinigunner1->GetHealth() <= 0) {
-	//	return new GameOverGameState();
-	//}
-	//else {
-	//	return this;
-	//}
+
+	Graphics * graphics = game.GetGraphics();
+	graphics->BeginScene(graphicsNS::CUSTOM6);
+	this->Render();
+	graphics->endScene();
+	graphics->ShowBackbuffer();
+
+
+
+	if (enemyMinigunner1 != NULL && enemyMinigunner1->GetHealth() <= 0) {
+		return new GameOverGameState(game);
+	}
+	else {
+		return this;
+	}
+
 
 	return this;
 

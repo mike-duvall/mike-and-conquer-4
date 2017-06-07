@@ -208,24 +208,24 @@ void Game::ProcessGameEvents() {
 
 }
 
-GameState * Game::Update() {
+//GameState * Game::Update() {
+//
+//	return currentGameState->Update(frameTime);
+//
+//}
 
-	return currentGameState->Update(frameTime);
 
-}
-
-
-void Game::RenderGame() {
-    if (SUCCEEDED(graphics->BeginScene()))
-    {
-        //Render();
-		currentGameState->Render();
-        graphics->endScene();
-    }
-
-    graphics->ShowBackbuffer();
-
-}
+//void Game::RenderGame() {
+//    if (SUCCEEDED(graphics->BeginScene()))
+//    {
+//        //Render();
+//		currentGameState->Render();
+//        graphics->endScene();
+//    }
+//
+//    graphics->ShowBackbuffer();
+//
+//}
 
 void Game::ExecuteGameCycle() {
     if(graphics == NULL)            // if graphics not initialized
@@ -240,10 +240,10 @@ void Game::ExecuteGameCycle() {
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-    GameState * newGameState = Update(); 
-    RenderGame(); 
+    //GameState * newGameState = Update(); 
+    //RenderGame(); 
 
-	currentGameState = newGameState;
+	currentGameState = currentGameState->Update(frameTime);
 
     if (input->IsKeyDown(ESC_KEY))
 		PostQuitMessage(0);
