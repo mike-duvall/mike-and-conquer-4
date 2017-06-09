@@ -1,7 +1,9 @@
 #pragma once
 
-
 #include "GameState.h"
+
+
+class GameOverMessage;
 
 class GameOverGameState : public GameState {
 
@@ -12,4 +14,7 @@ public:
 	virtual void Render();
 
 
+private:
+
+	GameOverMessage * gameOverMessage;
 };
