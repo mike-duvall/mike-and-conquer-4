@@ -274,3 +274,6 @@ void Minigunner::Draw()
 }
 
 
+void Minigunner::SetAnimate(bool newValue) {
+	gameSprite->SetAnimate(newValue);
+}

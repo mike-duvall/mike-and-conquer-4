@@ -13,6 +13,10 @@ void AnimationSequence::AddFrame(unsigned int frame) {
 }
 
 void AnimationSequence::Update() {
+	if (!animate) {
+		return;
+	}
+
 	if (frameSwitchTimer > frameSwitchThreshold) {
 		frameSwitchTimer = 0;
 		currentAnimationFrameIndex++;

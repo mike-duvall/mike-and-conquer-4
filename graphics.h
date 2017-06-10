@@ -70,14 +70,14 @@ public:
 
 
 
-    HRESULT BeginScene() {
+    HRESULT BeginScene(D3DCOLOR backgroundColor) {
         result = E_FAIL;
         if(device3d == NULL)
             return result;
         // Clear back buffer, stencil buffer and depth buffer
         device3d->Clear(0, 0, 
             D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER,
-            backColor, 1.0f, 0);
+            backgroundColor, 1.0f, 0);
 
         result = device3d->BeginScene();          // begin scene for drawing
         return result;

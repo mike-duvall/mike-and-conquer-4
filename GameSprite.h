@@ -38,11 +38,12 @@ public:
 	void AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence);
 	void SetCurrentAnimationSequenceIndex(unsigned int animationSequence);
 	unsigned int GetCurrentAnimationSequenceIndex() { return currentAnimationSequenceIndex; }
+	void setScaling(float scaling);
+	void SetAnimate(bool newValue);
 
 private:
 
-	LPDIRECT3DTEXTURE9 InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
-	LPDIRECT3DTEXTURE9 InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex);
+	void InitializeTextureFromPngFile( std::string filename, D3DCOLOR transparentColor);
 	void LoadAllTexturesFromShpFile(ShpFile & shpFile);
 	LPDIRECT3DTEXTURE9 CreateTextureForDrawing();
 	void DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData);

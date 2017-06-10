@@ -39,6 +39,7 @@ class Minigunner
 	bool GetIsSelected() { return this->isSelected; }
 	void SetDestination(int x, int y);
 	int GetHealth() { return this->health; }
+	void SetAnimate(bool newValue);
 
 
 

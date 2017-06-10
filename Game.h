@@ -26,6 +26,7 @@ class GameEvent;
 class ShpImageExplorer;
 class GdiShpFileColorMapper;
 class NodShpFileColorMapper;
+class GameState;
 
 
 class Game {
@@ -43,10 +44,7 @@ public:
     virtual void ReleaseAll();
     virtual void ResetAll();
     virtual void DeleteAll();
-    virtual void RenderGame();
 	void ProcessGameEvents();
-	virtual void Update();
-	virtual void Render();
 
 	Minigunner * GetMinigunnerAtPoint(int x, int y);
 
@@ -61,6 +59,9 @@ public:
 	Minigunner * GetNODMinigunnerViaEvent();
 	Minigunner * GetGDIMinigunner() { return minigunner1;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
+	Circle * GetCircle() { return circle; }
+	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
+
 
 protected:
 
@@ -93,6 +94,7 @@ protected:
 	NodShpFileColorMapper * nodShpFileColorMapper;
 
 
+	GameState * currentGameState;
 
 
 };

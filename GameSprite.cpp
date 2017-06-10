@@ -151,28 +151,8 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 }
 
 
-LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromShpFile(ShpFile & shpFile, int imageIndex) {
 
-	ImageHeader * imageHeader = shpFile.ImageHeaders()[imageIndex];
-	std::vector<unsigned char> & byteBuffer0 = imageHeader->GetData();
-
-	PaletteFile paletteFile(std::string("assets/temperat.pal"));
-	std::vector<PaletteEntry *> & paletteEntries = paletteFile.GetPaletteEntries();
-	
-	width = shpFile.Width();
-	height = shpFile.Height();
-
-	point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
-
-	LPDIRECT3DTEXTURE9 texture = CreateTextureForDrawing();
-	DrawImageDataToTexture(texture, imageData);
-
-	return texture;
-
-}
-
-
-LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
+void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
@@ -205,7 +185,7 @@ LPDIRECT3DTEXTURE9 GameSprite::InitializeTextureFromPngFile(std::string filename
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXCreateTextureFromFileEx()"));
 	}
 
-	return textureX;
+	textureList.push_back(textureX);
 
 }
 
@@ -244,6 +224,10 @@ bool GameSprite::InitializeDirectXSpriteInterface() {
 	catch (...) { return false; }
 	initialized = true;                    // set true when initialized
 	return success;
+}
+
+void GameSprite::setScaling(float newScaling) {
+	scaling = D3DXVECTOR2(newScaling, newScaling);
 }
 
 void GameSprite::SetSpriteCenter(int x, int y) {
@@ -316,4 +300,9 @@ void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequence
 
 void GameSprite::AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence) {
 	animationSequenceMap[key] = animationSequence;
+}
+
+void GameSprite::SetAnimate(bool newValue) {
+	AnimationSequence * animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	animationSequence->SetAnimate(newValue);
 }

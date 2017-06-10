@@ -13,6 +13,7 @@
 #include "ShpImageExplorer.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
+#include "PlayingGameState.h"
 
 
 
@@ -99,8 +100,12 @@ void Game::Initialize(HWND hw) {
 	}
 
 	circle = new Circle(300, 900);
+
+
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = NULL;
+
+	currentGameState = new PlayingGameState(*this);
 	initialized = true;
 }
 
@@ -203,58 +208,7 @@ void Game::ProcessGameEvents() {
 
 }
 
-void Game::Update() {
 
-	ProcessGameEvents();
-	if (minigunner1 != NULL) {
-		minigunner1->Update(frameTime);
-	}
-	if (enemyMinigunner1 != NULL) {
-		enemyMinigunner1->Update(frameTime);
-	}
-	if (input->isLeftMouseDown()) {
-		circle->SetX(input->getMouseX());
-		circle->SetY(input->getMouseY());
-	}
-
-	if (shpImageExplorer != NULL) {
-		shpImageExplorer->Update(frameTime);
-	}
-
-}
-
-
-void Game::Render() {
-//	graphics->spriteBegin();                // begin drawing sprites
-	if (minigunner1 != NULL) {
-		minigunner1->Draw();
-	}
-
-	if (enemyMinigunner1 != NULL) {
-		if (enemyMinigunner1->GetHealth() > 0) {
-			enemyMinigunner1->Draw();
-		}
-	}
-
-	if (shpImageExplorer != NULL) {
-		shpImageExplorer->Draw();
-	}
-	circle->Draw(graphics->Get3Ddevice());
-//	graphics->spriteEnd();                  // end drawing sprites
-
-}
-
-
-void Game::RenderGame() {
-    if (SUCCEEDED(graphics->BeginScene()))
-    {
-        Render();
-        graphics->endScene();
-    }
-
-    graphics->ShowBackbuffer();
-
-}
 
 void Game::ExecuteGameCycle() {
     if(graphics == NULL)            // if graphics not initialized
@@ -269,11 +223,14 @@ void Game::ExecuteGameCycle() {
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
     timeStart = timeEnd;
 
-    Update(); 
-    RenderGame(); 
+    //GameState * newGameState = Update(); 
+    //RenderGame(); 
+
+	currentGameState = currentGameState->Update(frameTime);
 
     if (input->IsKeyDown(ESC_KEY))
 		PostQuitMessage(0);
+
 
 }
 

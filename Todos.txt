@@ -3,6 +3,24 @@
 Next steps
 ***********
 		* Make game end after killing NOD minigunner
+			* Add Gamestates:
+				X * Playing
+				X	* Existing gameplay
+				x * GameOver
+			 x * Display "Mission Accomplished"
+				s * Only allow press of ESC to exit at this time
+			x * Don't animation minigunner in GaveOver state
+
+--->	* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
+		* Shortend timeout on Rest calls into Game used by test
+
+
+
+Next Next steps
+***************
+	* Have computer randomly move NOD minigunner and attack
+		* Do Mission Failed if NOD minigunner kills GDI
+	
 
 Backlog
 ********
@@ -20,6 +38,8 @@ Backlog
 
 	* Refactoring
 
+		* Group files in subclasses or packages or namespaces
+			* Research current C++ standards for this
 		* Revisit what claases snould handle mapping ShpFile to textures
 		* Make Minigunner class not create new ShpFile instances every time.  Initialize ShpFile instances up front,
 		  use same one over and over
@@ -30,6 +50,8 @@ Backlog
 			* GameSprite should not know about ShpFile.  The interface when instantiating GameSprite should
 			just be the sprite sheet image from above
 			* Create class that is responsible for parsing Shpfile into a single sprite sheet
+
+		* See if animation sequences are coded in INI files in original C&C
 
 	* Misc
 		 * Consider if clicking an enemy unit that is out of range is:
