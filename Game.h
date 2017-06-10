@@ -44,9 +44,7 @@ public:
     virtual void ReleaseAll();
     virtual void ResetAll();
     virtual void DeleteAll();
-    //virtual void RenderGame();
 	void ProcessGameEvents();
-	//virtual GameState *  Update();
 
 	Minigunner * GetMinigunnerAtPoint(int x, int y);
 

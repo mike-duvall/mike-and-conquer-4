@@ -208,24 +208,7 @@ void Game::ProcessGameEvents() {
 
 }
 
-//GameState * Game::Update() {
-//
-//	return currentGameState->Update(frameTime);
-//
-//}
 
-
-//void Game::RenderGame() {
-//    if (SUCCEEDED(graphics->BeginScene()))
-//    {
-//        //Render();
-//		currentGameState->Render();
-//        graphics->endScene();
-//    }
-//
-//    graphics->ShowBackbuffer();
-//
-//}
 
 void Game::ExecuteGameCycle() {
     if(graphics == NULL)            // if graphics not initialized
