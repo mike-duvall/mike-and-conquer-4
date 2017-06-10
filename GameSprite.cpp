@@ -9,7 +9,7 @@
 #include "AnimationSequence.h"
 #include "ShpFileColorMapper.h"
 
-
+#include "dxerr.h"
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
@@ -158,6 +158,10 @@ void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR tra
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
 	if (result != D3D_OK) {
 		//throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXGetImageInfoFromFile()"));
+		//WCHAR result = DXGetErrorString(result);
+		std::string errorString = DXGetErrorString(result);
+		std::string errorDescription = DXGetErrorDescription(result);
+
 		throw("Failed calling D3DXGetImageInfoFromFile()");
 	}
 

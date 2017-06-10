@@ -12,6 +12,8 @@ Next steps
 			x * Don't animation minigunner in GaveOver state
 
 --->	* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
+			* Bad filename for png file
+			* Bad filename for Shp file (it's two different scenarios)
 		* Shortend timeout on Rest calls into Game used by test
 
 
