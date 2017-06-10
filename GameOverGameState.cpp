@@ -7,6 +7,16 @@
 
 GameOverGameState::GameOverGameState(Game & game) : GameState(game) {
 	gameOverMessage = new GameOverMessage(game);
+	Minigunner * minigunner1 = game.GetGDIMinigunner();
+	if (minigunner1 != NULL) {
+		minigunner1->SetAnimate(false);
+	}
+
+	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
+	if (enemyMinigunner1 != NULL) {
+		enemyMinigunner1->SetAnimate(false);
+	}
+
 
 }
 

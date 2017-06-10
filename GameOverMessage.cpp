@@ -28,7 +28,7 @@ GameOverMessage::GameOverMessage(Game & game) {
 
 
 void GameOverMessage::Draw() {
-	missionGameSprite->Draw(0, 400, 400);
-	accomplishedGameSprite->Draw(0, 700, 400);
+	missionGameSprite->Draw(0, 800, 400);
+	accomplishedGameSprite->Draw(0, 800, 450);
 
 }

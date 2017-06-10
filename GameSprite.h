@@ -39,6 +39,7 @@ public:
 	void SetCurrentAnimationSequenceIndex(unsigned int animationSequence);
 	unsigned int GetCurrentAnimationSequenceIndex() { return currentAnimationSequenceIndex; }
 	void setScaling(float scaling);
+	void SetAnimate(bool newValue);
 
 private:
 

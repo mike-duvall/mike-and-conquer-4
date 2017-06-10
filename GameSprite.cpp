@@ -301,3 +301,8 @@ void GameSprite::SetCurrentAnimationSequenceIndex(unsigned int aniatmionSequence
 void GameSprite::AddAnimationSequence(unsigned int key, AnimationSequence * animationSequence) {
 	animationSequenceMap[key] = animationSequence;
 }
+
+void GameSprite::SetAnimate(bool newValue) {
+	AnimationSequence * animationSequence = animationSequenceMap[currentAnimationSequenceIndex];
+	animationSequence->SetAnimate(newValue);
+}
