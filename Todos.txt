@@ -6,12 +6,12 @@ Next steps
 			* Add Gamestates:
 				X * Playing
 				X	* Existing gameplay
-				* GameOver
---->		 * Display "Mission Accomplished"
-				* Only allow press of ESC to exit at this time
-			* Don't animation minigunner in GaveOver state
+				x * GameOver
+			 x * Display "Mission Accomplished"
+				s * Only allow press of ESC to exit at this time
+			x * Don't animation minigunner in GaveOver state
 
-		* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
+--->	* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
 		* Shortend timeout on Rest calls into Game used by test
 
 
