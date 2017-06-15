@@ -11,6 +11,10 @@
 
 #include "dxerr.h"
 
+#define BOOST_STACKTRACE_USE_WINDBG
+
+#include <boost/stacktrace.hpp>
+
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->shpFileColorMapper = shpFileColorMapper;
@@ -151,18 +155,123 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 }
 
 
+//#include "stdafx.h"
+//#include <process.h>
+//#include <iostream>
+//#include <Windows.h>
+#include "dbghelp.h"
+
+#define TRACE_MAX_STACK_FRAMES 1024
+#define TRACE_MAX_FUNCTION_NAME_LENGTH 1024
+
+
+#define BUFSIZE MAX_PATH
+
+int printStackTrace()
+{
+	void *stack[TRACE_MAX_STACK_FRAMES];
+	HANDLE process = GetCurrentProcess();
+
+
+
+
+	bool doit = false;
+	if (doit) {
+		SetCurrentDirectory("C:\\remotetemp");
+		SymInitialize(process, "C:\\remotetemp", TRUE);
+	}
+	else {
+		SymInitialize(process, NULL, TRUE);
+	}
+
+	char path[255];
+	SymGetSearchPath(process, path, 255 );
+
+	TCHAR Buffer[BUFSIZE];
+	DWORD dwRet;
+	dwRet = GetCurrentDirectory(BUFSIZE, Buffer);
+
+
+	//BOOL WINAPI SymGetSearchPath(
+	//	_In_  HANDLE hProcess,
+	//	_Out_ PTSTR  SearchPath,
+	//	_In_  DWORD  SearchPathLength
+	//);
+	WORD numberOfFrames = CaptureStackBackTrace(0, TRACE_MAX_STACK_FRAMES, stack, NULL);
+	SYMBOL_INFO *symbol = (SYMBOL_INFO *)malloc(sizeof(SYMBOL_INFO) + (TRACE_MAX_FUNCTION_NAME_LENGTH - 1) * sizeof(TCHAR));
+	symbol->MaxNameLen = TRACE_MAX_FUNCTION_NAME_LENGTH;
+	symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+	DWORD displacement;
+	IMAGEHLP_LINE64 *line = (IMAGEHLP_LINE64 *)malloc(sizeof(IMAGEHLP_LINE64));
+	line->SizeOfStruct = sizeof(IMAGEHLP_LINE64);
+
+	for (int i = 0; i < numberOfFrames; i++)
+	{
+		DWORD64 address = (DWORD64)(stack[i]);
+		SymFromAddr(process, address, NULL, symbol);
+		if (SymGetLineFromAddr64(process, address, &displacement, line))
+		{
+			char buffer[500];
+			sprintf(buffer, "\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
+			printf("\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
+		}
+		else
+		{
+			char buffer1[500];
+			sprintf(buffer1, "\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
+			printf("\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
+
+			char buffer2[500];
+			sprintf(buffer2, "\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
+			printf("\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
+		}
+
+//		Lookup why error 487 from SymGetLineFromAddr64
+		//Continue figuring out how to make stacktrace work when remotely debuggin
+		//	Read here: https://msdn.microsoft.com/en-us/library/windows/desktop/ms681412(v=vs.85).aspx
+
+		//Try running in Visual Studio on work laptop and see if stack info works
+		//	Then try to get a list of loaded symbol files somehow
+
+		//	Try this: https://msdn.microsoft.com/en-us/library/windows/desktop/ms679319(v=vs.85).aspx
+		//or this: https ://msdn.microsoft.com/en-us/library/windows/desktop/ms679318(v=vs.85).aspx
+	}
+	return 0;
+}
 
 void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
-	if (result != D3D_OK) {
+	if (FAILED(result)) {
 		//throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXGetImageInfoFromFile()"));
 		//WCHAR result = DXGetErrorString(result);
 		std::string errorString = DXGetErrorString(result);
 		std::string errorDescription = DXGetErrorDescription(result);
 
-		throw("Failed calling D3DXGetImageInfoFromFile()");
+		std::string errorMessage = "Error in InitializeTextureFromPngFile():  filename=" + filename + 
+			".  Error string: " + errorString + ".  Error description:" + errorDescription;
+		//throw("Failed calling D3DXGetImageInfoFromFile()");
+
+		boost::stacktrace::stacktrace myStracktrace = boost::stacktrace::stacktrace();
+
+		std::stringstream ss;
+		ss << myStracktrace << std::endl;
+		std::string s = ss.str();
+
+		printStackTrace();
+
+		for (boost::stacktrace::frame frame : myStracktrace) {
+			//std::cout << frame.address() << ',';
+			std::string sourceFile = frame.source_file();
+			std::size_t sourceLine = frame.source_line();
+			
+			int x = 3;
+		}
+
+
+		throw(errorMessage);
+
 	}
 
 	width = info.Width;
