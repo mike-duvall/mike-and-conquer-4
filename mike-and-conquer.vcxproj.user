@@ -9,8 +9,7 @@
     <RemoteDebuggerConnection>RemoteWithoutAuthentication</RemoteDebuggerConnection>
     <RemoteDebuggerDebuggerType>NativeOnly</RemoteDebuggerDebuggerType>
     <DeploymentDirectory>c:\remotetemp</DeploymentDirectory>
-    <AdditionalFiles>
-    </AdditionalFiles>
+    <AdditionalFiles>D:\workspace\mike-and-conquer-4\Debug\mike-and-conquer.pdb</AdditionalFiles>
     <LocalDebuggerCommandArguments>TESTMODE</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

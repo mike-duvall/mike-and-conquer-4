@@ -10,6 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mike-and-conquer", "mike-an
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mike-and-conquer-test", "mike-and-conquer-test\mike-and-conquer-test.vcxproj", "{9D18AE52-28E4-444B-BF02-04AF488886AE}"
 	ProjectSection(ProjectDependencies) = postProject
+		{0259B800-2046-467E-94A2-D13B6F5210BC} = {0259B800-2046-467E-94A2-D13B6F5210BC}
 		{94495E66-76EC-4509-8C17-0DAE4C61E3DB} = {94495E66-76EC-4509-8C17-0DAE4C61E3DB}
 	EndProjectSection
 EndProject
