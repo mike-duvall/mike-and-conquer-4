@@ -11,13 +11,6 @@
 
 #include "dxerr.h"
 
-#define BOOST_STACKTRACE_USE_WINDBG
-//#define BOOST_STACKTRACE_USE_BACKTRACE
-#define BOOST_STACKTRACE_USE_ADDR2LINE
-
-
-
-#include <boost/stacktrace.hpp>
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
@@ -337,21 +330,7 @@ void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR tra
 			".  Error string: " + errorString + ".  Error description:" + errorDescription;
 		//throw("Failed calling D3DXGetImageInfoFromFile()");
 
-		boost::stacktrace::stacktrace myStracktrace = boost::stacktrace::stacktrace();
-
-		std::stringstream ss;
-		ss << myStracktrace << std::endl;
-		std::string s = ss.str();
-
 		printStackTrace();
-
-		for (boost::stacktrace::frame frame : myStracktrace) {
-			//std::cout << frame.address() << ',';
-			std::string sourceFile = frame.source_file();
-			std::size_t sourceLine = frame.source_line();
-			
-			int x = 3;
-		}
 
 
 		throw(errorMessage);
