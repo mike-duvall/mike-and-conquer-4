@@ -1,7 +1,6 @@
 #include "GameSprite.h"
 
 #include "graphics.h"
-#include "Circle.h"
 #include "ShpFile.h"
 #include "PaletteFile.h"
 #include "ImageHeader.h"
@@ -152,10 +151,6 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 }
 
 
-//#include "stdafx.h"
-//#include <process.h>
-//#include <iostream>
-//#include <Windows.h>
 #include "dbghelp.h"
 
 #define TRACE_MAX_STACK_FRAMES 1024
@@ -168,54 +163,12 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 
 #include <tchar.h>
 
-HANDLE gProcess;
-
-BOOL CALLBACK EnumSymProc(
-	PSYMBOL_INFO pSymInfo,
-	ULONG SymbolSize,
-	PVOID UserContext)
-{
-	UNREFERENCED_PARAMETER(UserContext);
-
-	printf("%08X %4u %s\n",
-		pSymInfo->Address, SymbolSize, pSymInfo->Name);
-
-	char text[500];
-	sprintf(text, "%08X %4u %s\n",
-		pSymInfo->Address, SymbolSize, pSymInfo->Name);
-
-	return TRUE;
-}
-
-
-DWORD64 gBaseOfDll = NULL;
-
-
-BOOL CALLBACK EnumModules(
-	PCTSTR  ModuleName,
-	DWORD64 BaseOfDll,
-	PVOID   UserContext)
-{
-	UNREFERENCED_PARAMETER(UserContext);
-
-	_tprintf(TEXT("%08X %s\n"), BaseOfDll, ModuleName);
-	char text[500];
-	sprintf(text, TEXT("%08X %s\n"), BaseOfDll, ModuleName);
-
-	if (gBaseOfDll == NULL) {
-		gBaseOfDll = BaseOfDll;
-	}
-
-	return TRUE;
-}
-
 
 
 int printStackTrace()
 {
 	void *stack[TRACE_MAX_STACK_FRAMES];
 	HANDLE process = GetCurrentProcess();
-	gProcess = GetCurrentProcess();
 
 	bool doit = false;
 	if (doit) {
@@ -226,48 +179,14 @@ int printStackTrace()
 		SymInitialize(process, NULL, TRUE);
 	}
 
-	//if (SymEnumerateModules64(process, EnumModules, NULL))
-	//{
-	//	// SymEnumerateModules64 returned success
-	//}
-	//else
-	//{
-	//	// SymEnumerateModules64 failed
-	//	DWORD error = GetLastError();
-	//	_tprintf(TEXT("SymEnumerateModules64 returned error : %d\n"), error);
-	//	int x = 3;
-	//}
-
-
-	//if (SymEnumSymbols(gProcess,     // Process handle from SymInitialize.
-	//	gBaseOfDll,   // Base address of module.
-	//	NULL,        // Name of symbols to match.
-	//	EnumSymProc, // Symbol handler procedure.
-	//	NULL))       // User context.
-	//{
-	//	// SymEnumSymbols succeeded
-	//}
-	//else
-	//{
-	//	// SymEnumSymbols failed
-	//	printf("SymEnumSymbols failed: %d\n", GetLastError());
-	//}
-
-
 
 	char path[255];
 	SymGetSearchPath(process, path, 255 );
 
 	TCHAR Buffer[BUFSIZE];
-	DWORD dwRet;
-	dwRet = GetCurrentDirectory(BUFSIZE, Buffer);
+	DWORD dwRet = GetCurrentDirectory(BUFSIZE, Buffer);
 
 
-	//BOOL WINAPI SymGetSearchPath(
-	//	_In_  HANDLE hProcess,
-	//	_Out_ PTSTR  SearchPath,
-	//	_In_  DWORD  SearchPathLength
-	//);
 	WORD numberOfFrames = CaptureStackBackTrace(0, TRACE_MAX_STACK_FRAMES, stack, NULL);
 	SYMBOL_INFO *symbol = (SYMBOL_INFO *)malloc(sizeof(SYMBOL_INFO) + (TRACE_MAX_FUNCTION_NAME_LENGTH - 1) * sizeof(TCHAR));
 	symbol->MaxNameLen = TRACE_MAX_FUNCTION_NAME_LENGTH;
@@ -275,11 +194,6 @@ int printStackTrace()
 	DWORD displacement;
 	IMAGEHLP_LINE64 *line = (IMAGEHLP_LINE64 *)malloc(sizeof(IMAGEHLP_LINE64));
 	line->SizeOfStruct = sizeof(IMAGEHLP_LINE64);
-	int x = 3;
-	x = 4;
-
-
-//	Check for visual studio extensions
 
 
 	for (int i = 0; i < numberOfFrames; i++)
@@ -302,16 +216,7 @@ int printStackTrace()
 			sprintf(buffer2, "\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
 			printf("\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
 		}
-
-//		Lookup why error 487 from SymGetLineFromAddr64
-		//Continue figuring out how to make stacktrace work when remotely debuggin
-		//	Read here: https://msdn.microsoft.com/en-us/library/windows/desktop/ms681412(v=vs.85).aspx
-
-		//X Try running in Visual Studio on work laptop and see if stack info works
-		//	Then try to get a list of loaded symbol files somehow
-
-		//	Try this: https://msdn.microsoft.com/en-us/library/windows/desktop/ms679319(v=vs.85).aspx
-		
+	
 	}
 	return 0;
 }
