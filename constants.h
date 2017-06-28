@@ -6,11 +6,11 @@
 
 const char CLASS_NAME[] = "Mike and Conquer";
 const char GAME_TITLE[] = "Mike and Conquer";
-//const bool FULLSCREEN = true;              // windowed or fullscreen
+const bool FULLSCREEN = true;              // windowed or fullscreen
 const UINT GAME_WIDTH = 1920;               // width of game in pixels
 const UINT GAME_HEIGHT = 1080;               // height of game in pixels
 
-const bool FULLSCREEN = false;              // windowed or fullscreen
+//const bool FULLSCREEN = false;              // windowed or fullscreen
 //const UINT GAME_WIDTH =  1280;               // width of game in pixels
 //const UINT GAME_HEIGHT = 1024;               // height of game in pixels
  
@@ -23,8 +23,6 @@ const float FRAME_RATE = 240.0f;            // the target frame rate (frames/sec
 const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
-
-
 
 
 const UCHAR ESC_KEY      = VK_ESCAPE;   // escape key

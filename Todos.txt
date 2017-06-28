@@ -13,8 +13,12 @@ Next steps
 
 --->	* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
 			* Bad filename for png file
+				* 	Move DirectX error  to CPP file
+				*  Chop off first two stack frames in stack trace (this exception and the stacktrace class)
 			* Bad filename for Shp file (it's two different scenarios)
+
 		* Shortend timeout on Rest calls into Game used by test
+		* Make sure green background is drawing correclty
 
 
 

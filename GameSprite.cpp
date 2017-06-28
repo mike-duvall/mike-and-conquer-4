@@ -8,17 +8,13 @@
 #include "AnimationSequence.h"
 #include "ShpFileColorMapper.h"
 
-#include "dxerr.h"
-
+#include "DirectXError.h"
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->shpFileColorMapper = shpFileColorMapper;
-
 	LoadAllTexturesFromShpFile(shpFile);
-	
 	this->InitializeDirectXSpriteInterface();
-
 }
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
@@ -151,95 +147,13 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 }
 
 
-#include "dbghelp.h"
-
-#define TRACE_MAX_STACK_FRAMES 1024
-#define TRACE_MAX_FUNCTION_NAME_LENGTH 1024
-
-#include <stdio.h>
-#include <Windows.h>
-
-#define BUFSIZE MAX_PATH
-
-#include <tchar.h>
-
-
-
-int printStackTrace()
-{
-	void *stack[TRACE_MAX_STACK_FRAMES];
-	HANDLE process = GetCurrentProcess();
-
-	bool doit = false;
-	if (doit) {
-		SetCurrentDirectory("C:\\remotetemp");
-		SymInitialize(process, "C:\\remotetemp", TRUE);
-	}
-	else {
-		SymInitialize(process, NULL, TRUE);
-	}
-
-
-	char path[255];
-	SymGetSearchPath(process, path, 255 );
-
-	TCHAR Buffer[BUFSIZE];
-	DWORD dwRet = GetCurrentDirectory(BUFSIZE, Buffer);
-
-
-	WORD numberOfFrames = CaptureStackBackTrace(0, TRACE_MAX_STACK_FRAMES, stack, NULL);
-	SYMBOL_INFO *symbol = (SYMBOL_INFO *)malloc(sizeof(SYMBOL_INFO) + (TRACE_MAX_FUNCTION_NAME_LENGTH - 1) * sizeof(TCHAR));
-	symbol->MaxNameLen = TRACE_MAX_FUNCTION_NAME_LENGTH;
-	symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
-	DWORD displacement;
-	IMAGEHLP_LINE64 *line = (IMAGEHLP_LINE64 *)malloc(sizeof(IMAGEHLP_LINE64));
-	line->SizeOfStruct = sizeof(IMAGEHLP_LINE64);
-
-
-	for (int i = 0; i < numberOfFrames; i++)
-	{
-		DWORD64 address = (DWORD64)(stack[i]);
-		SymFromAddr(process, address, NULL, symbol);
-		if (SymGetLineFromAddr64(process, address, &displacement, line))
-		{
-			char buffer[500];
-			sprintf(buffer, "\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
-			printf("\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
-		}
-		else
-		{
-			char buffer1[500];
-			sprintf(buffer1, "\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
-			printf("\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
-
-			char buffer2[500];
-			sprintf(buffer2, "\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
-			printf("\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
-		}
-	
-	}
-	return 0;
-}
-
 void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
+
 	if (FAILED(result)) {
-		//throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXGetImageInfoFromFile()"));
-		//WCHAR result = DXGetErrorString(result);
-		std::string errorString = DXGetErrorString(result);
-		std::string errorDescription = DXGetErrorDescription(result);
-
-		std::string errorMessage = "Error in InitializeTextureFromPngFile():  filename=" + filename + 
-			".  Error string: " + errorString + ".  Error description:" + errorDescription;
-		//throw("Failed calling D3DXGetImageInfoFromFile()");
-
-		printStackTrace();
-
-
-		throw(errorMessage);
-
+		throw DirectXError(result, "Params: {filename=" + filename + "}");
 	}
 
 	width = info.Width;
