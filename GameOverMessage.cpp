@@ -9,7 +9,7 @@
 GameOverMessage::GameOverMessage(Game & game) {
 
 	
-	missionGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/xMission.png", graphicsNS::MAGENTA);
+	missionGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/Mission.png", graphicsNS::MAGENTA);
 	AnimationSequence * missionAnimationSequence = new AnimationSequence(10);
 	missionAnimationSequence->AddFrame(0);
 	missionGameSprite->AddAnimationSequence(0, missionAnimationSequence);

@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RemoteDebuggerCommand>c:\remotetemp\mike-and-conquer.exe</RemoteDebuggerCommand>
-    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <RemoteDebuggerCommandArguments>TESTMODE</RemoteDebuggerCommandArguments>
     <RemoteDebuggerWorkingDirectory>c:\remotetemp</RemoteDebuggerWorkingDirectory>
     <RemoteDebuggerServerName>W540-WINDOWS7</RemoteDebuggerServerName>
@@ -10,6 +10,7 @@
     <RemoteDebuggerDebuggerType>NativeOnly</RemoteDebuggerDebuggerType>
     <DeploymentDirectory>c:\remotetemp</DeploymentDirectory>
     <AdditionalFiles>D:\workspace\mike-and-conquer-4\Debug\mike-and-conquer.pdb</AdditionalFiles>
-    <LocalDebuggerCommandArguments>TESTMODE</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
