@@ -25,8 +25,6 @@ const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 fr
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
 
 
-
-
 const UCHAR ESC_KEY      = VK_ESCAPE;   // escape key
 
 

@@ -1,7 +1,6 @@
 #include "GameSprite.h"
 
 #include "graphics.h"
-#include "Circle.h"
 #include "ShpFile.h"
 #include "PaletteFile.h"
 #include "ImageHeader.h"
@@ -9,16 +8,13 @@
 #include "AnimationSequence.h"
 #include "ShpFileColorMapper.h"
 
-
+#include "DirectXError.h"
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, ShpFile & shpFile, ShpFileColorMapper * shpFileColorMapper, D3DCOLOR transparentColor) {
 	this->device = device;
 	this->shpFileColorMapper = shpFileColorMapper;
-
 	LoadAllTexturesFromShpFile(shpFile);
-	
 	this->InitializeDirectXSpriteInterface();
-
 }
 
 GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR transparentColor) {
@@ -151,14 +147,13 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 }
 
 
-
 void GameSprite::InitializeTextureFromPngFile(std::string filename, D3DCOLOR transparentColor) {
 	// Get width and height from file
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filename.c_str(), &info);
-	if (result != D3D_OK) {
-		//throw(GameError(gameErrorNS::FATAL_ERROR, "Failed calling D3DXGetImageInfoFromFile()"));
-		throw("Failed calling D3DXGetImageInfoFromFile()");
+
+	if (FAILED(result)) {
+		throw DirectXError(result, "Params: {filename=" + filename + "}");
 	}
 
 	width = info.Width;

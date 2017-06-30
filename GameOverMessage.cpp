@@ -7,7 +7,6 @@
 #include "AnimationSequence.h"
 
 GameOverMessage::GameOverMessage(Game & game) {
-
 	
 	missionGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/Mission.png", graphicsNS::MAGENTA);
 	AnimationSequence * missionAnimationSequence = new AnimationSequence(10);
@@ -22,7 +21,6 @@ GameOverMessage::GameOverMessage(Game & game) {
 	accomplishedGameSprite->AddAnimationSequence(0, accomplishedAnimationSequence);
 	accomplishedGameSprite->SetCurrentAnimationSequenceIndex(0);
 	accomplishedGameSprite->setScaling(1.0);
-
 
 }
 

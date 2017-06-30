@@ -14,6 +14,9 @@
 #include "TestModeRestHandler.h"
 
 
+#include "DirectXError.h"
+
+
 //Unit test todos:
 // * Put a dummy class in lib and use it from main(prove that C++ classes also work in lib, was issue in distant past)
 // * Pull a small part of real game code into lib and use it in main
@@ -89,10 +92,24 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
         DestroyWindow(hwnd);
         MessageBox(NULL, err.getMessage(), "Error", MB_OK);
     }
+	catch (DirectXError & directXError)
+	{
+		game->DeleteAll();
+		DestroyWindow(hwnd);
+		std::string message = directXError.message + "\n" +  directXError.dxErrorString + "\n" + directXError.dxErrorDescription + "\n" + directXError.stacktrace;
+		MessageBox(NULL, message.c_str(), "Error", MB_OK);
+
+	}
 	catch (std::exception const& e) {
 		game->DeleteAll();
 		DestroyWindow(hwnd);
 		MessageBox(NULL, e.what(), "Error", MB_OK);
+
+	}
+	catch (std::string const & stringException) {
+		game->DeleteAll();
+		DestroyWindow(hwnd);
+		MessageBox(NULL, stringException.c_str(), "Error", MB_OK);
 
 	}
     catch(...) {
