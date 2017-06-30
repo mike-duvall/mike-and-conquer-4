@@ -3,22 +3,22 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include "windows.h"
+#include <windows.h>
 
-
-#include "dbghelp.h"
+#pragma warning(disable:4091)
+#include <dbghelp.h>
+#pragma warning(default:4091)
 
 #define TRACE_MAX_STACK_FRAMES 1024
 #define TRACE_MAX_FUNCTION_NAME_LENGTH 1024
 
 #include <stdio.h>
-#include <Windows.h>
 
 #define BUFSIZE MAX_PATH
 
 #include <tchar.h>
 
-
+  
 
 std::string StackTrace::createStackTrace(int numFramesToSkip)
 {
@@ -51,18 +51,18 @@ std::string StackTrace::createStackTrace(int numFramesToSkip)
 		if (SymGetLineFromAddr64(process, address, &displacement, line))
 		{
 			char buffer[500];
-			sprintf(buffer, "\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
-			//printf("\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
+			//sprintf(buffer, "\tat %s in %s: line: %lu: address: 0x%0X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
+			sprintf_s(buffer, "\tat %s in %s: line: %lu: address: 0x%I64X\n", symbol->Name, line->FileName, line->LineNumber, symbol->Address);
 			stackTrace += buffer;
 		}
 		else
-		{
+		{ 
 			char buffer1[500];
-			sprintf(buffer1, "\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
+			sprintf_s(buffer1, "\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
 			printf("\tSymGetLineFromAddr64 returned error code %lu.\n", GetLastError());
 
 			char buffer2[500];
-			sprintf(buffer2, "\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
+			sprintf_s(buffer2, "\tat %s, address 0x%I64X.\n", symbol->Name, symbol->Address);
 			stackTrace += buffer2;
 			//printf("\tat %s, address 0x%0X.\n", symbol->Name, symbol->Address);
 

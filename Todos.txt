@@ -11,7 +11,7 @@ Next steps
 				s * Only allow press of ESC to exit at this time
 			x * Don't animation minigunner in GaveOver state
 
---->	* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
+		* Add generic error handling so that better error message is delivered if DirectX calls file, like in the case where a png file is missing
 			X * Bad filename for png file
 				X* 	Move DirectX error  to CPP file
 				X*  Chop off first two stack frames in stack trace (this exception and the stacktrace class)
@@ -20,6 +20,8 @@ Next steps
 		X * Shortend timeout on Rest calls into Game used by test
 			(not doing) * Use non-deprecated way to set timeouts
 		X * Make sure green background is drawing correclty
+
+		X * Fix compiler warnings in Stacktrace.pp
 
 
 
