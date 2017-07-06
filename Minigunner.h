@@ -92,6 +92,11 @@ private:
 	int CalculateDistanceToTarget();
 	void ReduceHealth(int amount);
 
+	void HandleEnemyUpdate(float frameTime);
+
+	boolean enemyStateIsSleeping;
+	int enemySleepCountdownTimer;
+
 };
 
 
