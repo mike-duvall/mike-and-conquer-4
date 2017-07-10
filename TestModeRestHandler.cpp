@@ -153,26 +153,15 @@ void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {
 void TestModeRestHandler::HandleGetGameState(http_request message) {
 	GameState * currentGameState = game->GetCurrentGameState();
 
+	std::string gameStateName = currentGameState->GetName();
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	std::wstring wideGameStateName = converter.from_bytes(gameStateName);
 
 	json::value obj;
-	//obj[L"x"] = json::value::number(minigunner->GetX());
-	//obj[L"y"] = json::value::number(minigunner->GetY());
-	//obj[L"health"] = json::value::number(minigunner->GetHealth());
+	obj[L"gameState"] = json::value::string(wideGameStateName);
 
-	std::string gameStateName = currentGameState->GetName();
-	//std::wstring st = L"SomeText";
-	//std::wstring st = L"SomeText";
-
-//	Convert string to wstring, perhaps with code below from : https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t
-
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-//	std::string narrow = converter.to_bytes(st);
-	std::wstring wide = converter.from_bytes(gameStateName);
-
-	obj[L"gameState"] = json::value::string(wide);
-
+	//json::value obj[L"gameState"] = json::value::string(wideGameStateName);
 	message.reply(status_codes::OK, obj);
-
 }
 
 
