@@ -4,8 +4,10 @@
 
 #include <Windows.h>
 
+#include <codecvt>
 #include "game.h"
 #include "Minigunner.h"
+#include "GameState.h"
 
 
 
@@ -40,6 +42,15 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	leftClickListener->support(
 		methods::POST,
 		[this](http_request request) {return HandlePOSTLeftClick(request); });
+
+	std::wstring gameStateURL = baseUrl + L"/mac/gameState";
+	gdiMinigunnerListener = new http_listener(gameStateURL);
+	gdiMinigunnerListener->open().wait();
+
+	gdiMinigunnerListener->support(
+		methods::GET,
+		[this](http_request request) {return HandleGetGameState(request); });
+
 
 }
 
@@ -130,13 +141,39 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 void TestModeRestHandler::HandleGetGdiMinigunner(http_request message) {
 	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
 	RenderAndReturnMinigunner(message, minigunner);
-};
+}
 
 
 void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {
 	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
 	RenderAndReturnMinigunner(message, minigunner);
-};
+}
+								   
+								 
+void TestModeRestHandler::HandleGetGameState(http_request message) {
+	GameState * currentGameState = game->GetCurrentGameState();
+
+
+	json::value obj;
+	//obj[L"x"] = json::value::number(minigunner->GetX());
+	//obj[L"y"] = json::value::number(minigunner->GetY());
+	//obj[L"health"] = json::value::number(minigunner->GetHealth());
+
+	std::string gameStateName = currentGameState->GetName();
+	//std::wstring st = L"SomeText";
+	//std::wstring st = L"SomeText";
+
+//	Convert string to wstring, perhaps with code below from : https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t
+
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+//	std::string narrow = converter.to_bytes(st);
+	std::wstring wide = converter.from_bytes(gameStateName);
+
+	obj[L"gameState"] = json::value::string(wide);
+
+	message.reply(status_codes::OK, obj);
+
+}
 
 
 void TestModeRestHandler::HandlePOSTLeftClick(http_request message) {

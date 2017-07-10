@@ -86,3 +86,8 @@ void PlayingGameState::Render() {
 	circle->Draw(graphics->Get3Ddevice());
 
 }
+
+std::string PlayingGameState::GetName()
+{
+	return "Playing";
+}

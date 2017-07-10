@@ -15,11 +15,15 @@ Next steps
 			* Consider delgating behavior to a MinigunnerController
 			Which has PlayerControlled vs ComputerControlled
 			* Make ComputerControlled have multiple states
+
+		* Merge mike-and-conquer-4 and mike-and-conquer-test branches
 	
 
 Backlog
 ********
 ********
+
+	* Refactor - put files in subdirectories.  Example - all game states in gamestate directory
 
 	* Features
 		* Make game end after killing NOD minigunner

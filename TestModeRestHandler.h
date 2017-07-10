@@ -26,6 +26,7 @@ public:
 	void HandleGetGdiMinigunner(http_request message);
 	void HandleGetNodMinigunner(http_request message);
 	void HandlePOSTLeftClick(http_request message);
+	void HandleGetGameState(http_request message);
 
 private:
 	std::wstring baseUrl = L"http://*:11369";

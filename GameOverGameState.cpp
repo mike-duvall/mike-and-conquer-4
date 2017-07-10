@@ -56,3 +56,10 @@ void GameOverGameState::Render() {
 
 
 }
+
+
+
+std::string GameOverGameState::GetName()
+{
+	return "Game Over";
+}

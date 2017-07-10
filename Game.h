@@ -61,6 +61,7 @@ public:
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
+	GameState * GetCurrentGameState() { return currentGameState; }
 
 
 protected:
