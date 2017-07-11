@@ -160,7 +160,6 @@ void TestModeRestHandler::HandleGetGameState(http_request message) {
 	json::value obj;
 	obj[L"gameState"] = json::value::string(wideGameStateName);
 
-	//json::value obj[L"gameState"] = json::value::string(wideGameStateName);
 	message.reply(status_codes::OK, obj);
 }
 

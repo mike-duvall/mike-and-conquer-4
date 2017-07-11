@@ -51,6 +51,9 @@ GameState * PlayingGameState::Update(float frameTime) {
 	if (enemyMinigunner1 != NULL && enemyMinigunner1->GetHealth() <= 0) {
 		return new GameOverGameState(game);
 	}
+	else if(minigunner1 != NULL && minigunner1->GetHealth() <= 0) {
+		return new GameOverGameState(game);
+	}
 	else {
 		return this;
 	}
