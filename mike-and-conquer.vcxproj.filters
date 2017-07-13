@@ -69,13 +69,19 @@
     <ClCompile Include="PlayingGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverGameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameOverMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StackTrace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionAccomplishedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionAccomplishedGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionFailedGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionFailedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,16 +146,22 @@
     <ClInclude Include="PlayingGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverGameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StackTrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectXError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionAccomplishedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionAccomplishedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionFailedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionFailedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

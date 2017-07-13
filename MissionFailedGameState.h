@@ -3,13 +3,13 @@
 #include "GameState.h"
 
 
-class GameOverMessage;
+class MissionFailedMessage;
 
-class GameOverGameState : public GameState {
+class MissionFailedGameState : public GameState {
 
 
 public:
-	GameOverGameState(Game & game);
+	MissionFailedGameState(Game & game);
 	virtual GameState * Update(float frameTime);
 	virtual void Render();
 	virtual std::string GetName();
@@ -17,5 +17,5 @@ public:
 
 private:
 
-	GameOverMessage * gameOverMessage;
+	MissionFailedMessage * gameOverMessage;
 };

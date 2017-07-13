@@ -8,15 +8,17 @@ Next steps
 			X * Write failing test, where GDI doesn't attack
 			X * Make test pass
 			* Do Mission Failed if NOD minigunner kills GDI
------>			* Write test that detects Mission Failed vs Mission Accomplished
+			* Write test that detects Mission Failed vs Mission Accomplished
 			* Make running of all tests at once work
-				* Add ability to reset game between tests
+----->			* Add ability to reset game between tests
 		* Refactor and cleanup	
 			* Consider delgating behavior to a MinigunnerController
 			Which has PlayerControlled vs ComputerControlled
 			* Make ComputerControlled have multiple states
 
 		* Merge mike-and-conquer-4 and mike-and-conquer-test branches
+
+		* Backup keyboard shortcuts
 	
 
 Backlog

@@ -1,12 +1,12 @@
-#include "GameOverGameState.h"
+#include "MissionFailedGameState.h"
 
 #include "graphics.h"
 #include "Game.h"
 #include "Minigunner.h"
-#include "GameOverMessage.h"
+#include "MissionFailedMessage.h"
 
-GameOverGameState::GameOverGameState(Game & game) : GameState(game) {
-	gameOverMessage = new GameOverMessage(game);
+MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
+	gameOverMessage = new MissionFailedMessage(game);
 	Minigunner * minigunner1 = game.GetGDIMinigunner();
 	if (minigunner1 != NULL) {
 		minigunner1->SetAnimate(false);
@@ -16,11 +16,10 @@ GameOverGameState::GameOverGameState(Game & game) : GameState(game) {
 	if (enemyMinigunner1 != NULL) {
 		enemyMinigunner1->SetAnimate(false);
 	}
-
-
 }
 
-GameState * GameOverGameState::Update(float frameTime) {
+
+GameState * MissionFailedGameState::Update(float frameTime) {
 
 	game.ProcessGameEvents();
 	Graphics * graphics = game.GetGraphics();
@@ -35,7 +34,7 @@ GameState * GameOverGameState::Update(float frameTime) {
 }
 
 
-void GameOverGameState::Render() {
+void MissionFailedGameState::Render() {
 	//Consider how to  handle if we want GameOver to draw different background color
 	//	Does rendering and everything go in Render?
 	//	Do we just have one Update method, that includes render
@@ -59,7 +58,7 @@ void GameOverGameState::Render() {
 
 
 
-std::string GameOverGameState::GetName()
+std::string MissionFailedGameState::GetName()
 {
-	return "Game Over";
+	return "Mission Failed";
 }

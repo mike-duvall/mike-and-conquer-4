@@ -5,14 +5,14 @@
 class GameSprite;
 class Game;
 
-class GameOverMessage {
+class MissionFailedMessage {
 public:
 
-	GameOverMessage(Game & game);
+	MissionFailedMessage(Game & game);
 	void Draw();
 
 private:
 
 	GameSprite * missionGameSprite;
-	GameSprite * accomplishedGameSprite;
+	GameSprite * failedGameSprite;
 };
