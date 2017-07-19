@@ -8,6 +8,8 @@ CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX
 }
 
 
-void CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent::Process() {
+GameState * CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent::Process() {
+	GameState * newGameState = nullptr;
 	game->InitializeNODMinigunner(x, y);
+	return newGameState;
 }

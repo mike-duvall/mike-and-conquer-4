@@ -20,6 +20,8 @@ Minigunner * GetNODMinigunnerGameEvent::GetMinigunner() {
 }
 
 
-void GetNODMinigunnerGameEvent::Process() {
+GameState * GetNODMinigunnerGameEvent::Process() {
+	GameState * newGameState = nullptr;
 	condition.notify_one();
+	return nullptr;
 }

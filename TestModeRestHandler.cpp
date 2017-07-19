@@ -43,6 +43,14 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		methods::POST,
 		[this](http_request request) {return HandlePOSTLeftClick(request); });
 
+
+	std::wstring resetGameURL = baseUrl + L"/mac/resetGame";
+	resetGameListener = new http_listener(resetGameURL);
+	resetGameListener->open().wait();
+	resetGameListener->support(
+		methods::POST,
+		[this](http_request request) {return HandleResetGame(request); });
+
 	std::wstring gameStateURL = baseUrl + L"/mac/gameState";
 	gdiMinigunnerListener = new http_listener(gameStateURL);
 	gdiMinigunnerListener->open().wait();
@@ -188,5 +196,13 @@ void TestModeRestHandler::HandlePOSTLeftClick(http_request message) {
 
 	ClickLeftMouseButton(mouseX, mouseY);
 	message.reply(status_codes::OK, U("Success"));
+}
+
+void TestModeRestHandler::HandleResetGame(http_request message) {
+	pplx::task<json::value> jsonValue = message.extract_json();
+//	game->ResetGame();
+	game->AddResetGameEvent();
+	message.reply(status_codes::OK, U("Success"));
 };
+
 

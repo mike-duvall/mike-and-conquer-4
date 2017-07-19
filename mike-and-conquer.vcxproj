@@ -108,6 +108,7 @@
     <ClCompile Include="MissionFailedGameState.cpp" />
     <ClCompile Include="MissionFailedMessage.cpp" />
     <ClCompile Include="PlayingGameState.cpp" />
+    <ClCompile Include="ResetGameGameEvent.cpp" />
     <ClCompile Include="ShpImageExplorer.cpp" />
     <ClCompile Include="StackTrace.cpp" />
     <ClCompile Include="TestModeRestHandler.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="MissionFailedGameState.h" />
     <ClInclude Include="MissionFailedMessage.h" />
     <ClInclude Include="PlayingGameState.h" />
+    <ClInclude Include="ResetGameGameEvent.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Minigunner.h" />

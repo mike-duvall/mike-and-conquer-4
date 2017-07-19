@@ -27,6 +27,7 @@ public:
 	void HandleGetNodMinigunner(http_request message);
 	void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);
+	void HandleResetGame(http_request message);
 
 private:
 	std::wstring baseUrl = L"http://*:11369";
@@ -34,5 +35,6 @@ private:
 	http_listener * gdiMinigunnerListener;
 	http_listener * nodMinigunnerListener;
 	http_listener * leftClickListener;
+	http_listener * resetGameListener;
 
 };

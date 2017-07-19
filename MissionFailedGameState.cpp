@@ -21,14 +21,19 @@ MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 
 GameState * MissionFailedGameState::Update(float frameTime) {
 
-	game.ProcessGameEvents();
 	Graphics * graphics = game.GetGraphics();
 	graphics->BeginScene(graphicsNS::CUSTOM6);
 	this->Render();
 	graphics->endScene();
 	graphics->ShowBackbuffer();
 
-	return this;
+	GameState * nextGameState = game.ProcessGameEvents();
+	if (nextGameState != nullptr) {
+		return nextGameState;
+	}
+	else {
+		return this;
+	}
 
 
 }

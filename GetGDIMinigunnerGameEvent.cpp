@@ -20,6 +20,8 @@ Minigunner * GetGDIMinigunnerGameEvent::GetMinigunner() {
 }
 
 
-void GetGDIMinigunnerGameEvent::Process() {
+GameState * GetGDIMinigunnerGameEvent::Process() {
+	GameState * newGameState = nullptr;
 	condition.notify_one();
+	return newGameState;
 }

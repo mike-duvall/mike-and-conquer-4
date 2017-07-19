@@ -23,9 +23,8 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	this->unitSelectCursor = unitSelectCursor;
 	this->isEnemy = isEnemy;
 	this->enemyStateIsSleeping = true;
-	this->enemySleepCountdownTimer = 300;
-
-
+	this->enemySleepCountdownTimer = 400;
+	 
 	this->x = x;
 	this->y = y;
 	this->destinationX = int(this->x);

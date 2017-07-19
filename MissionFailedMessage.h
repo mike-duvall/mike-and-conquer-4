@@ -16,3 +16,4 @@ private:
 	GameSprite * missionGameSprite;
 	GameSprite * failedGameSprite;
 };
+
