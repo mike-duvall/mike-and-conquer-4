@@ -6,7 +6,6 @@
 #include "input.h"
 #include "game.h"
 #include "ShpFile.h"
-//#include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
 #include "MikeRectangle.h"
 #include "AnimationSequence.h"

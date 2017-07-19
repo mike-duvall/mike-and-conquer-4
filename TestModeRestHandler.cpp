@@ -200,7 +200,6 @@ void TestModeRestHandler::HandlePOSTLeftClick(http_request message) {
 
 void TestModeRestHandler::HandleResetGame(http_request message) {
 	pplx::task<json::value> jsonValue = message.extract_json();
-//	game->ResetGame();
 	game->AddResetGameEvent();
 	message.reply(status_codes::OK, U("Success"));
 };

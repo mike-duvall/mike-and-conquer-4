@@ -30,8 +30,6 @@ Backlog
 ********
 ********
 
-	* Refactor - put files in subdirectories.  Example - all game states in gamestate directory
-
 	* Features
 		* Make game end after killing NOD minigunner
 			* Make game end after GDI minigunner is killed
@@ -43,6 +41,8 @@ Backlog
 		* Make computer controller continually spit out minigunners and have them attack
 
 	* Refactoring
+
+		* Reduce duplication between MissionAccomplishedGameState and MissionFailedGameState
 
 		* Revisit having processing of external test events return a new game state.
 			* Seems a little awkward:
