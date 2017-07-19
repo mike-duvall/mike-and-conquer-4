@@ -4,8 +4,10 @@
 
 #include <Windows.h>
 
+#include <codecvt>
 #include "game.h"
 #include "Minigunner.h"
+#include "GameState.h"
 
 
 
@@ -40,6 +42,23 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	leftClickListener->support(
 		methods::POST,
 		[this](http_request request) {return HandlePOSTLeftClick(request); });
+
+
+	std::wstring resetGameURL = baseUrl + L"/mac/resetGame";
+	resetGameListener = new http_listener(resetGameURL);
+	resetGameListener->open().wait();
+	resetGameListener->support(
+		methods::POST,
+		[this](http_request request) {return HandleResetGame(request); });
+
+	std::wstring gameStateURL = baseUrl + L"/mac/gameState";
+	gdiMinigunnerListener = new http_listener(gameStateURL);
+	gdiMinigunnerListener->open().wait();
+
+	gdiMinigunnerListener->support(
+		methods::GET,
+		[this](http_request request) {return HandleGetGameState(request); });
+
 
 }
 
@@ -130,13 +149,27 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 void TestModeRestHandler::HandleGetGdiMinigunner(http_request message) {
 	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
 	RenderAndReturnMinigunner(message, minigunner);
-};
+}
 
 
 void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {
 	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
 	RenderAndReturnMinigunner(message, minigunner);
-};
+}
+								   
+								 
+void TestModeRestHandler::HandleGetGameState(http_request message) {
+	GameState * currentGameState = game->GetCurrentGameState();
+
+	std::string gameStateName = currentGameState->GetName();
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	std::wstring wideGameStateName = converter.from_bytes(gameStateName);
+
+	json::value obj;
+	obj[L"gameState"] = json::value::string(wideGameStateName);
+
+	message.reply(status_codes::OK, obj);
+}
 
 
 void TestModeRestHandler::HandlePOSTLeftClick(http_request message) {
@@ -163,5 +196,12 @@ void TestModeRestHandler::HandlePOSTLeftClick(http_request message) {
 
 	ClickLeftMouseButton(mouseX, mouseY);
 	message.reply(status_codes::OK, U("Success"));
+}
+
+void TestModeRestHandler::HandleResetGame(http_request message) {
+	pplx::task<json::value> jsonValue = message.extract_json();
+	game->AddResetGameEvent();
+	message.reply(status_codes::OK, U("Success"));
 };
+
 

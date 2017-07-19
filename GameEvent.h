@@ -3,12 +3,13 @@
 #include <string>
 
 class Game;
+class GameState;
 
 class GameEvent {
 	public:
 
 		GameEvent(Game * aGame);
-		virtual void Process() = 0;
+		virtual GameState * Process() = 0;
 
 
 protected:

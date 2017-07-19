@@ -8,6 +8,8 @@ CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent(Game * aGame, int anX
 }
 
 
-void CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent::Process() {
+GameState * CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent::Process() {
+	GameState * newGameState = nullptr;
 	game->InitializeGDIMinigunner(x, y);
+	return newGameState;
 }

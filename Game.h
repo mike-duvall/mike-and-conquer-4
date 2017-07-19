@@ -44,7 +44,7 @@ public:
     virtual void ReleaseAll();
     virtual void ResetAll();
     virtual void DeleteAll();
-	void ProcessGameEvents();
+	GameState * ProcessGameEvents();
 
 	Minigunner * GetMinigunnerAtPoint(int x, int y);
 
@@ -55,12 +55,15 @@ public:
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
 	void AddCreateGDIMinigunnerEvent(int x, int y);
 	void AddCreateNODMinigunnerEvent(int x, int y);
+	void AddResetGameEvent();
 	Minigunner * GetGDIMinigunnerViaEvent();
 	Minigunner * GetNODMinigunnerViaEvent();
 	Minigunner * GetGDIMinigunner() { return minigunner1;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
+	GameState * GetCurrentGameState() { return currentGameState; }
+	GameState * ResetGame();
 
 
 protected:

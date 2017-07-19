@@ -13,7 +13,7 @@ class GetNODMinigunnerGameEvent : public GameEvent {
 public:
 	GetNODMinigunnerGameEvent(Game * aGame);
 	Minigunner * GetMinigunner();
-	virtual void Process();
+	virtual GameState * Process();
 
 private:
 	std::condition_variable condition;

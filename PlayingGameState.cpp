@@ -4,7 +4,8 @@
 #include "Minigunner.h"
 #include "Circle.h"
 #include "ShpImageExplorer.h"
-#include "GameOverGameState.h"
+#include "MissionAccomplishedGameState.h"
+#include "MissionFailedGameState.h"
 
 
 
@@ -49,7 +50,10 @@ GameState * PlayingGameState::Update(float frameTime) {
 
 
 	if (enemyMinigunner1 != NULL && enemyMinigunner1->GetHealth() <= 0) {
-		return new GameOverGameState(game);
+		return new MissionAccomplishedGameState(game);
+	}
+	else if(minigunner1 != NULL && minigunner1->GetHealth() <= 0) {
+		return new MissionFailedGameState(game);
 	}
 	else {
 		return this;
@@ -85,4 +89,9 @@ void PlayingGameState::Render() {
 	Graphics * graphics = game.GetGraphics();
 	circle->Draw(graphics->Get3Ddevice());
 
+}
+
+std::string PlayingGameState::GetName()
+{
+	return "Playing";
 }

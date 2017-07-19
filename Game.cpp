@@ -14,7 +14,7 @@
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
 #include "PlayingGameState.h"
-
+#include "ResetGameGameEvent.h"
 
 
 Game::Game(bool testMode) {
@@ -23,6 +23,59 @@ Game::Game(bool testMode) {
     initialized = false;
 	this->testMode = testMode;
 }
+
+
+
+void Game::Initialize(HWND hw) {
+	hwnd = hw;                                  // save window handle
+
+	graphics = new Graphics();
+	graphics->Initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
+
+
+	// attempt to set up high resolution timer
+	if (QueryPerformanceFrequency(&timerFreq) == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
+
+	QueryPerformanceCounter(&timeStart);        // get starting time
+
+	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
+
+	minigunner1 = nullptr;
+	enemyMinigunner1 = nullptr;
+	circle = nullptr;
+
+	gdiShpFileColorMapper = new GdiShpFileColorMapper();
+	nodShpFileColorMapper = new NodShpFileColorMapper();
+
+	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
+	shpImageExplorer = nullptr;
+	minigunner1 = nullptr;
+	enemyMinigunner1 = nullptr;
+
+	currentGameState = ResetGame();
+}
+
+GameState * Game::ResetGame() {
+	initialized = false;
+	delete minigunner1;
+	minigunner1 = nullptr;
+	delete enemyMinigunner1;
+	enemyMinigunner1 = nullptr;
+	delete circle;
+
+	if (!testMode) {
+
+		minigunner1 = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		enemyMinigunner1 = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
+	}
+
+	circle = new Circle(300, 900);
+
+	initialized = true;
+	return new PlayingGameState(*this);
+}
+
 
 Game::~Game() {
 	ReleaseAll();
@@ -70,44 +123,6 @@ void Game::HandleMouseInput(LPARAM lParam) {
 
 }
 
-
-
-void Game::Initialize(HWND hw) {
-	hwnd = hw;                                  // save window handle
-
-	graphics = new Graphics();
-	graphics->Initialize(hwnd, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
-
-
-	// attempt to set up high resolution timer
-	if (QueryPerformanceFrequency(&timerFreq) == false)
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
-
-	QueryPerformanceCounter(&timeStart);        // get starting time
-
-	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
-
-	minigunner1 = NULL;
-	enemyMinigunner1 = NULL;
-
-	gdiShpFileColorMapper = new GdiShpFileColorMapper();
-	nodShpFileColorMapper = new NodShpFileColorMapper();
-
-	if (!testMode) {
-
-		minigunner1 = new Minigunner(this,  300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
-		enemyMinigunner1 = new Minigunner(this,  1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
-	}
-
-	circle = new Circle(300, 900);
-
-
-	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
-	shpImageExplorer = NULL;
-
-	currentGameState = new PlayingGameState(*this);
-	initialized = true;
-}
 
 
 
@@ -168,6 +183,12 @@ void Game::AddCreateNODMinigunnerEvent(int x, int y) {
 }
 
 
+void Game::AddResetGameEvent() {
+	GameEvent * gameEvent = new ResetGameGameEvent(this);
+	std::lock_guard<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+}
+
 
 LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
     if(initialized)     // do not process messages if not initialized
@@ -197,22 +218,29 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 
 
-void Game::ProcessGameEvents() {
+GameState * Game::ProcessGameEvents() {
+	GameState * newGameState = nullptr;
+
 	std::vector<GameEvent *>::iterator iter;
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter) {
 		GameEvent * nextGameEvent = *iter;
-		nextGameEvent->Process();
+		GameState * returnedGameState = nextGameEvent->Process();
+		if( returnedGameState != nullptr && newGameState == nullptr) {
+			newGameState = returnedGameState;
+		}
 	}
 	gameEvents.clear();
+	return newGameState;
 
 }
 
 
 
 void Game::ExecuteGameCycle() {
-    if(graphics == NULL)            // if graphics not initialized
-        return;
+	if(!initialized) {
+		return;
+	}
 
     // calculate elapsed time of last frame, save in frameTime
     QueryPerformanceCounter(&timeEnd);
@@ -230,8 +258,6 @@ void Game::ExecuteGameCycle() {
 
     if (input->IsKeyDown(ESC_KEY))
 		PostQuitMessage(0);
-
-
 }
 
 

@@ -6,7 +6,6 @@
 #include "input.h"
 #include "game.h"
 #include "ShpFile.h"
-#include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
 #include "MikeRectangle.h"
 #include "AnimationSequence.h"
@@ -22,6 +21,9 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 	this->isSelected = false;
 	this->unitSelectCursor = unitSelectCursor;
 	this->isEnemy = isEnemy;
+	this->enemyStateIsSleeping = true;
+	this->enemySleepCountdownTimer = 400;
+	 
 	this->x = x;
 	this->y = y;
 	this->destinationX = int(this->x);
@@ -206,10 +208,36 @@ void Minigunner::HandleAttackingState(float frameTime) {
 
 }
 
+void Minigunner::HandleEnemyUpdate(float frameTime) {
+	if(!enemyStateIsSleeping) {
+
+		if (IsInAttackRange()) {
+			gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
+			currentAttackTarget->ReduceHealth(10);
+		}
+		else {
+			gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+			SetDestination(currentAttackTarget->GetX(), currentAttackTarget->GetY());
+			MoveTowardsDestination(frameTime);
+		}
+
+	}
+	else {
+		enemySleepCountdownTimer--;
+		if (enemySleepCountdownTimer <= 0) {
+			enemyStateIsSleeping = false;
+			currentAttackTarget = game->GetGDIMinigunner();
+		}
+
+	}
+	
+}
+
 
 void Minigunner::Update(float frameTime) {
 
 	if (isEnemy) {
+		HandleEnemyUpdate(frameTime);
 		return;
 	}
 

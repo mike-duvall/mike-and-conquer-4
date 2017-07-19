@@ -11,7 +11,7 @@ class CreateNODMinigunnerGameEvent : public GameEvent {
 
 public:
 	CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY);
-	virtual void Process();
+	virtual GameState * Process();
 
 private:
 	int x;

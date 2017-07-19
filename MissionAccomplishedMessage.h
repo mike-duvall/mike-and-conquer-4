@@ -5,10 +5,10 @@
 class GameSprite;
 class Game;
 
-class GameOverMessage {
+class MissionAccomplishedMessage {
 public:
 
-	GameOverMessage(Game & game);
+	MissionAccomplishedMessage(Game & game);
 	void Draw();
 
 private:
