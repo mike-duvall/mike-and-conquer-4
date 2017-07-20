@@ -90,7 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="gameobject\Circle.cpp" />
     <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -109,14 +109,14 @@
     <ClCompile Include="gameobject\MissionFailedMessage.cpp" />
     <ClCompile Include="gamestate\PlayingGameState.cpp" />
     <ClCompile Include="gameevent\ResetGameGameEvent.cpp" />
-    <ClCompile Include="ShpImageExplorer.cpp" />
-    <ClCompile Include="StackTrace.cpp" />
+    <ClCompile Include="util\ShpImageExplorer.cpp" />
+    <ClCompile Include="util\StackTrace.cpp" />
     <ClCompile Include="TestModeRestHandler.cpp" />
     <ClCompile Include="gameobject\UnitSelectCursor.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Circle.h" />
+    <ClInclude Include="gameobject\Circle.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h" />
     <ClInclude Include="gameevent\CreateNODMinigunnerGameEvent.h" />
@@ -139,8 +139,8 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="gameobject\Minigunner.h" />
-    <ClInclude Include="ShpImageExplorer.h" />
-    <ClInclude Include="StackTrace.h" />
+    <ClInclude Include="util\ShpImageExplorer.h" />
+    <ClInclude Include="util\StackTrace.h" />
     <ClInclude Include="TestModeRestHandler.h" />
     <ClInclude Include="gameobject\UnitSelectCursor.h" />
   </ItemGroup>

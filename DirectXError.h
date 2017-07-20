@@ -9,7 +9,7 @@
 #include <string>
 //#include <exception>
 #include "dxerr.h"
-#include "StackTrace.h"
+#include "../util/StackTrace.h"
 
 
 class DirectXError : public std::exception

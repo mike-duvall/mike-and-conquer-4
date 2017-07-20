@@ -3,7 +3,7 @@
 
 #include "../gameobject/Minigunner.h"
 #include "../gameobject/UnitSelectCursor.h"
-#include "Circle.h"
+#include "../gameobject/Circle.h"
 #include "../gameevent/GameEvent.h"
 #include "../gameevent/GetGDIMinigunnerGameEvent.h"
 #include "../gameevent/GetNODMinigunnerGameEvent.h"
