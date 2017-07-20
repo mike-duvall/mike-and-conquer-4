@@ -1,7 +1,7 @@
 #include "GetNODMinigunnerGameEvent.h"
 
 
-#include "game.h"
+#include "../game.h"
 
 
 GetNODMinigunnerGameEvent::GetNODMinigunnerGameEvent(Game * aGame) : GameEvent(aGame) {

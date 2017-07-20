@@ -1,7 +1,7 @@
 #include "GetGDIMinigunnerGameEvent.h"
 
 
-#include "game.h"
+#include "../game.h"
 #include <iso646.h>
 
 

@@ -2,7 +2,7 @@
 
 
 
-#include "../GameEvent.h"
+#include "GameEvent.h"
 
 
 

@@ -36,18 +36,6 @@
     <ClCompile Include="Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GetGDIMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateNODMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GetNODMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestModeRestHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,10 +69,22 @@
     <ClCompile Include="MissionFailedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResetGameGameEvent.cpp">
+    <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp">
+    <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\ResetGameGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,18 +114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetGDIMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateNODMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetNODMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestModeRestHandler.h">
@@ -164,10 +152,22 @@
     <ClInclude Include="MissionFailedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResetGameGameEvent.h">
+    <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h">
+    <ClInclude Include="gameevent\CreateNODMinigunnerGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\ResetGameGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
