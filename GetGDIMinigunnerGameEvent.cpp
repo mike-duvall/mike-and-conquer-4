@@ -2,11 +2,13 @@
 
 
 #include "game.h"
+#include <iso646.h>
 
 
 GetGDIMinigunnerGameEvent::GetGDIMinigunnerGameEvent(Game * aGame) : GameEvent(aGame) {
 
 }
+
 
 
 //Can do same kind of wait on condition in the createGDI rest call as well

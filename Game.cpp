@@ -8,7 +8,7 @@
 #include "GameEvent.h"
 #include "GetGDIMinigunnerGameEvent.h"
 #include "GetNODMinigunnerGameEvent.h"
-#include "CreateGDIMinigunnerGameEvent.h"
+#include "gameevent/CreateGDIMinigunnerGameEvent.h"
 #include "CreateNODMinigunnerGameEvent.h"
 #include "ShpImageExplorer.h"
 #include "GdiShpFileColorMapper.h"

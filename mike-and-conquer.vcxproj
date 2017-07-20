@@ -91,7 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="CreateGDIMinigunnerGameEvent.cpp" />
+    <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="CreateNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEvent.cpp" />
@@ -118,7 +118,7 @@
   <ItemGroup>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="constants.h" />
-    <ClInclude Include="CreateGDIMinigunnerGameEvent.h" />
+    <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h" />
     <ClInclude Include="CreateNODMinigunnerGameEvent.h" />
     <ClInclude Include="DirectXError.h" />
     <ClInclude Include="Game.h" />
