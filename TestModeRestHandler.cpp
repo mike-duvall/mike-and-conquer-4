@@ -6,7 +6,7 @@
 
 #include <codecvt>
 #include "game.h"
-#include "Minigunner.h"
+#include "../gameobject/Minigunner.h"
 #include "../gamestate/GameState.h"
 
 

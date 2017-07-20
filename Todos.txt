@@ -23,6 +23,8 @@ Next steps
 
 		* Backup keyboard shortcuts
 
+		* Cleanup un-needed includes
+
 
 	
 

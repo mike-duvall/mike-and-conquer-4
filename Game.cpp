@@ -1,8 +1,8 @@
 
 #include "game.h"
 
-#include "Minigunner.h"
-#include "UnitSelectCursor.h"
+#include "../gameobject/Minigunner.h"
+#include "../gameobject/UnitSelectCursor.h"
 #include "Circle.h"
 #include "../gameevent/GameEvent.h"
 #include "../gameevent/GetGDIMinigunnerGameEvent.h"

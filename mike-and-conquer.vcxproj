@@ -96,23 +96,23 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gameevent\GameEvent.cpp" />
     <ClCompile Include="gamestate\MissionAccomplishedGameState.cpp" />
-    <ClCompile Include="MissionAccomplishedMessage.cpp" />
+    <ClCompile Include="gameobject\MissionAccomplishedMessage.cpp" />
     <ClCompile Include="GameSprite.cpp" />
     <ClCompile Include="gamestate\GameState.cpp" />
     <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="Minigunner.cpp" />
-    <ClCompile Include="MikeRectangle.cpp" />
+    <ClCompile Include="gameobject\Minigunner.cpp" />
+    <ClCompile Include="gameobject\MikeRectangle.cpp" />
     <ClCompile Include="gamestate\MissionFailedGameState.cpp" />
-    <ClCompile Include="MissionFailedMessage.cpp" />
+    <ClCompile Include="gameobject\MissionFailedMessage.cpp" />
     <ClCompile Include="gamestate\PlayingGameState.cpp" />
     <ClCompile Include="gameevent\ResetGameGameEvent.cpp" />
     <ClCompile Include="ShpImageExplorer.cpp" />
     <ClCompile Include="StackTrace.cpp" />
     <ClCompile Include="TestModeRestHandler.cpp" />
-    <ClCompile Include="UnitSelectCursor.cpp" />
+    <ClCompile Include="gameobject\UnitSelectCursor.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -125,24 +125,24 @@
     <ClInclude Include="gameError.h" />
     <ClInclude Include="gameevent\GameEvent.h" />
     <ClInclude Include="gamestate\MissionAccomplishedGameState.h" />
-    <ClInclude Include="MissionAccomplishedMessage.h" />
+    <ClInclude Include="gameobject\MissionAccomplishedMessage.h" />
     <ClInclude Include="GameSprite.h" />
     <ClInclude Include="gamestate\GameState.h" />
     <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h" />
     <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="MikeRectangle.h" />
+    <ClInclude Include="gameobject\MikeRectangle.h" />
     <ClInclude Include="gamestate\MissionFailedGameState.h" />
-    <ClInclude Include="MissionFailedMessage.h" />
+    <ClInclude Include="gameobject\MissionFailedMessage.h" />
     <ClInclude Include="gamestate\PlayingGameState.h" />
     <ClInclude Include="gameevent\ResetGameGameEvent.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="Minigunner.h" />
+    <ClInclude Include="gameobject\Minigunner.h" />
     <ClInclude Include="ShpImageExplorer.h" />
     <ClInclude Include="StackTrace.h" />
     <ClInclude Include="TestModeRestHandler.h" />
-    <ClInclude Include="UnitSelectCursor.h" />
+    <ClInclude Include="gameobject\UnitSelectCursor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -27,12 +27,6 @@
     <ClCompile Include="GameSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Minigunner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnitSelectCursor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,19 +36,10 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MikeRectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShpImageExplorer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StackTrace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MissionAccomplishedMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MissionFailedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp">
@@ -87,6 +72,21 @@
     <ClCompile Include="gamestate\PlayingGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameobject\MikeRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\Minigunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\MissionAccomplishedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\MissionFailedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\UnitSelectCursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -107,12 +107,6 @@
     <ClInclude Include="GameSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Minigunner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitSelectCursor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,9 +116,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MikeRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShpImageExplorer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -132,12 +123,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectXError.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MissionAccomplishedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MissionFailedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h">
@@ -168,6 +153,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gamestate\PlayingGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MikeRectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\Minigunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MissionAccomplishedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MissionFailedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\UnitSelectCursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

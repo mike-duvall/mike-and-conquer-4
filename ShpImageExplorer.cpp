@@ -6,7 +6,7 @@
 #include "ShpFile.h"
 #include "GdiShpFileColorMapper.h"
 #include "GameSprite.h"
-#include "MikeRectangle.h"
+#include "../gameobject/MikeRectangle.h"
 #include "AnimationSequence.h"
 
 

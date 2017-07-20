@@ -1,7 +1,7 @@
 #include "PlayingGameState.h"
 
 #include "../Game.h"
-#include "../Minigunner.h"
+#include "../gameobject/Minigunner.h"
 #include "../Circle.h"
 #include "../ShpImageExplorer.h"
 #include "MissionAccomplishedGameState.h"
