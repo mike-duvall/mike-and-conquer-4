@@ -48,22 +48,10 @@
     <ClCompile Include="ShpImageExplorer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayingGameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StackTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MissionAccomplishedMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MissionAccomplishedGameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MissionFailedGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MissionFailedMessage.cpp">
@@ -85,6 +73,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gameevent\ResetGameGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestate\GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestate\MissionAccomplishedGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestate\MissionFailedGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestate\PlayingGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,12 +128,6 @@
     <ClInclude Include="ShpImageExplorer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayingGameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StackTrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -141,12 +135,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MissionAccomplishedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MissionAccomplishedGameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MissionFailedGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MissionFailedMessage.h">
@@ -168,6 +156,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\ResetGameGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\MissionAccomplishedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\MissionFailedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\PlayingGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

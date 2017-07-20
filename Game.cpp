@@ -4,16 +4,14 @@
 #include "Minigunner.h"
 #include "UnitSelectCursor.h"
 #include "Circle.h"
-//#include "MikeRectangle.h"
 #include "../gameevent/GameEvent.h"
 #include "../gameevent/GetGDIMinigunnerGameEvent.h"
 #include "../gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/CreateGDIMinigunnerGameEvent.h"
 #include "../gameevent/CreateNODMinigunnerGameEvent.h"
-//#include "ShpImageExplorer.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
-#include "PlayingGameState.h"
+#include "../gamestate/PlayingGameState.h"
 #include "../gameevent/ResetGameGameEvent.h"
 
 
