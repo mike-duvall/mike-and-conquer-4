@@ -8,7 +8,6 @@
 #include "MissionFailedGameState.h"
 
 
-
 PlayingGameState::PlayingGameState(Game & game)  : GameState(game) {
 
 }

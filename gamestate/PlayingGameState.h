@@ -3,8 +3,6 @@
 #include "GameState.h"
 
 
-
-
 class PlayingGameState : public GameState {
 
 public:

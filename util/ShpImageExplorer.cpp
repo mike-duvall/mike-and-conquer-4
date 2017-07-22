@@ -10,8 +10,6 @@
 #include "AnimationSequence.h"
 
 
-
-
 ShpImageExplorer::ShpImageExplorer(Game * game, int x, int y, Input * input) {
 	this->game = game;
 	this->graphics = game->GetGraphics();
