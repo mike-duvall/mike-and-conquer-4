@@ -1,11 +1,6 @@
 #pragma once
 
-
-
-
 #include "GameEvent.h"
-
-
 
 class CreateNODMinigunnerGameEvent : public GameEvent {
 

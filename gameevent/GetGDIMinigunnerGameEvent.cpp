@@ -1,8 +1,6 @@
 #include "GetGDIMinigunnerGameEvent.h"
 
-
 #include "../game.h"
-#include <iso646.h>
 
 
 GetGDIMinigunnerGameEvent::GetGDIMinigunnerGameEvent(Game * aGame) : GameEvent(aGame) {

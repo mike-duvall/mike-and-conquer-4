@@ -1,6 +1,5 @@
-
-#include "../game.h"
 #include "CreateGDIMinigunnerGameEvent.h"
+#include "../game.h"
 
 
 CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent(Game * aGame, int anX, int aY) : GameEvent(aGame) {
