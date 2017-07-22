@@ -1,8 +1,6 @@
 #pragma once
 
-
 #include <d3dx9.h>
-#include <string>
 
 #include <vector>
 #include <map>
@@ -11,9 +9,6 @@ class ShpFile;
 class ShpFileColorMapper;
 class PaletteEntry;
 class AnimationSequence;
-
-
-
 
 const DWORD point_fvf = D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
 

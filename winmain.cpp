@@ -6,13 +6,7 @@
 #include <crtdbg.h>             // for detecting memory leaks
 #include "game.h"
 
-//#include <utility>
-
-//#include <chrono>
-#include <thread>
-//#include "../gameobject/Minigunner.h"
 #include "TestModeRestHandler.h"
-
 
 #include "DirectXError.h"
 
