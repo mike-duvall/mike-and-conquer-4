@@ -1,8 +1,6 @@
 #include "graphics.h"
 
-
 #include "constants.h"
-
 
 Graphics::Graphics() {
     direct3d = NULL;

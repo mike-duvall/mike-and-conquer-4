@@ -5,7 +5,6 @@
 class GameError;
 
 #include <string>
-#include <exception>
 
 namespace gameErrorNS
 {
