@@ -2,7 +2,6 @@
 
 #include "GameState.h"
 
-
 class MissionAccomplishedMessage;
 
 class MissionAccomplishedGameState : public GameState {

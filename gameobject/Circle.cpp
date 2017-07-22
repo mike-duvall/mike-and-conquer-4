@@ -1,9 +1,6 @@
 #include "Circle.h"
 
-
 #include "../graphics.h"
-
-
 
 Circle::Circle(int x, int y) {
 	this->x = x;

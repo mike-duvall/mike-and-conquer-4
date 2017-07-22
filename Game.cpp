@@ -1,4 +1,3 @@
-
 #include "game.h"
 
 #include "../gameobject/Minigunner.h"

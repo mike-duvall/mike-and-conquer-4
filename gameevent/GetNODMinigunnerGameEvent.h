@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameEvent.h"
-
 #include <mutex>
 
 class Minigunner;

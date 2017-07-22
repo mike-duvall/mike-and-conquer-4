@@ -14,8 +14,8 @@ Next steps
 					X * Revisit if event code needs the wait on mutex
 
 		* Refactor and cleanup	
------>		* Put files in subdirectories.  Example - all game states in gamestate directory
-			* Consider delgating behavior to a MinigunnerController
+     		x* Put files in subdirectories.  Example - all game states in gamestate directory
+----->		* Consider delgating behavior to a MinigunnerController
 			Which has PlayerControlled vs ComputerControlled
 			* Make ComputerControlled have multiple states
 
@@ -23,7 +23,7 @@ Next steps
 
 		* Backup keyboard shortcuts
 
-		* Cleanup un-needed includes
+		x * Cleanup un-needed includes
 
 
 	

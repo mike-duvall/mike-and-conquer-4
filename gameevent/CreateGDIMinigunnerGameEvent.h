@@ -1,10 +1,6 @@
 #pragma once
 
-
-
 #include "GameEvent.h"
-
-
 
 class CreateGDIMinigunnerGameEvent : public GameEvent {
 

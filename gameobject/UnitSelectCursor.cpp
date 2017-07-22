@@ -1,7 +1,6 @@
 #include "UnitSelectCursor.h"
 #include "../graphics.h"
 
-
 #include "../GameSprite.h"
 #include "ShpFile.h"
 #include "GdiShpFileColorMapper.h"
