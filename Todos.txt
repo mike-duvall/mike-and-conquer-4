@@ -23,6 +23,8 @@ Next steps
 
 		* Backup keyboard shortcuts
 
+		* Cleanup un-needed includes
+
 
 	
 
@@ -42,6 +44,7 @@ Backlog
 
 	* Refactoring
 
+		* Revisit directory structure.  Top level code "packages" are at same level as things like "Debug", "assets", and mike-and-conquer-lib and test
 		* Reduce duplication between MissionAccomplishedGameState and MissionFailedGameState
 
 		* Revisit having processing of external test events return a new game state.

@@ -1,13 +1,13 @@
-#include "MissionAccomplishedMessage.h"
+#include "MissionFailedMessage.h"
 
 
 
-#include "GameSprite.h"
-#include "Game.h"
+#include "../GameSprite.h"
+#include "../Game.h"
 #include "AnimationSequence.h"
 
-MissionAccomplishedMessage::MissionAccomplishedMessage(Game & game) {
-	
+MissionFailedMessage::MissionFailedMessage(Game & game) {
+
 	missionGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/Mission.png", graphicsNS::MAGENTA);
 	AnimationSequence * missionAnimationSequence = new AnimationSequence(10);
 	missionAnimationSequence->AddFrame(0);
@@ -15,18 +15,18 @@ MissionAccomplishedMessage::MissionAccomplishedMessage(Game & game) {
 	missionGameSprite->SetCurrentAnimationSequenceIndex(0);
 	missionGameSprite->setScaling(1.0);
 
-	accomplishedGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/Accomplished.png", graphicsNS::MAGENTA);
+	failedGameSprite = new GameSprite(game.GetGraphics()->Get3Ddevice(), "assets/Failed.png", graphicsNS::MAGENTA);
 	AnimationSequence * accomplishedAnimationSequence = new AnimationSequence(10);
 	accomplishedAnimationSequence->AddFrame(0);
-	accomplishedGameSprite->AddAnimationSequence(0, accomplishedAnimationSequence);
-	accomplishedGameSprite->SetCurrentAnimationSequenceIndex(0);
-	accomplishedGameSprite->setScaling(1.0);
+	failedGameSprite->AddAnimationSequence(0, accomplishedAnimationSequence);
+	failedGameSprite->SetCurrentAnimationSequenceIndex(0);
+	failedGameSprite->setScaling(1.0);
 
 }
 
 
-void MissionAccomplishedMessage::Draw() {
+void MissionFailedMessage::Draw() {
 	missionGameSprite->Draw(0, 800, 400);
-	accomplishedGameSprite->Draw(0, 800, 450);
+	failedGameSprite->Draw(0, 800, 450);
 
 }

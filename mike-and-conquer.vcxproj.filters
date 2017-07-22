@@ -27,64 +27,64 @@
     <ClCompile Include="GameSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Minigunner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnitSelectCursor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GetGDIMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateGDIMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateNODMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GetNODMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestModeRestHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MikeRectangle.cpp">
+    <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShpImageExplorer.cpp">
+    <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
+    <ClCompile Include="gameevent\GameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayingGameState.cpp">
+    <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StackTrace.cpp">
+    <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MissionAccomplishedMessage.cpp">
+    <ClCompile Include="gameevent\ResetGameGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MissionAccomplishedGameState.cpp">
+    <ClCompile Include="gamestate\GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MissionFailedGameState.cpp">
+    <ClCompile Include="gamestate\MissionAccomplishedGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MissionFailedMessage.cpp">
+    <ClCompile Include="gamestate\MissionFailedGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResetGameGameEvent.cpp">
+    <ClCompile Include="gamestate\PlayingGameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\MikeRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\Minigunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\MissionAccomplishedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\MissionFailedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\UnitSelectCursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject\Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util\ShpImageExplorer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util\StackTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,67 +107,67 @@
     <ClInclude Include="GameSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Minigunner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitSelectCursor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetGDIMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateGDIMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateNODMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetNODMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestModeRestHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MikeRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShpImageExplorer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayingGameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StackTrace.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MissionAccomplishedMessage.h">
+    <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MissionAccomplishedGameState.h">
+    <ClInclude Include="gameevent\CreateNODMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MissionFailedGameState.h">
+    <ClInclude Include="gameevent\GameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MissionFailedMessage.h">
+    <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResetGameGameEvent.h">
+    <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\ResetGameGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\MissionAccomplishedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\MissionFailedGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestate\PlayingGameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MikeRectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\Minigunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MissionAccomplishedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\MissionFailedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\UnitSelectCursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject\Circle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\ShpImageExplorer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\StackTrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,8 +4,8 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include "constants.h"
-#include "graphics.h"
+#include "../constants.h"
+#include "../graphics.h"
 
 class Graphics;
 class Game;

@@ -1,6 +1,6 @@
 #include "ResetGameGameEvent.h"
 
-#include "game.h"
+#include "../game.h"
 
 ResetGameGameEvent::ResetGameGameEvent(Game * aGame) : GameEvent(aGame) {
 }

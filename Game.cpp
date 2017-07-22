@@ -1,20 +1,18 @@
 
 #include "game.h"
 
-#include "Minigunner.h"
-#include "UnitSelectCursor.h"
-#include "Circle.h"
-#include "MikeRectangle.h"
-#include "GameEvent.h"
-#include "GetGDIMinigunnerGameEvent.h"
-#include "GetNODMinigunnerGameEvent.h"
-#include "CreateGDIMinigunnerGameEvent.h"
-#include "CreateNODMinigunnerGameEvent.h"
-#include "ShpImageExplorer.h"
+#include "../gameobject/Minigunner.h"
+#include "../gameobject/UnitSelectCursor.h"
+#include "../gameobject/Circle.h"
+#include "../gameevent/GameEvent.h"
+#include "../gameevent/GetGDIMinigunnerGameEvent.h"
+#include "../gameevent/GetNODMinigunnerGameEvent.h"
+#include "gameevent/CreateGDIMinigunnerGameEvent.h"
+#include "../gameevent/CreateNODMinigunnerGameEvent.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
-#include "PlayingGameState.h"
-#include "ResetGameGameEvent.h"
+#include "../gamestate/PlayingGameState.h"
+#include "../gameevent/ResetGameGameEvent.h"
 
 
 Game::Game(bool testMode) {

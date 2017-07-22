@@ -1,9 +1,9 @@
 #include "MissionFailedGameState.h"
 
-#include "graphics.h"
-#include "Game.h"
-#include "Minigunner.h"
-#include "MissionFailedMessage.h"
+#include "../graphics.h"
+#include "../Game.h"
+#include "../gameobject/Minigunner.h"
+#include "../gameobject/MissionFailedMessage.h"
 
 MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 	gameOverMessage = new MissionFailedMessage(game);

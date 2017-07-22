@@ -1,12 +1,12 @@
 #include "ShpImageExplorer.h"
 
 
-#include "input.h"
-#include "game.h"
+#include "../input.h"
+#include "../game.h"
 #include "ShpFile.h"
 #include "GdiShpFileColorMapper.h"
-#include "GameSprite.h"
-#include "MikeRectangle.h"
+#include "../GameSprite.h"
+#include "../gameobject/MikeRectangle.h"
 #include "AnimationSequence.h"
 
 
