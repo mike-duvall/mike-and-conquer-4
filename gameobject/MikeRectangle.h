@@ -9,7 +9,7 @@
 
 
 #include <d3d9.h>
-#include <d3dx9.h>
+//#include <d3dx9.h>
 
 
 // TODO Use namespaces.  Naming MikeRectangle to not conflict with Windows Rectangle() function

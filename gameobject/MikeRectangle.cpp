@@ -11,8 +11,6 @@ struct VERTEX_2D_DIF { // transformed colorized
 };
 
 
-
-
 MikeRectangle::MikeRectangle(int x, int y, int width, int height) {
 	this->x = x;
 	this->y = y;

@@ -1,7 +1,5 @@
 #include "MissionAccomplishedMessage.h"
 
-
-
 #include "../GameSprite.h"
 #include "../Game.h"
 #include "AnimationSequence.h"
