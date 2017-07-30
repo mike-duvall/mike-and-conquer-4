@@ -1,4 +1,4 @@
-# mike-and-conquer-4
+# mike-and-conquer
 
 
 Notes:
