@@ -3,28 +3,10 @@
 
 Next steps
 ***************
-	x* Basic enemey AI
-	x	* Have computer sleep for set time then attack
-			X * Write failing test, where GDI doesn't attack
-			X * Make test pass
-			X * Do Mission Failed if NOD minigunner kills GDI
-			X * Write test that detects Mission Failed vs Mission Accomplished
-			X * Make running of all tests at once work
-				X * Add ability to reset game between tests
-					X * Revisit if event code needs the wait on mutex
-
-		* Refactor and cleanup	
-     		x* Put files in subdirectories.  Example - all game states in gamestate directory
------>		* Consider delgating behavior to a MinigunnerController
-			Which has PlayerControlled vs ComputerControlled
-			* Make ComputerControlled have multiple states
-
-		* Merge mike-and-conquer-4 and mike-and-conquer-test branches
-
-		* Backup keyboard shortcuts
-
-		x * Cleanup un-needed includes
-
+	* Add multiple GDI minigunners
+		* Allow multi select and move or attack
+	* Add multiple NOD minigunners
+		* Have each NOD minigunner select and attack random GDI minigunner
 
 	
 
