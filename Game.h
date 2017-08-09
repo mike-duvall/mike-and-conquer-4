@@ -47,6 +47,7 @@ public:
 	GameState * ProcessGameEvents();
 
 	Minigunner * GetMinigunnerAtPoint(int x, int y);
+	Minigunner * GetGDIMinigunnerAtPoint(int x, int y);
 
     Graphics* GetGraphics() {return graphics;}
     Input* GetInput()       {return input;}
@@ -58,7 +59,7 @@ public:
 	void AddResetGameEvent();
 	Minigunner * GetGDIMinigunnerViaEvent();
 	Minigunner * GetNODMinigunnerViaEvent();
-	Minigunner * GetGDIMinigunner() { return minigunner1;  }
+	std::vector<Minigunner * > getGDIMinigunners() { return gdiMinigunners;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
@@ -76,7 +77,7 @@ protected:
 
 	boolean testMode;
 
-	Minigunner  * minigunner1;
+	std::vector<Minigunner *> gdiMinigunners;
 	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;

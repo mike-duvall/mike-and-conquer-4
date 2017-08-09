@@ -81,6 +81,7 @@ private:
 	void HandleIdleState(float frameTime);
 	void HandleMovingState(float frameTime);
 	void HandleAttackingState(float frameTime);
+	Minigunner* FindFirstGdiMinigunner();
 
 	bool IsInAttackRange();
 	bool IsAtDestination();

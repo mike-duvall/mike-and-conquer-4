@@ -16,7 +16,17 @@ Minigunner * GetGDIMinigunnerGameEvent::GetMinigunner() {
 	std::mutex dummyMutex;
 	std::unique_lock<std::mutex> locker(dummyMutex);
 	condition.wait(locker);
-	return game->GetGDIMinigunner();
+//	return game->GetGDIMinigunner();
+	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		return nextMinigunner;
+	}
+
+	return nullptr;
+
 }
 
 

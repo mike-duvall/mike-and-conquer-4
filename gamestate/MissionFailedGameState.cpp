@@ -7,9 +7,12 @@
 
 MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 	gameOverMessage = new MissionFailedMessage(game);
-	Minigunner * minigunner1 = game.GetGDIMinigunner();
-	if (minigunner1 != NULL) {
-		minigunner1->SetAnimate(false);
+
+	std::vector<Minigunner * > gdiMinigunners = game.getGDIMinigunners();
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		nextMinigunner->SetAnimate(false);
 	}
 
 	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
@@ -44,10 +47,20 @@ void MissionFailedGameState::Render() {
 	//	Does rendering and everything go in Render?
 	//	Do we just have one Update method, that includes render
 	//	And maybe GameState has base functions that can be called to begin and end scene
-	Minigunner * minigunner1 = game.GetGDIMinigunner();
-	if (minigunner1 != NULL) {
-		minigunner1->Draw();
+//	Minigunner * minigunner1 = game.GetGDIMinigunner();
+//	if (minigunner1 != NULL) {
+//		minigunner1->Draw();
+//	}
+
+	std::vector<Minigunner * > gdiMinigunners = game.getGDIMinigunners();
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		nextMinigunner->Draw();
 	}
+
+
 
 	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
 	if (enemyMinigunner1 != NULL) {

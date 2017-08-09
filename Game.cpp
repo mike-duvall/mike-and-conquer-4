@@ -22,7 +22,6 @@ Game::Game(bool testMode) {
 }
 
 
-
 void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
@@ -38,7 +37,6 @@ void Game::Initialize(HWND hw) {
 
 	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
 
-	minigunner1 = nullptr;
 	enemyMinigunner1 = nullptr;
 	circle = nullptr;
 
@@ -47,7 +45,6 @@ void Game::Initialize(HWND hw) {
 
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = nullptr;
-	minigunner1 = nullptr;
 	enemyMinigunner1 = nullptr;
 
 	currentGameState = ResetGame();
@@ -55,15 +52,22 @@ void Game::Initialize(HWND hw) {
 
 GameState * Game::ResetGame() {
 	initialized = false;
-	delete minigunner1;
-	minigunner1 = nullptr;
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		delete nextMinigunner;
+	}
+	gdiMinigunners.clear();
+
+
 	delete enemyMinigunner1;
 	enemyMinigunner1 = nullptr;
 	delete circle;
 
 	if (!testMode) {
-
-		minigunner1 = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		Minigunner * minigunner = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		gdiMinigunners.push_back(minigunner);
 		enemyMinigunner1 = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
 	}
 
@@ -121,24 +125,40 @@ void Game::HandleMouseInput(LPARAM lParam) {
 }
 
 
+Minigunner * Game::GetGDIMinigunnerAtPoint(int x, int y) {
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if(nextMinigunner->PointIsWithin(x,y)) {
+			return nextMinigunner;
+		}
+	}
+
+	return nullptr;
+}
+
 
 
 Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
-	if (minigunner1->PointIsWithin(x, y)) {
-		return minigunner1;
+	Minigunner * gdiMinigunnerAtPoint = GetGDIMinigunnerAtPoint(x, y);
+	if (gdiMinigunnerAtPoint != nullptr) {
+		return gdiMinigunnerAtPoint;
 	}
-	else if (enemyMinigunner1 != NULL && enemyMinigunner1->PointIsWithin(x, y)) {
+	
+	if (enemyMinigunner1 != nullptr && enemyMinigunner1->PointIsWithin(x, y)) {
 		return enemyMinigunner1;
 	}
-	else {
-		return NULL;
-	}
+
+	return nullptr;
+
 }
 
 
 void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
-	minigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+	Minigunner * minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+	gdiMinigunners.push_back(minigunner);
 }
 
 void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
