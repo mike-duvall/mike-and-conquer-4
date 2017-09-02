@@ -90,6 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gameevent\GetMinigunnerAtLocationGameEvent.cpp" />
     <ClCompile Include="gameobject\Circle.cpp" />
     <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gameevent\GetMinigunnerAtLocationGameEvent.h" />
     <ClInclude Include="gameobject\Circle.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h" />

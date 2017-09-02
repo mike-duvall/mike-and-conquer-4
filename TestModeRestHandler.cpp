@@ -5,6 +5,7 @@
 #include <Windows.h>
 
 #include <codecvt>
+#include <string.h>
 #include "game.h"
 #include "../gameobject/Minigunner.h"
 #include "../gamestate/GameState.h"
@@ -22,7 +23,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 	gdiMinigunnerListener->support(
 		methods::GET,
-		[this](http_request request) {return HandleGetGdiMinigunner(request); });
+		[this](http_request request) {return HandleGetMinigunnerAtLocation(request); });
 
 	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
 	nodMinigunnerListener = new http_listener(nodMinigunnerURL);
@@ -138,16 +139,32 @@ std::pair<int, int>  TestModeRestHandler::ParseMinigunnerRequest(http_request me
 
 void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
 	json::value obj;
-	obj[L"x"] = json::value::number(minigunner->GetX());
-	obj[L"y"] = json::value::number(minigunner->GetY());
-	obj[L"health"] = json::value::number(minigunner->GetHealth());
-	message.reply(status_codes::OK, obj);
+	if (minigunner == nullptr) {
+		message.reply(status_codes::NotFound, obj);
+	}
+	else {
+		obj[L"x"] = json::value::number(minigunner->GetX());
+		obj[L"y"] = json::value::number(minigunner->GetY());
+		obj[L"health"] = json::value::number(minigunner->GetHealth());
+		message.reply(status_codes::OK, obj);
+	}
 }
 
 
 
-void TestModeRestHandler::HandleGetGdiMinigunner(http_request message) {
-	Minigunner * minigunner = game->GetGDIMinigunnerViaEvent();
+void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
+
+	auto http_get_vars = uri::split_query(message.request_uri().query());
+	utility::string_t xString = L"x";
+	utility::string_t yString = L"y";
+
+	auto xValueFromQueryParam = http_get_vars[xString];
+	auto yValueFromQueryParam = http_get_vars[yString];
+
+	int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
+	int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
+
+	Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
 	RenderAndReturnMinigunner(message, minigunner);
 }
 

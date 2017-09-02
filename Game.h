@@ -57,6 +57,7 @@ public:
 	void AddCreateGDIMinigunnerEvent(int x, int y);
 	void AddCreateNODMinigunnerEvent(int x, int y);
 	void AddResetGameEvent();
+	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerViaEvent();
 	Minigunner * GetNODMinigunnerViaEvent();
 	std::vector<Minigunner * > getGDIMinigunners() { return gdiMinigunners;  }

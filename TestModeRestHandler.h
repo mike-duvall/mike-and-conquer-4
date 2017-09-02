@@ -22,7 +22,7 @@ public:
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
-	void HandleGetGdiMinigunner(http_request message);
+	void HandleGetMinigunnerAtLocation(http_request message);
 	void HandleGetNodMinigunner(http_request message);
 	void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);

@@ -1,5 +1,6 @@
 #include "game.h"
 
+
 #include "../gameobject/Minigunner.h"
 #include "../gameobject/UnitSelectCursor.h"
 #include "../gameobject/Circle.h"
@@ -7,6 +8,7 @@
 #include "../gameevent/GetGDIMinigunnerGameEvent.h"
 #include "../gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/CreateGDIMinigunnerGameEvent.h"
+#include "gameevent/GetMinigunnerAtLocationGameEvent.h"
 #include "../gameevent/CreateNODMinigunnerGameEvent.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
@@ -168,6 +170,19 @@ void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
 }
 
 
+
+Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
+	GetMinigunnerAtLocationGameEvent * gameEvent = new GetMinigunnerAtLocationGameEvent(this, x, y );
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
+
+
+// TODO Remove this method?
 Minigunner * Game::GetGDIMinigunnerViaEvent() {
 	GetGDIMinigunnerGameEvent * gameEvent = new GetGDIMinigunnerGameEvent(this);
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
