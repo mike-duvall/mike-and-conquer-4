@@ -22,7 +22,9 @@ public:
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
+	void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> allGDIMinigunnerList);
 	void HandleGetMinigunnerAtLocation(http_request message);
+	void HandleGetAllMinigunners(http_request message);
 	void HandleGetNodMinigunner(http_request message);
 	void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);
@@ -32,6 +34,7 @@ private:
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;
 	http_listener * gdiMinigunnerListener;
+	http_listener * gdiAllMinigunnersListener;
 	http_listener * nodMinigunnerListener;
 	http_listener * leftClickListener;
 	http_listener * resetGameListener;

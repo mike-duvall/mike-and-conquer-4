@@ -21,9 +21,21 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		methods::POST,
 		[this](http_request request) {return HandlePostGdiMinigunner(request); });
 
+
 	gdiMinigunnerListener->support(
 		methods::GET,
 		[this](http_request request) {return HandleGetMinigunnerAtLocation(request); });
+
+
+	std::wstring gdiAllMinigunnersURL = baseUrl + L"/mac/gdiMinigunners";
+	gdiAllMinigunnersListener = new http_listener(gdiAllMinigunnersURL);
+	gdiAllMinigunnersListener->open().wait();
+
+	gdiAllMinigunnersListener->support(
+		methods::GET,
+		[this](http_request request) {return HandleGetAllMinigunners(request); });
+
+
 
 	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
 	nodMinigunnerListener = new http_listener(nodMinigunnerURL);
@@ -150,6 +162,44 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 	}
 }
 
+void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > allGDIMinigunnerList) {
+// 	json::value obj;
+// 
+// 	json::array minigunnerArray;
+// 	minigunnerArray.
+// 
+// 	if (minigunner == nullptr) {
+// 		message.reply(status_codes::NotFound, obj);
+// 	}
+// 	else {
+// 		obj[L"x"] = json::value::number(minigunner->GetX());
+// 		obj[L"y"] = json::value::number(minigunner->GetY());
+// 		obj[L"health"] = json::value::number(minigunner->GetHealth());
+// 		message.reply(status_codes::OK, obj);
+// 	}
+
+
+	test is failing because this needs to return actual minigunners here 
+
+	json::value arr;
+
+	json::value obj1;
+	obj1[L"x"] = json::value::number(300);
+	obj1[L"y"] = json::value::number(400);
+	obj1[L"health"] = json::value::number(100);
+
+	json::value obj2;
+	obj2[L"x"] = json::value::number(500);
+	obj2[L"y"] = json::value::number(600);
+	obj2[L"health"] = json::value::number(75);
+
+	arr[0] = obj1;
+	arr[1] = obj2;
+
+	message.reply(status_codes::OK, arr);
+}
+
+
 
 
 void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
@@ -167,6 +217,15 @@ void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
 	Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
 	RenderAndReturnMinigunner(message, minigunner);
 }
+
+
+
+void TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
+
+	std::vector<Minigunner * > allGDIMinigunnerList = game->getGDIMinigunners();
+	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+}
+
 
 
 void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {

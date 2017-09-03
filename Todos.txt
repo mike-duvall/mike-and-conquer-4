@@ -5,6 +5,8 @@ Next steps
 ***************
 	* Add multiple GDI minigunners
 		* Allow multi select and move or attack
+			* Update tests to verify GDI vs NOD minigunners(add method to get list of all GDI minigunners, not just at location)
+			* Change path of /mac/gdiMinigunner to /mac/gdiMinigunners (with an 's' on the end)
 	* Add multiple NOD minigunners
 		* Have each NOD minigunner select and attack random GDI minigunner
 
