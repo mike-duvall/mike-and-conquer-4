@@ -17,10 +17,9 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	std::wstring gdiMinigunnerURL = baseUrl + L"/mac/gdiMinigunner";
 	gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 	gdiMinigunnerListener->open().wait();
-	gdiMinigunnerListener->support(
-		methods::POST,
-		[this](http_request request) {return HandlePostGdiMinigunner(request); });
-
+// 	gdiMinigunnerListener->support(
+// 		methods::POST,
+// 		[this](http_request request) {return HandlePostGdiMinigunner(request); });
 
 	gdiMinigunnerListener->support(
 		methods::GET,
@@ -28,12 +27,20 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 
 	std::wstring gdiAllMinigunnersURL = baseUrl + L"/mac/gdiMinigunners";
-	gdiAllMinigunnersListener = new http_listener(gdiAllMinigunnersURL);
-	gdiAllMinigunnersListener->open().wait();
+	gdiAllMinigunnersURLListener = new http_listener(gdiAllMinigunnersURL);
+	gdiAllMinigunnersURLListener->open().wait();
 
-	gdiAllMinigunnersListener->support(
+
+	gdiAllMinigunnersURLListener->support(
+		methods::POST,
+		[this](http_request request) {return HandlePostGdiMinigunner(request); });
+
+
+	gdiAllMinigunnersURLListener->support(
 		methods::GET,
 		[this](http_request request) {return HandleGetAllMinigunners(request); });
+
+
 
 
 
@@ -78,8 +85,16 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
 	game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
+	//Minigunner * minigunner = game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
+
+// 	json::value obj;
+// 	obj[L"x"] = json::value::number(minigunner->GetX());
+// 	obj[L"y"] = json::value::number(minigunner->GetY());
+// 	obj[L"health"] = json::value::number(minigunner->GetHealth());
+// 	message.reply(status_codes::OK, obj);
+
 };
 
 

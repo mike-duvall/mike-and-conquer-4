@@ -34,7 +34,7 @@ private:
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;
 	http_listener * gdiMinigunnerListener;
-	http_listener * gdiAllMinigunnersListener;
+	http_listener * gdiAllMinigunnersURLListener;
 	http_listener * nodMinigunnerListener;
 	http_listener * leftClickListener;
 	http_listener * resetGameListener;
