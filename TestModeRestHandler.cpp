@@ -163,43 +163,23 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 }
 
 void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > allGDIMinigunnerList) {
-// 	json::value obj;
-// 
-// 	json::array minigunnerArray;
-// 	minigunnerArray.
-// 
-// 	if (minigunner == nullptr) {
-// 		message.reply(status_codes::NotFound, obj);
-// 	}
-// 	else {
-// 		obj[L"x"] = json::value::number(minigunner->GetX());
-// 		obj[L"y"] = json::value::number(minigunner->GetY());
-// 		obj[L"health"] = json::value::number(minigunner->GetHealth());
-// 		message.reply(status_codes::OK, obj);
-// 	}
 
+	json::value gdiMinigunnerJsonArray;
+	int arrayIndex = 0;
 
-	test is failing because this needs to return actual minigunners here 
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = allGDIMinigunnerList.begin(); iter != allGDIMinigunnerList.end(); ++iter) {
+		Minigunner * minigunner = *iter;
+		json::value minigunnerJson;
+		minigunnerJson[L"x"] = minigunner->GetX();
+		minigunnerJson[L"y"] = minigunner->GetY();
+		minigunnerJson[L"health"] = minigunner->GetHealth();
+		gdiMinigunnerJsonArray[arrayIndex] = minigunnerJson;
+		arrayIndex++;
+	}
 
-	json::value arr;
-
-	json::value obj1;
-	obj1[L"x"] = json::value::number(300);
-	obj1[L"y"] = json::value::number(400);
-	obj1[L"health"] = json::value::number(100);
-
-	json::value obj2;
-	obj2[L"x"] = json::value::number(500);
-	obj2[L"y"] = json::value::number(600);
-	obj2[L"health"] = json::value::number(75);
-
-	arr[0] = obj1;
-	arr[1] = obj2;
-
-	message.reply(status_codes::OK, arr);
+	message.reply(status_codes::OK, gdiMinigunnerJsonArray);
 }
-
-
 
 
 void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
