@@ -82,6 +82,12 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 }
 
+
+//Continue with this  code
+
+//Make creation of minigunner return one, with an ID
+//Make test get minigunner by id
+
 void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
 	game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
