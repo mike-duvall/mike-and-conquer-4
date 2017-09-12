@@ -52,9 +52,9 @@ public:
     Graphics* GetGraphics() {return graphics;}
     Input* GetInput()       {return input;}
     void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
-	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
+	Minigunner * InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
-	void AddCreateGDIMinigunnerEvent(int x, int y);
+	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
 	void AddCreateNODMinigunnerEvent(int x, int y);
 	void AddResetGameEvent();
 	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);

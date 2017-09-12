@@ -6,6 +6,7 @@
 GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : GameEvent(aGame) {
 	this->x = x;
 	this->y = y;
+	foundMinigunner = nullptr;
 
 }
 
@@ -17,21 +18,22 @@ Minigunner * GetMinigunnerAtLocationGameEvent::GetMinigunner() {
 	condition.wait(locker);
 	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
 
-	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
-		Minigunner * nextMinigunner = *iter;
-		if (nextMinigunner->PointIsWithin(x, y)) {
-			return nextMinigunner;
-		}
-	}
-
-	return nullptr;
-
+	return foundMinigunner;
 }
 
 
 GameState * GetMinigunnerAtLocationGameEvent::Process() {
 	GameState * newGameState = nullptr;
+	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner->PointIsWithin(x, y)) {
+			foundMinigunner =  nextMinigunner;
+		}
+	}
+
 	condition.notify_one();
 	return newGameState;
 }

@@ -32,6 +32,7 @@ class Minigunner
 	void SetY(int newY) { this->y = newY; }
 	int GetX() { return this->x; }
 	int GetY() { return this->y; }
+	int GetId() { return this->id; }
 	bool PointIsWithin(int x, int y);
 	void SetSelected(bool selected) { this->isSelected = selected; }
 	bool GetIsSelected() { return this->isSelected; }
@@ -43,6 +44,8 @@ class Minigunner
 
 private:
 
+	static int nextMinigunnerId;
+	int id;
 	Graphics * graphics;
 	GameSprite * gameSprite;
 	UnitSelectCursor * unitSelectCursor;

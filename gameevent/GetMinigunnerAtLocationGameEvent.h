@@ -1,9 +1,6 @@
 #pragma once
 
 
-
-#pragma once
-
 #include "GameEvent.h"
 
 #include <mutex>
@@ -24,6 +21,8 @@ private:
 
 	int x;
 	int y;
+
+	Minigunner * foundMinigunner;
 
 
 };

@@ -157,16 +157,20 @@ Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
 }
 
 
-void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
+Minigunner * Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
 	Minigunner * minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
 	gdiMinigunners.push_back(minigunner);
+	return minigunner;
 }
 
-void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
-	GameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
-	std::lock_guard<std::mutex> lock(gameEventsMutex);
+Minigunner * Game::CreateGDIMinigunnerViaEvent(int x, int y) {
+	CreateGDIMinigunnerGameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+    return gdiMinigunner;
 }
 
 

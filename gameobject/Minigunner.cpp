@@ -12,7 +12,10 @@
 
 
 
+int Minigunner::nextMinigunnerId = 0;
+
 Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectCursor, Input * input, bool isEnemy, ShpFileColorMapper * shpFileColorMapper) {
+	this->id = Minigunner::nextMinigunnerId++;
 	this->health = 1000;
 	this->state = "IDLE";
 	this->game = game;
