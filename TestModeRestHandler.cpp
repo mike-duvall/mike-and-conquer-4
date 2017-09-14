@@ -38,7 +38,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 	gdiAllMinigunnersURLListener->support(
 		methods::GET,
-		[this](http_request request) {return HandleGetAllMinigunners(request); });
+		[this](http_request request) {return HandleGetMinigunners(request); });
 
 
 
@@ -83,28 +83,8 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 }
 
 
-// Continue with this  code
-
-// Make creation of minigunner return one, with an ID
-// Make test get minigunner by id
-
-// Need to re-understand how eventing works
-// in
-
 void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
-//	game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
-	//Minigunner * minigunner = game->AddCreateGDIMinigunnerEvent(xAndY.first, xAndY.second);
-	// TODO:  update this to return the created minigunner as JSON, instead of result message
-//	message.reply(status_codes::OK, U("Initialized minigunner"));
-
-// 	json::value obj;
-// 	obj[L"x"] = json::value::number(minigunner->GetX());
-// 	obj[L"y"] = json::value::number(minigunner->GetY());
-// 	obj[L"health"] = json::value::number(minigunner->GetHealth());
-// 	message.reply(status_codes::OK, obj);
-
-
 	Minigunner * minigunner = game->CreateGDIMinigunnerViaEvent(xAndY.first, xAndY.second);
 	RenderAndReturnMinigunner(message, minigunner);
 };
@@ -128,21 +108,6 @@ void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
 
 
 
-
-
-
-// auto http_get_vars = uri::split_query(message.request_uri().query());
-// utility::string_t xString = L"x";
-// utility::string_t yString = L"y";
-// 
-// auto xValueFromQueryParam = http_get_vars[xString];
-// auto yValueFromQueryParam = http_get_vars[yString];
-// 
-// int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
-// int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
-// 
-// Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
-// RenderAndReturnMinigunner(message, minigunner);
 
 
 void TestModeRestHandler::HandlePostNodMinigunner(http_request message) {
@@ -225,13 +190,13 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 	}
 }
 
-void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > allGDIMinigunnerList) {
+void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGDIMinigunnerList) {
 
 	json::value gdiMinigunnerJsonArray;
 	int arrayIndex = 0;
 
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = allGDIMinigunnerList.begin(); iter != allGDIMinigunnerList.end(); ++iter) {
+	for (iter = allGDIMinigunnerList->begin(); iter != allGDIMinigunnerList->end(); ++iter) {
 		Minigunner * minigunner = *iter;
 		json::value minigunnerJson;
 		minigunnerJson[L"x"] = minigunner->GetX();
@@ -245,18 +210,23 @@ void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, st
 }
 
 
+ 
+
+void TestModeRestHandler::HandleGetMinigunners(http_request message) {
 
 
-void TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
+	int minigunnerId;
+	std::wstring uri = message.request_uri().path().c_str();
 
+	if (1 == swscanf(uri.c_str(), L"/mac/gdiMinigunners/%d", &minigunnerId)) {
+		Minigunner * minigunner = game->GetGDIMinigunnerByIdViaEvent(minigunnerId);
+		RenderAndReturnMinigunner(message, minigunner);
+	}
+	else {
+		std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
+		RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+	}
 
-// 	First, update remainint events to do their processing in the ::Process() method
-// 	Need to update this to handle pathParam : "/mac/gdiMinigunners/{minigunnerId}"
-// 
-// 		Perhaps like this: https ://stackoverflow.com/questions/9148667/parse-rest-query-in-c
-
-	std::vector<Minigunner * > allGDIMinigunnerList = game->getGDIMinigunners();
-	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
 }
 
 

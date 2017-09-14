@@ -1,19 +1,17 @@
-#include "GetGDIMinigunnerGameEvent.h"
+#include "GetGDIMinigunnerByIdGameEvent.h"
 
 #include "../game.h"
+#include "../gameobject/Minigunner.h"
 
 
-GetGDIMinigunnerGameEvent::GetGDIMinigunnerGameEvent(Game * aGame) : GameEvent(aGame) {
+GetGDIMinigunnerByIdGameEvent::GetGDIMinigunnerByIdGameEvent(Game * aGame, int id) : GameEvent(aGame) {
 	foundMinigunner = nullptr;
-
+	this->id = id;
 }
 
 
 
-//Can do same kind of wait on condition in the createGDI rest call as well
-//general pattern, post event, wait for it to be completed, then return
-
-Minigunner * GetGDIMinigunnerGameEvent::GetMinigunner() {
+Minigunner * GetGDIMinigunnerByIdGameEvent::GetMinigunner() {
 	std::mutex dummyMutex;
 	std::unique_lock<std::mutex> locker(dummyMutex);
 	condition.wait(locker);
@@ -22,14 +20,16 @@ Minigunner * GetGDIMinigunnerGameEvent::GetMinigunner() {
 }
 
 
-GameState * GetGDIMinigunnerGameEvent::Process() {
+GameState * GetGDIMinigunnerByIdGameEvent::Process() {
 	GameState * newGameState = nullptr;
 	std::vector<Minigunner * > * gdiMinigunners = game->getGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
-		foundMinigunner = nextMinigunner;
+		if (nextMinigunner->GetId() == id) {
+			foundMinigunner = nextMinigunner;
+		}
 	}
 
 	condition.notify_one();

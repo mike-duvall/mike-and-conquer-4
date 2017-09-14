@@ -214,7 +214,7 @@ void Minigunner::HandleAttackingState(float frameTime) {
 
 Minigunner * Minigunner::FindFirstGdiMinigunner()
 {
-	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
+	std::vector<Minigunner * > gdiMinigunners = *(game->getGDIMinigunners());
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {

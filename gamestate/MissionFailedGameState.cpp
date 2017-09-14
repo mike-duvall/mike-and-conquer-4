@@ -8,9 +8,9 @@
 MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 	gameOverMessage = new MissionFailedMessage(game);
 
-	std::vector<Minigunner * > gdiMinigunners = game.getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game.getGDIMinigunners();
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		nextMinigunner->SetAnimate(false);
 	}
@@ -52,10 +52,10 @@ void MissionFailedGameState::Render() {
 //		minigunner1->Draw();
 //	}
 
-	std::vector<Minigunner * > gdiMinigunners = game.getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game.getGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		nextMinigunner->Draw();
 	}

@@ -16,18 +16,16 @@ Minigunner * GetMinigunnerAtLocationGameEvent::GetMinigunner() {
 	std::mutex dummyMutex;
 	std::unique_lock<std::mutex> locker(dummyMutex);
 	condition.wait(locker);
-	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
-
 	return foundMinigunner;
 }
 
 
 GameState * GetMinigunnerAtLocationGameEvent::Process() {
 	GameState * newGameState = nullptr;
-	std::vector<Minigunner * > gdiMinigunners = game->getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game->getGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		if (nextMinigunner->PointIsWithin(x, y)) {
 			foundMinigunner =  nextMinigunner;

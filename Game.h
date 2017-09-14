@@ -54,18 +54,27 @@ public:
     void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 	Minigunner * InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
-	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
-	void AddCreateNODMinigunnerEvent(int x, int y);
-	void AddResetGameEvent();
-	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
-	Minigunner * GetGDIMinigunnerViaEvent();
-	Minigunner * GetNODMinigunnerViaEvent();
-	std::vector<Minigunner * > getGDIMinigunners() { return gdiMinigunners;  }
+
+	std::vector<Minigunner * > * getGDIMinigunners() { return &gdiMinigunners;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
 	GameState * GetCurrentGameState() { return currentGameState; }
 	GameState * ResetGame();
+
+
+	// Via Event handler
+	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
+	void AddCreateNODMinigunnerEvent(int x, int y);
+	void AddResetGameEvent();
+	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
+	Minigunner * GetGDIMinigunnerByIdViaEvent(int id);
+
+	Minigunner * GetGDIMinigunnerViaEvent();
+	Minigunner * GetNODMinigunnerViaEvent();
+
+	std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent();
+
 
 
 protected:
