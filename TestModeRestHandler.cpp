@@ -218,7 +218,7 @@ void TestModeRestHandler::HandleGetMinigunners(http_request message) {
 	int minigunnerId;
 	std::wstring uri = message.request_uri().path().c_str();
 
-	if (1 == swscanf(uri.c_str(), L"/mac/gdiMinigunners/%d", &minigunnerId)) {
+	if (1 == swscanf_s(uri.c_str(), L"/mac/gdiMinigunners/%d", &minigunnerId)) {
 		Minigunner * minigunner = game->GetGDIMinigunnerByIdViaEvent(minigunnerId);
 		RenderAndReturnMinigunner(message, minigunner);
 	}
