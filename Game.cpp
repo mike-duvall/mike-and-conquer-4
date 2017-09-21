@@ -205,15 +205,6 @@ Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
 
 
 
-// TODO Remove this method?
-Minigunner * Game::GetGDIMinigunnerViaEvent() {
-	GetGDIMinigunnerGameEvent * gameEvent = new GetGDIMinigunnerGameEvent(this);
-	std::unique_lock<std::mutex> lock(gameEventsMutex);
-	gameEvents.push_back(gameEvent);
-	lock.unlock();
-	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
-	return gdiMinigunner;
-}
 
 
 Minigunner * Game::GetGDIMinigunnerByIdViaEvent(int id) {

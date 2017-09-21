@@ -70,7 +70,6 @@ public:
 	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerByIdViaEvent(int id);
 
-	Minigunner * GetGDIMinigunnerViaEvent();
 	Minigunner * GetNODMinigunnerViaEvent();
 
 	std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent();
