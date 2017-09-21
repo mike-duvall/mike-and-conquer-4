@@ -86,27 +86,21 @@ void Minigunner::SetDestination(int x, int y) {
 	this->destinationY = y;
 }
 
+
 void Minigunner::HandleIdleState(float frameTime) {
 	gameSprite->SetCurrentAnimationSequenceIndex(STANDING_STILL);
-	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
-		if (foundMinigunner != NULL) {
-			if (foundMinigunner == this) {
-				SetSelected(true);
-			}
-			else if (GetIsSelected()) {
-				// It's the enemy
-				state = "ATTACKING";
-				currentAttackTarget = foundMinigunner;
-			}
-		}
-		else if (GetIsSelected()) {
-			state = "MOVING";
-			SetDestination(input->getMouseX(), input->getMouseY());
-		}
 
-	}
+}
 
+void Minigunner::OrderToMoveToDestination(int x, int y) {
+	state = "MOVING";
+	SetDestination(x, y);
+}
+
+
+void Minigunner::OrderToMoveToAttackEnemyUnit(Minigunner * enemyMinigunner) {
+	state = "ATTACKING";
+	currentAttackTarget = enemyMinigunner;
 }
 
 
@@ -132,24 +126,6 @@ void Minigunner::MoveTowardsDestination(float frameTime) {
 void Minigunner::HandleMovingState(float frameTime) {
 
 	gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
-	if (input->isLeftMouseDown()) {
-		Minigunner * foundMinigunner = game->GetMinigunnerAtPoint(input->getMouseX(), input->getMouseY());
-		if (foundMinigunner != NULL) {
-			if (foundMinigunner == this) {
-				SetSelected(true);
-			}
-			else {
-				// It's the enemy
-				state = "ATTACKING";
-				currentAttackTarget = foundMinigunner;
-			}
-		}
-		else if (GetIsSelected()) {
-			state = "MOVING";
-			SetDestination(input->getMouseX(), input->getMouseY());
-		}
-
-	}
 
 	MoveTowardsDestination(frameTime);
 	if (IsAtDestination()) {
@@ -212,9 +188,8 @@ void Minigunner::HandleAttackingState(float frameTime) {
 }
 
 
-Minigunner * Minigunner::FindFirstGdiMinigunner()
-{
-	std::vector<Minigunner * > gdiMinigunners = *(game->getGDIMinigunners());
+Minigunner * Minigunner::FindFirstGdiMinigunner() {
+	std::vector<Minigunner * > gdiMinigunners = *(game->GetGDIMinigunners());
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
@@ -280,8 +255,10 @@ void Minigunner::Update(float frameTime) {
 
 }
 
-bool Minigunner::PointIsWithin(int x, int y)
-{
+
+
+
+bool Minigunner::PointIsWithin(int x, int y) {
 	int scale = 4;
 	int boundingBoxWidth = WIDTH * scale;
 	int boundingBoxHeight = HEIGHT * scale;

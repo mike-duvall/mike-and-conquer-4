@@ -8,7 +8,7 @@
 MissionAccomplishedGameState::MissionAccomplishedGameState(Game & game) : GameState(game) {
 	gameOverMessage = new MissionAccomplishedMessage(game);
 
-	std::vector<Minigunner * > gdiMinigunners = *(game.getGDIMinigunners());
+	std::vector<Minigunner * > gdiMinigunners = *(game.GetGDIMinigunners());
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
@@ -48,7 +48,7 @@ void MissionAccomplishedGameState::Render() {
 	//	Does rendering and everything go in Render?
 	//	Do we just have one Update method, that includes render
 	//	And maybe GameState has base functions that can be called to begin and end scene
-	std::vector<Minigunner * > gdiMinigunners = *(game.getGDIMinigunners());
+	std::vector<Minigunner * > gdiMinigunners = *(game.GetGDIMinigunners());
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {

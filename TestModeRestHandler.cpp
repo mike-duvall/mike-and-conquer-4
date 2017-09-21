@@ -17,9 +17,6 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	std::wstring gdiMinigunnerURL = baseUrl + L"/mac/gdiMinigunner";
 	gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
 	gdiMinigunnerListener->open().wait();
-// 	gdiMinigunnerListener->support(
-// 		methods::POST,
-// 		[this](http_request request) {return HandlePostGdiMinigunner(request); });
 
 	gdiMinigunnerListener->support(
 		methods::GET,
@@ -39,9 +36,6 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	gdiAllMinigunnersURLListener->support(
 		methods::GET,
 		[this](http_request request) {return HandleGetMinigunners(request); });
-
-
-
 
 
 	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
@@ -186,9 +180,14 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 		obj[L"x"] = json::value::number(minigunner->GetX());
 		obj[L"y"] = json::value::number(minigunner->GetY());
 		obj[L"health"] = json::value::number(minigunner->GetHealth());
+		obj[L"selected"] = json::value::boolean(minigunner->GetIsSelected());
+		obj[L"health"] = json::value::number(minigunner->GetHealth());
+
 		message.reply(status_codes::OK, obj);
 	}
 }
+
+
 
 void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGDIMinigunnerList) {
 

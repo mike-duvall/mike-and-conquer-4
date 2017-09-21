@@ -16,7 +16,7 @@ class Game;
 #include "constants.h"
 #include "gameError.h"
 
-
+  
 
 class Minigunner;
 class UnitSelectCursor;
@@ -55,7 +55,7 @@ public:
 	Minigunner * InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
 
-	std::vector<Minigunner * > * getGDIMinigunners() { return &gdiMinigunners;  }
+	std::vector<Minigunner * > * GetGDIMinigunners() { return &gdiMinigunners;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
@@ -74,6 +74,7 @@ public:
 	Minigunner * GetNODMinigunnerViaEvent();
 
 	std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent();
+	void SelectSingleGDIUnit(Minigunner * gdiMinigunner);
 
 
 

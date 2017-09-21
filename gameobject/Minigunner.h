@@ -40,6 +40,8 @@ class Minigunner
 	int GetHealth() { return this->health; }
 	void SetAnimate(bool newValue);
 
+	void OrderToMoveToDestination(int x, int y);
+	void OrderToMoveToAttackEnemyUnit(Minigunner * enemyMinigunner);
 
 
 private:

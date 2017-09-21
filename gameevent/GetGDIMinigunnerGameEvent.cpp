@@ -24,7 +24,7 @@ Minigunner * GetGDIMinigunnerGameEvent::GetMinigunner() {
 
 GameState * GetGDIMinigunnerGameEvent::Process() {
 	GameState * newGameState = nullptr;
-	std::vector<Minigunner * > * gdiMinigunners = game->getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game->GetGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {

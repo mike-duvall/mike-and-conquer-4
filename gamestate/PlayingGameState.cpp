@@ -13,10 +13,29 @@ PlayingGameState::PlayingGameState(Game & game)  : GameState(game) {
 }
 
 
+void PlayingGameState::HandleLeftMouseDown(Input * input) {
+
+	bool handledEvent = CheckForAndHandleLeftClickOnFriendlyUnit(input);
+	if (!handledEvent) {
+		handledEvent = 	CheckForAndHandleLeftClickOnEnemyUnit(input);
+	}
+	if (!handledEvent) {
+		CheckForAndHandleLeftClickOnMap(input);
+	}
+	
+}
+
 GameState * PlayingGameState::Update(float frameTime) {
 
 	game.ProcessGameEvents();
-	std::vector<Minigunner * > * gdiMinigunners = game.getGDIMinigunners();
+
+
+	Input * input = game.GetInput();
+	if (input->isLeftMouseDown()) {
+		HandleLeftMouseDown(input);
+	}
+
+	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
@@ -29,7 +48,6 @@ GameState * PlayingGameState::Update(float frameTime) {
 		enemyMinigunner1->Update(frameTime);
 	}
 
-	Input * input = game.GetInput();
 
 	Circle * circle = game.GetCircle();
 	if (input->isLeftMouseDown()) {
@@ -51,7 +69,7 @@ GameState * PlayingGameState::Update(float frameTime) {
 
 
 
-	if (enemyMinigunner1 != NULL && enemyMinigunner1->GetHealth() <= 0) {
+	if (enemyMinigunner1 != nullptr && enemyMinigunner1->GetHealth() <= 0) {
 		return new MissionAccomplishedGameState(game);
 	}
 	else if(MinigunnersExistAndAreAllDead()) {
@@ -67,7 +85,7 @@ GameState * PlayingGameState::Update(float frameTime) {
 
 bool PlayingGameState::MinigunnersExistAndAreAllDead()
 {
-	std::vector<Minigunner * > * gdiMinigunners = game.getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
 	if(gdiMinigunners->size() == 0) {
 		return false;
 	}
@@ -87,7 +105,7 @@ bool PlayingGameState::MinigunnersExistAndAreAllDead()
 
 void PlayingGameState::Render() {
 
-	std::vector<Minigunner * > * gdiMinigunners = game.getGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
@@ -111,6 +129,66 @@ void PlayingGameState::Render() {
 	Graphics * graphics = game.GetGraphics();
 	circle->Draw(graphics->Get3Ddevice());
 
+}
+
+bool PlayingGameState::CheckForAndHandleLeftClickOnFriendlyUnit(Input * input) {
+	int mouseX = input->getMouseX();
+	int mouseY = input->getMouseY();
+
+	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner->PointIsWithin(mouseX, mouseY)) {
+			game.SelectSingleGDIUnit(nextMinigunner);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool PlayingGameState::CheckForAndHandleLeftClickOnMap(Input * input) {
+	int mouseX = input->getMouseX();
+	int mouseY = input->getMouseY();
+
+	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner->GetIsSelected()) {
+			nextMinigunner->OrderToMoveToDestination(mouseX, mouseY);
+		}
+	}
+
+	return true;
+
+}
+
+bool PlayingGameState::CheckForAndHandleLeftClickOnEnemyUnit(Input * input) {
+	int mouseX = input->getMouseX();
+	int mouseY = input->getMouseY();
+
+
+	Minigunner * enemyMinigunner = game.GetNODMinigunner();
+	if (enemyMinigunner != nullptr && enemyMinigunner->PointIsWithin(mouseX, mouseY)) {
+		std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+
+		std::vector<Minigunner *>::iterator iter;
+		for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+			Minigunner * nextMinigunner = *iter;
+			if (nextMinigunner->GetIsSelected()) {
+				nextMinigunner->OrderToMoveToAttackEnemyUnit(enemyMinigunner);
+			}
+		}
+
+		return true;
+
+	}
+
+	return false;
 }
 
 std::string PlayingGameState::GetName()

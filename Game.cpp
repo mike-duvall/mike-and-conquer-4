@@ -131,6 +131,21 @@ void Game::HandleMouseInput(LPARAM lParam) {
 }
 
 
+void Game::SelectSingleGDIUnit(Minigunner * gdiMinigunner) {
+
+	gdiMinigunner->SetSelected(true);
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner != gdiMinigunner) {
+			nextMinigunner->SetSelected(false);
+		}
+	}
+
+}
+
+
 Minigunner * Game::GetGDIMinigunnerAtPoint(int x, int y) {
 
 	std::vector<Minigunner *>::iterator iter;

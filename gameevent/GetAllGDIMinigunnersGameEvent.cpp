@@ -19,7 +19,7 @@ std::vector<Minigunner * > * GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunners
 
 GameState * GetAllGDIMinigunnersGameEvent::Process() {
 	GameState * newGameState = nullptr;
-	foundMinigunners = game->getGDIMinigunners();
+	foundMinigunners = game->GetGDIMinigunners();
 
 	condition.notify_one();
 	return newGameState;
