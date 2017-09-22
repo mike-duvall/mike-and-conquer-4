@@ -16,7 +16,7 @@ class Game;
 #include "constants.h"
 #include "gameError.h"
 
-
+  
 
 class Minigunner;
 class UnitSelectCursor;
@@ -47,23 +47,34 @@ public:
 	GameState * ProcessGameEvents();
 
 	Minigunner * GetMinigunnerAtPoint(int x, int y);
+	Minigunner * GetGDIMinigunnerAtPoint(int x, int y);
 
     Graphics* GetGraphics() {return graphics;}
     Input* GetInput()       {return input;}
     void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
-	void InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
+	Minigunner * InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
 	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
-	void AddCreateGDIMinigunnerEvent(int x, int y);
-	void AddCreateNODMinigunnerEvent(int x, int y);
-	void AddResetGameEvent();
-	Minigunner * GetGDIMinigunnerViaEvent();
-	Minigunner * GetNODMinigunnerViaEvent();
-	Minigunner * GetGDIMinigunner() { return minigunner1;  }
+
+	std::vector<Minigunner * > * GetGDIMinigunners() { return &gdiMinigunners;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
 	GameState * GetCurrentGameState() { return currentGameState; }
 	GameState * ResetGame();
+
+
+	// Via Event handler
+	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
+	void AddCreateNODMinigunnerEvent(int x, int y);
+	void AddResetGameEvent();
+	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
+	Minigunner * GetGDIMinigunnerByIdViaEvent(int id);
+
+	Minigunner * GetNODMinigunnerViaEvent();
+
+	std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent();
+	void SelectSingleGDIUnit(Minigunner * gdiMinigunner);
+
 
 
 protected:
@@ -76,7 +87,7 @@ protected:
 
 	boolean testMode;
 
-	Minigunner  * minigunner1;
+	std::vector<Minigunner *> gdiMinigunners;
 	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;

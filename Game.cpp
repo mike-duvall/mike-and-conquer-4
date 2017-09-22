@@ -1,12 +1,18 @@
 #include "game.h"
 
+
 #include "../gameobject/Minigunner.h"
 #include "../gameobject/UnitSelectCursor.h"
 #include "../gameobject/Circle.h"
 #include "../gameevent/GameEvent.h"
 #include "../gameevent/GetGDIMinigunnerGameEvent.h"
+#include "../gameevent/GetGDIMinigunnerByIdGameEvent.h"
 #include "../gameevent/GetNODMinigunnerGameEvent.h"
+#include "../gameevent/GetAllGDIMinigunnersGameEvent.h"
+
+#include "gameevent/GetAllGDIMinigunnersGameEvent.h"
 #include "gameevent/CreateGDIMinigunnerGameEvent.h"
+#include "gameevent/GetMinigunnerAtLocationGameEvent.h"
 #include "../gameevent/CreateNODMinigunnerGameEvent.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
@@ -20,7 +26,6 @@ Game::Game(bool testMode) {
     initialized = false;
 	this->testMode = testMode;
 }
-
 
 
 void Game::Initialize(HWND hw) {
@@ -38,7 +43,6 @@ void Game::Initialize(HWND hw) {
 
 	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
 
-	minigunner1 = nullptr;
 	enemyMinigunner1 = nullptr;
 	circle = nullptr;
 
@@ -47,7 +51,6 @@ void Game::Initialize(HWND hw) {
 
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = nullptr;
-	minigunner1 = nullptr;
 	enemyMinigunner1 = nullptr;
 
 	currentGameState = ResetGame();
@@ -55,15 +58,22 @@ void Game::Initialize(HWND hw) {
 
 GameState * Game::ResetGame() {
 	initialized = false;
-	delete minigunner1;
-	minigunner1 = nullptr;
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		delete nextMinigunner;
+	}
+	gdiMinigunners.clear();
+
+
 	delete enemyMinigunner1;
 	enemyMinigunner1 = nullptr;
 	delete circle;
 
 	if (!testMode) {
-
-		minigunner1 = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		Minigunner * minigunner = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		gdiMinigunners.push_back(minigunner);
 		enemyMinigunner1 = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
 	}
 
@@ -121,41 +131,100 @@ void Game::HandleMouseInput(LPARAM lParam) {
 }
 
 
+void Game::SelectSingleGDIUnit(Minigunner * gdiMinigunner) {
+
+	gdiMinigunner->SetSelected(true);
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner != gdiMinigunner) {
+			nextMinigunner->SetSelected(false);
+		}
+	}
+
+}
+
+
+Minigunner * Game::GetGDIMinigunnerAtPoint(int x, int y) {
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if(nextMinigunner->PointIsWithin(x,y)) {
+			return nextMinigunner;
+		}
+	}
+
+	return nullptr;
+}
+
 
 
 Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
-	if (minigunner1->PointIsWithin(x, y)) {
-		return minigunner1;
+	Minigunner * gdiMinigunnerAtPoint = GetGDIMinigunnerAtPoint(x, y);
+	if (gdiMinigunnerAtPoint != nullptr) {
+		return gdiMinigunnerAtPoint;
 	}
-	else if (enemyMinigunner1 != NULL && enemyMinigunner1->PointIsWithin(x, y)) {
+	
+	if (enemyMinigunner1 != nullptr && enemyMinigunner1->PointIsWithin(x, y)) {
 		return enemyMinigunner1;
 	}
-	else {
-		return NULL;
-	}
+
+	return nullptr;
+
 }
 
 
-void Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
+Minigunner * Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = false;
-	minigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+	Minigunner * minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+	gdiMinigunners.push_back(minigunner);
+	return minigunner;
 }
 
-void Game::AddCreateGDIMinigunnerEvent(int x, int y) {
-	GameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
-	std::lock_guard<std::mutex> lock(gameEventsMutex);
+Minigunner * Game::CreateGDIMinigunnerViaEvent(int x, int y) {
+	CreateGDIMinigunnerGameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+    return gdiMinigunner;
 }
 
 
-Minigunner * Game::GetGDIMinigunnerViaEvent() {
-	GetGDIMinigunnerGameEvent * gameEvent = new GetGDIMinigunnerGameEvent(this);
+
+Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
+	GetMinigunnerAtLocationGameEvent * gameEvent = new GetMinigunnerAtLocationGameEvent(this, x, y );
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
 	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
 	return gdiMinigunner;
 }
+
+
+
+
+
+Minigunner * Game::GetGDIMinigunnerByIdViaEvent(int id) {
+	GetGDIMinigunnerByIdGameEvent * gameEvent = new GetGDIMinigunnerByIdGameEvent(this, id);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
+
+std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent() {
+	GetAllGDIMinigunnersGameEvent * gameEvent = new GetAllGDIMinigunnersGameEvent(this);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	return gameEvent->GetAllGDIMinigunners();
+}
+
 
 Minigunner * Game::GetNODMinigunnerViaEvent() {
 	GetNODMinigunnerGameEvent * gameEvent = new GetNODMinigunnerGameEvent(this);

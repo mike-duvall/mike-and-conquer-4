@@ -12,6 +12,8 @@ class MikeRectangle;
 class ShpFileColorMapper;
 
 
+
+
 class Minigunner
 {
 
@@ -30,6 +32,7 @@ class Minigunner
 	void SetY(int newY) { this->y = newY; }
 	int GetX() { return this->x; }
 	int GetY() { return this->y; }
+	int GetId() { return this->id; }
 	bool PointIsWithin(int x, int y);
 	void SetSelected(bool selected) { this->isSelected = selected; }
 	bool GetIsSelected() { return this->isSelected; }
@@ -37,10 +40,14 @@ class Minigunner
 	int GetHealth() { return this->health; }
 	void SetAnimate(bool newValue);
 
+	void OrderToMoveToDestination(int x, int y);
+	void OrderToMoveToAttackEnemyUnit(Minigunner * enemyMinigunner);
 
 
 private:
 
+	static int nextMinigunnerId;
+	int id;
 	Graphics * graphics;
 	GameSprite * gameSprite;
 	UnitSelectCursor * unitSelectCursor;
@@ -81,6 +88,7 @@ private:
 	void HandleIdleState(float frameTime);
 	void HandleMovingState(float frameTime);
 	void HandleAttackingState(float frameTime);
+	Minigunner* FindFirstGdiMinigunner();
 
 	bool IsInAttackRange();
 	bool IsAtDestination();

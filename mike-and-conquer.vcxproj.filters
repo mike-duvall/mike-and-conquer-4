@@ -87,6 +87,15 @@
     <ClCompile Include="util\StackTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameevent\GetMinigunnerAtLocationGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetGDIMinigunnerByIdGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetAllGDIMinigunnersGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -168,6 +177,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util\StackTrace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetMinigunnerAtLocationGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetGDIMinigunnerByIdGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetAllGDIMinigunnersGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

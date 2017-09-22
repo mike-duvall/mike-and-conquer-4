@@ -17,6 +17,7 @@ class GetGDIMinigunnerGameEvent : public GameEvent {
 
 	private:
 		std::condition_variable condition;
+		Minigunner * foundMinigunner;
 
 
 };

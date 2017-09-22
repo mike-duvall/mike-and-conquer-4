@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "GameEvent.h"
 
 #include <mutex>
@@ -7,17 +8,21 @@
 class Minigunner;
 class Game;
 
-class CreateGDIMinigunnerGameEvent : public GameEvent {
+
+class GetMinigunnerAtLocationGameEvent : public GameEvent {
 
 public:
-	CreateGDIMinigunnerGameEvent(Game * aGame, int anX, int aY);
+	GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y);
 	Minigunner * GetMinigunner();
 	virtual GameState * Process();
 
 private:
 	std::condition_variable condition;
+
 	int x;
 	int y;
-	Minigunner * createdMinigunner;
+
+	Minigunner * foundMinigunner;
+
 
 };
