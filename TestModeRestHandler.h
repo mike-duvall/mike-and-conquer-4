@@ -31,6 +31,9 @@ public:
 	void HandleResetGame(http_request message);
 
 private:
+
+	static int GetMinigunnerIdFromUriIfPresent(uri theUri);
+
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;
 	http_listener * gdiMinigunnerListener;
