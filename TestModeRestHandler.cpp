@@ -188,7 +188,6 @@ void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, st
 
 int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
 
-
 	std::wstring uri = theUri.path().c_str();
 	int minigunnerId;
 	if (1 == swscanf_s(uri.c_str(), L"/mac/gdiMinigunners/%d", &minigunnerId)) {
@@ -214,18 +213,20 @@ bool TestModeRestHandler::HandleGetMinigunnerById(http_request message) {
 	
 }
 
+bool TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
+	std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
+	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+
+	return true;
+}
+
 
 void TestModeRestHandler::HandleGetMinigunners(http_request message) {
 
 	if (!HandleGetMinigunnerById(message)) {
-//		if (uri::split_query(message.request_uri().query()).size() == 2) {
-//			HandleGetMinigunnerAtLocation(message);
-//		}
 		if(!HandleGetMinigunnerAtLocation(message)) {
-			std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
-			RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+			HandleGetAllMinigunners(message);
 		}
-
 	}
 }
 

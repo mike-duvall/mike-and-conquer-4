@@ -15,6 +15,7 @@ class TestModeRestHandler {
 public:
 	TestModeRestHandler(Game * aGame);
 
+private:
 
 	static void ClickLeftMouseButton(int x, int y);
 	static std::pair<int, int>  ParseMinigunnerRequest(http_request message);
@@ -29,10 +30,11 @@ public:
 	void HandleGetGameState(http_request message);
 	void HandleResetGame(http_request message);
 
-private:
+
 
 	static int GetMinigunnerIdFromUriIfPresent(uri theUri);
 	bool HandleGetMinigunnerById(http_request message);
+	bool HandleGetAllMinigunners(http_request message);
 
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;
