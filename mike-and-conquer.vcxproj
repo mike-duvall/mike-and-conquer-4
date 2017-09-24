@@ -102,7 +102,6 @@
     <ClCompile Include="gameobject\MissionAccomplishedMessage.cpp" />
     <ClCompile Include="GameSprite.cpp" />
     <ClCompile Include="gamestate\GameState.cpp" />
-    <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="input.cpp" />
@@ -134,7 +133,6 @@
     <ClInclude Include="gameobject\MissionAccomplishedMessage.h" />
     <ClInclude Include="GameSprite.h" />
     <ClInclude Include="gamestate\GameState.h" />
-    <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h" />
     <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="gameobject\MikeRectangle.h" />

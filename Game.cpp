@@ -5,7 +5,6 @@
 #include "gameobject/UnitSelectCursor.h"
 #include "gameobject/Circle.h"
 #include "gameevent/GameEvent.h"
-#include "gameevent/GetGDIMinigunnerGameEvent.h"
 #include "gameevent/GetGDIMinigunnerByIdGameEvent.h"
 #include "gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/GetAllGDIMinigunnersGameEvent.h"

@@ -42,9 +42,6 @@
     <ClCompile Include="gameevent\GameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\GameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h">
