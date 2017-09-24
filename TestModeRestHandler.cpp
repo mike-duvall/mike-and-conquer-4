@@ -41,8 +41,8 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		methods::GET,
 		[this](http_request request) {return HandleGetNodMinigunner(request); });
 
-	std::wstring leftClickURL = baseUrl + L"/mac/leftClick";
-	leftClickListener = new http_listener(leftClickURL);
+	std::wstring leftClickUrl = baseUrl + L"/mac/leftClick";
+	leftClickListener = new http_listener(leftClickUrl);
 	leftClickListener->open().wait();
 	leftClickListener->support(
 		methods::POST,
@@ -72,10 +72,7 @@ void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
 	Minigunner * minigunner = game->CreateGDIMinigunnerViaEvent(xAndY.first, xAndY.second);
 	RenderAndReturnMinigunner(message, minigunner);
-};
-
-
-
+}
 
 
 
@@ -85,7 +82,7 @@ void TestModeRestHandler::HandlePostNodMinigunner(http_request message) {
 	game->AddCreateNODMinigunnerEvent(xAndY.first, xAndY.second);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
-};
+}
 
 
 
@@ -98,8 +95,8 @@ void TestModeRestHandler::ClickLeftMouseButton(int x, int y) {
 
 	INPUT mouseInput = { 0 };
 	mouseInput.type = INPUT_MOUSE;
-	mouseInput.mi.dx = (LONG)fx;
-	mouseInput.mi.dy = (LONG)fy;
+	mouseInput.mi.dx = LONG(fx);
+	mouseInput.mi.dy = LONG(fy);
 	mouseInput.mi.mouseData = 0;
 
 
@@ -165,13 +162,13 @@ void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigu
 
 
 
-void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGDIMinigunnerList) {
+void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGdiMinigunnerList) {
 
 	json::value gdiMinigunnerJsonArray;
 	int arrayIndex = 0;
 
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = allGDIMinigunnerList->begin(); iter != allGDIMinigunnerList->end(); ++iter) {
+	for (iter = allGdiMinigunnerList->begin(); iter != allGdiMinigunnerList->end(); ++iter) {
 		Minigunner * minigunner = *iter;
 		json::value minigunnerJson;
 		minigunnerJson[L"x"] = minigunner->GetX();

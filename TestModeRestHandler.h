@@ -22,11 +22,11 @@ private:
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
-	void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
+	static void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
 	bool HandleGetMinigunnerAtLocation(http_request message);
 	void HandleGetMinigunners(http_request message);
 	void HandleGetNodMinigunner(http_request message);
-	void HandlePOSTLeftClick(http_request message);
+	static void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);
 	void HandleResetGame(http_request message);
 
