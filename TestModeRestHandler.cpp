@@ -5,7 +5,6 @@
 #include <Windows.h>
 
 #include <codecvt>
-#include <string.h>
 #include "game.h"
 #include "../gameobject/Minigunner.h"
 #include "../gamestate/GameState.h"

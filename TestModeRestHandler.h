@@ -16,9 +16,8 @@ public:
 	TestModeRestHandler(Game * aGame);
 
 
-
-	void ClickLeftMouseButton(int x, int y);
-	std::pair<int, int>  ParseMinigunnerRequest(http_request message);
+	static void ClickLeftMouseButton(int x, int y);
+	static std::pair<int, int>  ParseMinigunnerRequest(http_request message);
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
