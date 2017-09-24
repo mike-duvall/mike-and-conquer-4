@@ -32,6 +32,7 @@ public:
 private:
 
 	static int GetMinigunnerIdFromUriIfPresent(uri theUri);
+	bool HandleGetMinigunnerById(http_request message);
 
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;

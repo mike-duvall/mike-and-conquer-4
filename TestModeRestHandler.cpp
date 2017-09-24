@@ -201,22 +201,32 @@ int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
 }
  
 
-void TestModeRestHandler::HandleGetMinigunners(http_request message) {
-
+bool TestModeRestHandler::HandleGetMinigunnerById(http_request message) {
 	int minigunnerId = GetMinigunnerIdFromUriIfPresent(message.request_uri());
 
 	if (minigunnerId != -1) {
 		Minigunner * minigunner = game->GetGDIMinigunnerByIdViaEvent(minigunnerId);
 		RenderAndReturnMinigunner(message, minigunner);
-	}
-	else if (uri::split_query(message.request_uri().query()).size() == 2) {
-		HandleGetMinigunnerAtLocation(message);
-	}
-	else {
-		std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
-		RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+		return true;
 	}
 
+	return false;
+	
+}
+
+
+void TestModeRestHandler::HandleGetMinigunners(http_request message) {
+
+	if (!HandleGetMinigunnerById(message)) {
+		if (uri::split_query(message.request_uri().query()).size() == 2) {
+			HandleGetMinigunnerAtLocation(message);
+		}
+		else {
+			std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
+			RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+		}
+
+	}
 }
 
 
