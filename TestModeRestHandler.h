@@ -22,6 +22,7 @@ private:
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
+	static json::value RenderMinigunnerToJson(Minigunner* minigunner);
 	static void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
 	bool HandleGetMinigunnerAtLocation(http_request message);
 	void HandleGetMinigunners(http_request message);

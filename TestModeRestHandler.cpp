@@ -144,23 +144,28 @@ std::pair<int, int>  TestModeRestHandler::ParseMinigunnerRequest(http_request me
 
 
 void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
-	json::value obj;
+
 	if (minigunner == nullptr) {
-		message.reply(status_codes::NotFound, obj);
+		json::value dummyJsonObj;
+		message.reply(status_codes::NotFound, dummyJsonObj);
 	}
 	else {
-		obj[L"id"] = json::value::number(minigunner->GetId());
-		obj[L"x"] = json::value::number(minigunner->GetX());
-		obj[L"y"] = json::value::number(minigunner->GetY());
-		obj[L"health"] = json::value::number(minigunner->GetHealth());
-		obj[L"selected"] = json::value::boolean(minigunner->GetIsSelected());
-		obj[L"health"] = json::value::number(minigunner->GetHealth());
-
-		message.reply(status_codes::OK, obj);
+		json::value minigunnerAsJson = RenderMinigunnerToJson(minigunner);
+		message.reply(status_codes::OK, minigunnerAsJson);
 	}
 }
 
 
+json::value TestModeRestHandler::RenderMinigunnerToJson(Minigunner * minigunner) {
+	json::value jsonObject;
+	jsonObject[L"id"] = json::value::number(minigunner->GetId());
+	jsonObject[L"x"] = json::value::number(minigunner->GetX());
+	jsonObject[L"y"] = json::value::number(minigunner->GetY());
+	jsonObject[L"health"] = json::value::number(minigunner->GetHealth());
+	jsonObject[L"selected"] = json::value::boolean(minigunner->GetIsSelected());
+	jsonObject[L"health"] = json::value::number(minigunner->GetHealth());
+	return jsonObject;
+}
 
 void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGdiMinigunnerList) {
 
@@ -170,10 +175,7 @@ void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, st
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = allGdiMinigunnerList->begin(); iter != allGdiMinigunnerList->end(); ++iter) {
 		Minigunner * minigunner = *iter;
-		json::value minigunnerJson;
-		minigunnerJson[L"x"] = minigunner->GetX();
-		minigunnerJson[L"y"] = minigunner->GetY();
-		minigunnerJson[L"health"] = minigunner->GetHealth();
+		json::value minigunnerJson = RenderMinigunnerToJson(minigunner);
 		gdiMinigunnerJsonArray[arrayIndex] = minigunnerJson;
 		arrayIndex++;
 	}
