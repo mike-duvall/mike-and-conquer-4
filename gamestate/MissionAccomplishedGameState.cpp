@@ -13,15 +13,15 @@ MissionAccomplishedGameState::MissionAccomplishedGameState(Game & game) : GameSt
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
-		nextMinigunner->Draw();
+		nextMinigunner->SetAnimate(false);
 	}
 
 	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != NULL) {
+	if (enemyMinigunner1 != nullptr) {
 		enemyMinigunner1->SetAnimate(false);
 	}
 }
-
+ 
 
 GameState * MissionAccomplishedGameState::Update(float frameTime) {
 

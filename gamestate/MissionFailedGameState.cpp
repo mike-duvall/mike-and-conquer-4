@@ -16,7 +16,7 @@ MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 	}
 
 	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != NULL) {
+	if (enemyMinigunner1 != nullptr) {
 		enemyMinigunner1->SetAnimate(false);
 	}
 }
