@@ -9,7 +9,7 @@ class GameEvent {
 		GameEvent(Game * aGame);
 		virtual GameState * Process() = 0;
 
-
+		 
 protected:
 		Game * game;
 };

@@ -93,6 +93,9 @@
     <ClCompile Include="gameevent\GetAllGDIMinigunnersGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameevent\NewGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\GetAllGDIMinigunnersGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\NewGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

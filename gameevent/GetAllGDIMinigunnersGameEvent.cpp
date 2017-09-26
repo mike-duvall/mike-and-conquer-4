@@ -3,7 +3,7 @@
 #include "../game.h"
 
 
-GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunnersGameEvent(Game * aGame) : GameEvent(aGame) {
+GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunnersGameEvent(Game * aGame) : NewGameEvent(aGame) {
 }
 
 
@@ -11,16 +11,15 @@ GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunnersGameEvent(Game * aGame) : Gam
 
 
 std::vector<Minigunner * > * GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunners() {
-	std::mutex dummyMutex;
-	std::unique_lock<std::mutex> locker(dummyMutex);
-	condition.wait(locker);
-	return foundMinigunners;
+//	std::mutex dummyMutex;
+//	std::unique_lock<std::mutex> locker(dummyMutex);
+//	condition.wait(locker);
+//	return foundMinigunners;
+	return (std::vector<Minigunner * > *) GetResult();
 }
 
-GameState * GetAllGDIMinigunnersGameEvent::Process() {
+GameState * GetAllGDIMinigunnersGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
-	foundMinigunners = game->GetGDIMinigunners();
-
-	condition.notify_one();
+	result = game->GetGDIMinigunners();
 	return newGameState;
 }
