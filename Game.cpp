@@ -221,7 +221,7 @@ std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent() {
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
-	return gameEvent->GetAllGDIMinigunners();
+	return gameEvent->GetAllGdiMinigunners();
 }
 
 

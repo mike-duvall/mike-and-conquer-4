@@ -14,18 +14,16 @@ public:
 	NewGameEvent(Game * aGame);
 	virtual ~NewGameEvent() = default;
 
-
 	GameState * Process() override;
 	void * GetResult();
-
-
 
 protected:
 
 	virtual GameState * ProcessImpl() = 0;
-
-	std::condition_variable condition;
 	void * result;
+
+private:
+	std::condition_variable condition;
 
 
 };
