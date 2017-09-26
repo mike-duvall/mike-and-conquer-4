@@ -3,24 +3,19 @@
 #include "../game.h"
 #include "../gameobject/Minigunner.h"
 
-GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : GameEvent(aGame) {
+GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : NewGameEvent(aGame) {
 	this->x = x;
 	this->y = y;
-	foundMinigunner = nullptr;
-
 }
 
 
-// TODO: Can probably pull a lot of this common functionality into a base class
 Minigunner * GetMinigunnerAtLocationGameEvent::GetMinigunner() {
-	std::mutex dummyMutex;
-	std::unique_lock<std::mutex> locker(dummyMutex);
-	condition.wait(locker);
-	return foundMinigunner;
+	return static_cast<Minigunner *>(GetResult());
+
 }
 
 
-GameState * GetMinigunnerAtLocationGameEvent::Process() {
+GameState * GetMinigunnerAtLocationGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
 	std::vector<Minigunner * > * gdiMinigunners = game->GetGDIMinigunners();
 
@@ -28,10 +23,9 @@ GameState * GetMinigunnerAtLocationGameEvent::Process() {
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		if (nextMinigunner->PointIsWithin(x, y)) {
-			foundMinigunner =  nextMinigunner;
+			result =  nextMinigunner;
 		}
 	}
 
-	condition.notify_one();
 	return newGameState;
 }

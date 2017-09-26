@@ -2,10 +2,10 @@
 
 #include "../game.h"
 
-ResetGameGameEvent::ResetGameGameEvent(Game * aGame) : GameEvent(aGame) {
+ResetGameGameEvent::ResetGameGameEvent(Game * aGame) : NewGameEvent(aGame) {
 }
 
 
-GameState * ResetGameGameEvent::Process() {
+GameState * ResetGameGameEvent::ProcessImpl() {
 	return game->ResetGame();
 }

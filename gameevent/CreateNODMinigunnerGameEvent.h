@@ -1,12 +1,14 @@
 #pragma once
 
-#include "GameEvent.h"
+#include "NewGameEvent.h"
 
-class CreateNODMinigunnerGameEvent : public GameEvent {
+class CreateNODMinigunnerGameEvent : public NewGameEvent {
 
 public:
 	CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY);
-	virtual GameState * Process();
+
+protected:
+	GameState * ProcessImpl() override;
 
 private:
 	int x;
