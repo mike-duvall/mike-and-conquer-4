@@ -1,23 +1,22 @@
 #pragma once
 
-#include "GameEvent.h"
+#include "AsyncGameEvent.h"
 
-#include <mutex>
 
 class Minigunner;
 class Game;
 
-class CreateGDIMinigunnerGameEvent : public GameEvent {
+class CreateGDIMinigunnerGameEvent : public AsyncGameEvent {
 
 public:
 	CreateGDIMinigunnerGameEvent(Game * aGame, int anX, int aY);
 	Minigunner * GetMinigunner();
-	virtual GameState * Process();
+
+protected:
+	GameState * ProcessImpl() override;
 
 private:
-	std::condition_variable condition;
 	int x;
 	int y;
-	Minigunner * createdMinigunner;
 
 };

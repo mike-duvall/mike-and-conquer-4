@@ -39,12 +39,6 @@
     <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameevent\GameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameevent\GetGDIMinigunnerGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gameevent\GetNODMinigunnerGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +90,9 @@
     <ClCompile Include="gameevent\GetAllGDIMinigunnersGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameevent\AsyncGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -129,12 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\CreateNODMinigunnerGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameevent\GameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameevent\GetGDIMinigunnerGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\GetNODMinigunnerGameEvent.h">
@@ -186,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\GetAllGDIMinigunnersGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\AsyncGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,23 +4,18 @@
 #include "../gameobject/Minigunner.h"
 
 
-GetGDIMinigunnerByIdGameEvent::GetGDIMinigunnerByIdGameEvent(Game * aGame, int id) : GameEvent(aGame) {
-	foundMinigunner = nullptr;
+GetGDIMinigunnerByIdGameEvent::GetGDIMinigunnerByIdGameEvent(Game * aGame, int id) : AsyncGameEvent(aGame) {
 	this->id = id;
 }
 
 
 
 Minigunner * GetGDIMinigunnerByIdGameEvent::GetMinigunner() {
-	std::mutex dummyMutex;
-	std::unique_lock<std::mutex> locker(dummyMutex);
-	condition.wait(locker);
-	return foundMinigunner;
-
+	return static_cast<Minigunner *>(GetResult());
 }
 
 
-GameState * GetGDIMinigunnerByIdGameEvent::Process() {
+GameState * GetGDIMinigunnerByIdGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
 	std::vector<Minigunner * > * gdiMinigunners = game->GetGDIMinigunners();
 
@@ -28,10 +23,9 @@ GameState * GetGDIMinigunnerByIdGameEvent::Process() {
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		if (nextMinigunner->GetId() == id) {
-			foundMinigunner = nextMinigunner;
+			result = nextMinigunner;
 		}
 	}
 
-	condition.notify_one();
 	return newGameState;
 }

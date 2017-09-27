@@ -1,23 +1,22 @@
 #include "game.h"
 
 
-#include "../gameobject/Minigunner.h"
-#include "../gameobject/UnitSelectCursor.h"
-#include "../gameobject/Circle.h"
-#include "../gameevent/GameEvent.h"
-#include "../gameevent/GetGDIMinigunnerGameEvent.h"
-#include "../gameevent/GetGDIMinigunnerByIdGameEvent.h"
-#include "../gameevent/GetNODMinigunnerGameEvent.h"
-#include "../gameevent/GetAllGDIMinigunnersGameEvent.h"
-
+#include "gameobject/Minigunner.h"
+#include "gameobject/UnitSelectCursor.h"
+#include "gameobject/Circle.h"
+#include "gameevent/AsyncGameEvent.h"
+#include "gameevent/GetGDIMinigunnerByIdGameEvent.h"
+#include "gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/GetAllGDIMinigunnersGameEvent.h"
+
+
 #include "gameevent/CreateGDIMinigunnerGameEvent.h"
 #include "gameevent/GetMinigunnerAtLocationGameEvent.h"
-#include "../gameevent/CreateNODMinigunnerGameEvent.h"
+#include "gameevent/CreateNODMinigunnerGameEvent.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
-#include "../gamestate/PlayingGameState.h"
-#include "../gameevent/ResetGameGameEvent.h"
+#include "gamestate/PlayingGameState.h"
+#include "gameevent/ResetGameGameEvent.h"
 
 
 Game::Game(bool testMode) {
@@ -222,7 +221,7 @@ std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent() {
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
-	return gameEvent->GetAllGDIMinigunners();
+	return gameEvent->GetAllGdiMinigunners();
 }
 
 
@@ -243,14 +242,14 @@ void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 }
 
 void Game::AddCreateNODMinigunnerEvent(int x, int y) {
-	GameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
+	AsyncGameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 }
 
 
 void Game::AddResetGameEvent() {
-	GameEvent * gameEvent = new ResetGameGameEvent(this);
+	AsyncGameEvent * gameEvent = new ResetGameGameEvent(this);
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 }
@@ -287,10 +286,10 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 GameState * Game::ProcessGameEvents() {
 	GameState * newGameState = nullptr;
 
-	std::vector<GameEvent *>::iterator iter;
+	std::vector<AsyncGameEvent *>::iterator iter;
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter) {
-		GameEvent * nextGameEvent = *iter;
+		AsyncGameEvent * nextGameEvent = *iter;
 		GameState * returnedGameState = nextGameEvent->Process();
 		if( returnedGameState != nullptr && newGameState == nullptr) {
 			newGameState = returnedGameState;

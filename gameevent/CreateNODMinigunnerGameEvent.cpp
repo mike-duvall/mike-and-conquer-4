@@ -2,13 +2,13 @@
 
 #include "../game.h"
 
-CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY) : GameEvent(aGame) {
+CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY) : AsyncGameEvent(aGame) {
 	this->x = anX;
 	this->y = aY;
 }
 
 
-GameState * CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent::Process() {
+GameState * CreateNODMinigunnerGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
 	game->InitializeNODMinigunner(x, y);
 	return newGameState;

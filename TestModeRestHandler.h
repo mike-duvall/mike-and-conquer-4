@@ -15,28 +15,31 @@ class TestModeRestHandler {
 public:
 	TestModeRestHandler(Game * aGame);
 
+private:
 
-
-	void ClickLeftMouseButton(int x, int y);
-	std::pair<int, int>  ParseMinigunnerRequest(http_request message);
+	static void ClickLeftMouseButton(int x, int y);
+	static std::pair<int, int>  ParseMinigunnerRequest(http_request message);
 	void HandlePostGdiMinigunner(http_request message);
 	void HandlePostNodMinigunner(http_request message);
 	void RenderAndReturnMinigunner(http_request message, Minigunner * minigunner);
-	void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
-	void HandleGetMinigunnerAtLocation(http_request message);
+	static json::value RenderMinigunnerToJson(Minigunner* minigunner);
+	static void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
+	bool HandleGetMinigunnerAtLocation(http_request message);
 	void HandleGetMinigunners(http_request message);
 	void HandleGetNodMinigunner(http_request message);
-	void HandlePOSTLeftClick(http_request message);
+	static void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);
 	void HandleResetGame(http_request message);
 
-private:
+
 
 	static int GetMinigunnerIdFromUriIfPresent(uri theUri);
+	bool HandleGetMinigunnerById(http_request message);
+	bool HandleGetAllMinigunners(http_request message);
 
 	std::wstring baseUrl = L"http://*:11369";
 	Game * game;
-	http_listener * gdiMinigunnerListener;
+	http_listener * gameStateListener;
 	http_listener * gdiAllMinigunnersURLListener;
 	http_listener * nodMinigunnerListener;
 	http_listener * leftClickListener;

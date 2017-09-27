@@ -5,23 +5,14 @@
 #include <Windows.h>
 
 #include <codecvt>
-#include <string.h>
 #include "game.h"
-#include "../gameobject/Minigunner.h"
-#include "../gamestate/GameState.h"
+#include "gameobject/Minigunner.h"
+#include "gamestate/GameState.h"
 
 
 
 TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 	this->game = aGame;
-	std::wstring gdiMinigunnerURL = baseUrl + L"/mac/gdiMinigunner";
-	gdiMinigunnerListener = new http_listener(gdiMinigunnerURL);
-	gdiMinigunnerListener->open().wait();
-
-	gdiMinigunnerListener->support(
-		methods::GET,
-		[this](http_request request) {return HandleGetMinigunnerAtLocation(request); });
-
 
 	std::wstring gdiAllMinigunnersURL = baseUrl + L"/mac/gdiMinigunners";
 	gdiAllMinigunnersURLListener = new http_listener(gdiAllMinigunnersURL);
@@ -50,8 +41,8 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		methods::GET,
 		[this](http_request request) {return HandleGetNodMinigunner(request); });
 
-	std::wstring leftClickURL = baseUrl + L"/mac/leftClick";
-	leftClickListener = new http_listener(leftClickURL);
+	std::wstring leftClickUrl = baseUrl + L"/mac/leftClick";
+	leftClickListener = new http_listener(leftClickUrl);
 	leftClickListener->open().wait();
 	leftClickListener->support(
 		methods::POST,
@@ -66,10 +57,10 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		[this](http_request request) {return HandleResetGame(request); });
 
 	std::wstring gameStateURL = baseUrl + L"/mac/gameState";
-	gdiMinigunnerListener = new http_listener(gameStateURL);
-	gdiMinigunnerListener->open().wait();
+	gameStateListener = new http_listener(gameStateURL);
+	gameStateListener->open().wait();
 
-	gdiMinigunnerListener->support(
+	gameStateListener->support(
 		methods::GET,
 		[this](http_request request) {return HandleGetGameState(request); });
 
@@ -81,25 +72,7 @@ void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
 	Minigunner * minigunner = game->CreateGDIMinigunnerViaEvent(xAndY.first, xAndY.second);
 	RenderAndReturnMinigunner(message, minigunner);
-};
-
-
-void TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
-
-	auto http_get_vars = uri::split_query(message.request_uri().query());
-	utility::string_t xString = L"x";
-	utility::string_t yString = L"y";
-
-	auto xValueFromQueryParam = http_get_vars[xString];
-	auto yValueFromQueryParam = http_get_vars[yString];
-
-	int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
-	int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
-
-	Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
-	RenderAndReturnMinigunner(message, minigunner);
 }
-
 
 
 
@@ -109,7 +82,7 @@ void TestModeRestHandler::HandlePostNodMinigunner(http_request message) {
 	game->AddCreateNODMinigunnerEvent(xAndY.first, xAndY.second);
 	// TODO:  update this to return the created minigunner as JSON, instead of result message
 	message.reply(status_codes::OK, U("Initialized minigunner"));
-};
+}
 
 
 
@@ -122,8 +95,8 @@ void TestModeRestHandler::ClickLeftMouseButton(int x, int y) {
 
 	INPUT mouseInput = { 0 };
 	mouseInput.type = INPUT_MOUSE;
-	mouseInput.mi.dx = (LONG)fx;
-	mouseInput.mi.dy = (LONG)fy;
+	mouseInput.mi.dx = LONG(fx);
+	mouseInput.mi.dy = LONG(fy);
 	mouseInput.mi.mouseData = 0;
 
 
@@ -171,36 +144,38 @@ std::pair<int, int>  TestModeRestHandler::ParseMinigunnerRequest(http_request me
 
 
 void TestModeRestHandler::RenderAndReturnMinigunner(http_request message, Minigunner * minigunner) {
-	json::value obj;
+
 	if (minigunner == nullptr) {
-		message.reply(status_codes::NotFound, obj);
+		json::value dummyJsonObj;
+		message.reply(status_codes::NotFound, dummyJsonObj);
 	}
 	else {
-		obj[L"id"] = json::value::number(minigunner->GetId());
-		obj[L"x"] = json::value::number(minigunner->GetX());
-		obj[L"y"] = json::value::number(minigunner->GetY());
-		obj[L"health"] = json::value::number(minigunner->GetHealth());
-		obj[L"selected"] = json::value::boolean(minigunner->GetIsSelected());
-		obj[L"health"] = json::value::number(minigunner->GetHealth());
-
-		message.reply(status_codes::OK, obj);
+		json::value minigunnerAsJson = RenderMinigunnerToJson(minigunner);
+		message.reply(status_codes::OK, minigunnerAsJson);
 	}
 }
 
 
+json::value TestModeRestHandler::RenderMinigunnerToJson(Minigunner * minigunner) {
+	json::value jsonObject;
+	jsonObject[L"id"] = json::value::number(minigunner->GetId());
+	jsonObject[L"x"] = json::value::number(minigunner->GetX());
+	jsonObject[L"y"] = json::value::number(minigunner->GetY());
+	jsonObject[L"health"] = json::value::number(minigunner->GetHealth());
+	jsonObject[L"selected"] = json::value::boolean(minigunner->GetIsSelected());
+	jsonObject[L"health"] = json::value::number(minigunner->GetHealth());
+	return jsonObject;
+}
 
-void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGDIMinigunnerList) {
+void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner * > * allGdiMinigunnerList) {
 
 	json::value gdiMinigunnerJsonArray;
 	int arrayIndex = 0;
 
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = allGDIMinigunnerList->begin(); iter != allGDIMinigunnerList->end(); ++iter) {
+	for (iter = allGdiMinigunnerList->begin(); iter != allGdiMinigunnerList->end(); ++iter) {
 		Minigunner * minigunner = *iter;
-		json::value minigunnerJson;
-		minigunnerJson[L"x"] = minigunner->GetX();
-		minigunnerJson[L"y"] = minigunner->GetY();
-		minigunnerJson[L"health"] = minigunner->GetHealth();
+		json::value minigunnerJson = RenderMinigunnerToJson(minigunner);
 		gdiMinigunnerJsonArray[arrayIndex] = minigunnerJson;
 		arrayIndex++;
 	}
@@ -211,7 +186,6 @@ void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, st
 
 
 int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
-
 
 	std::wstring uri = theUri.path().c_str();
 	int minigunnerId;
@@ -225,20 +199,57 @@ int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
 }
  
 
-void TestModeRestHandler::HandleGetMinigunners(http_request message) {
-
+bool TestModeRestHandler::HandleGetMinigunnerById(http_request message) {
 	int minigunnerId = GetMinigunnerIdFromUriIfPresent(message.request_uri());
 
 	if (minigunnerId != -1) {
 		Minigunner * minigunner = game->GetGDIMinigunnerByIdViaEvent(minigunnerId);
 		RenderAndReturnMinigunner(message, minigunner);
-	}
-	else {
-		std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
-		RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+		return true;
 	}
 
+	return false;
+	
 }
+
+bool TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
+	std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
+	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+
+	return true;
+}
+
+
+void TestModeRestHandler::HandleGetMinigunners(http_request message) {
+
+	if (!HandleGetMinigunnerById(message)) {
+		if(!HandleGetMinigunnerAtLocation(message)) {
+			HandleGetAllMinigunners(message);
+		}
+	}
+}
+
+
+bool TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
+
+	auto http_get_vars = uri::split_query(message.request_uri().query());
+	if(http_get_vars.size() != 2) {
+		return false;
+	}
+	utility::string_t xString = L"x";
+	utility::string_t yString = L"y";
+
+	auto xValueFromQueryParam = http_get_vars[xString];
+	auto yValueFromQueryParam = http_get_vars[yString];
+
+	int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
+	int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
+
+	Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
+	RenderAndReturnMinigunner(message, minigunner);
+	return true;
+}
+
 
 
 

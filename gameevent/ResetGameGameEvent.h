@@ -1,21 +1,20 @@
 #pragma once
 
-#include "GameEvent.h"
+#include "AsyncGameEvent.h"
 
-#include <mutex>
 
 class Minigunner;
 class Game;
 
 
-class ResetGameGameEvent : public GameEvent {
+class ResetGameGameEvent : public AsyncGameEvent {
 
 public:
 	ResetGameGameEvent(Game * aGame);
-	virtual GameState *  Process();
 
-private:
-	std::condition_variable condition;
+protected:
+	GameState *  ProcessImpl() override;
+
 
 
 };
