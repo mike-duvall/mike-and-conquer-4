@@ -2,7 +2,8 @@
 
 
 
-NewGameEvent::NewGameEvent(Game * aGame) : GameEvent(aGame) {
+NewGameEvent::NewGameEvent(Game * aGame) {
+	this->game = aGame;
 	this->result = nullptr;
 }
 

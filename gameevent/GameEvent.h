@@ -13,3 +13,4 @@ class GameEvent {
 protected:
 		Game * game;
 };
+

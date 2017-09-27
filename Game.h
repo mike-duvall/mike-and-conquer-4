@@ -22,7 +22,7 @@ class Minigunner;
 class UnitSelectCursor;
 class Circle;
 class MikeRectangle;
-class GameEvent;
+class NewGameEvent;
 class ShpImageExplorer;
 class GdiShpFileColorMapper;
 class NodShpFileColorMapper;
@@ -79,7 +79,7 @@ public:
 
 protected:
 
-	std::vector<GameEvent *> gameEvents;
+	std::vector<NewGameEvent *> gameEvents;
 	std::mutex gameEventsMutex;
 
 	Graphics *graphics;             // pointer to the one and ONLY Graphics object

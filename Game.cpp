@@ -4,7 +4,7 @@
 #include "gameobject/Minigunner.h"
 #include "gameobject/UnitSelectCursor.h"
 #include "gameobject/Circle.h"
-#include "gameevent/GameEvent.h"
+#include "gameevent/NewGameEvent.h"
 #include "gameevent/GetGDIMinigunnerByIdGameEvent.h"
 #include "gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/GetAllGDIMinigunnersGameEvent.h"
@@ -242,14 +242,14 @@ void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 }
 
 void Game::AddCreateNODMinigunnerEvent(int x, int y) {
-	GameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
+	NewGameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 }
 
 
 void Game::AddResetGameEvent() {
-	GameEvent * gameEvent = new ResetGameGameEvent(this);
+	NewGameEvent * gameEvent = new ResetGameGameEvent(this);
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 }
@@ -286,10 +286,10 @@ LRESULT Game::MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam 
 GameState * Game::ProcessGameEvents() {
 	GameState * newGameState = nullptr;
 
-	std::vector<GameEvent *>::iterator iter;
+	std::vector<NewGameEvent *>::iterator iter;
 	std::lock_guard<std::mutex> lock(gameEventsMutex);
 	for (iter = gameEvents.begin(); iter != gameEvents.end(); ++iter) {
-		GameEvent * nextGameEvent = *iter;
+		NewGameEvent * nextGameEvent = *iter;
 		GameState * returnedGameState = nextGameEvent->Process();
 		if( returnedGameState != nullptr && newGameState == nullptr) {
 			newGameState = returnedGameState;
