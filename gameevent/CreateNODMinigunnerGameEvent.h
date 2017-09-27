@@ -1,8 +1,8 @@
 #pragma once
 
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
-class CreateNODMinigunnerGameEvent : public NewGameEvent {
+class CreateNODMinigunnerGameEvent : public AsyncGameEvent {
 
 public:
 	CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY);

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
 #include <vector>
 
@@ -9,7 +9,7 @@ class Minigunner;
 class Game;
 
 
-class GetAllGDIMinigunnersGameEvent : public NewGameEvent {
+class GetAllGDIMinigunnersGameEvent : public AsyncGameEvent {
 
 public:
 	GetAllGDIMinigunnersGameEvent(Game * aGame);

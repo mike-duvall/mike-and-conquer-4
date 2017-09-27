@@ -2,7 +2,7 @@
 
 #include "../game.h"
 
-CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY) : NewGameEvent(aGame) {
+CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX, int aY) : AsyncGameEvent(aGame) {
 	this->x = anX;
 	this->y = aY;
 }

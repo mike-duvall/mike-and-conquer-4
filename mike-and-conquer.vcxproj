@@ -93,12 +93,11 @@
     <ClCompile Include="gameevent\GetAllGDIMinigunnersGameEvent.cpp" />
     <ClCompile Include="gameevent\GetGDIMinigunnerByIdGameEvent.cpp" />
     <ClCompile Include="gameevent\GetMinigunnerAtLocationGameEvent.cpp" />
-    <ClCompile Include="gameevent\NewGameEvent.cpp" />
+    <ClCompile Include="gameevent\AsyncGameEvent.cpp" />
     <ClCompile Include="gameobject\Circle.cpp" />
     <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="gameevent\GameEvent.cpp" />
     <ClCompile Include="gamestate\MissionAccomplishedGameState.cpp" />
     <ClCompile Include="gameobject\MissionAccomplishedMessage.cpp" />
     <ClCompile Include="GameSprite.cpp" />
@@ -122,7 +121,7 @@
     <ClInclude Include="gameevent\GetAllGDIMinigunnersGameEvent.h" />
     <ClInclude Include="gameevent\GetGDIMinigunnerByIdGameEvent.h" />
     <ClInclude Include="gameevent\GetMinigunnerAtLocationGameEvent.h" />
-    <ClInclude Include="gameevent\NewGameEvent.h" />
+    <ClInclude Include="gameevent\AsyncGameEvent.h" />
     <ClInclude Include="gameobject\Circle.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h" />
@@ -130,7 +129,6 @@
     <ClInclude Include="DirectXError.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gameError.h" />
-    <ClInclude Include="gameevent\GameEvent.h" />
     <ClInclude Include="gamestate\MissionAccomplishedGameState.h" />
     <ClInclude Include="gameobject\MissionAccomplishedMessage.h" />
     <ClInclude Include="GameSprite.h" />

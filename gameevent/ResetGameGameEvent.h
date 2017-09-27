@@ -1,13 +1,13 @@
 #pragma once
 
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
 
 class Minigunner;
 class Game;
 
 
-class ResetGameGameEvent : public NewGameEvent {
+class ResetGameGameEvent : public AsyncGameEvent {
 
 public:
 	ResetGameGameEvent(Game * aGame);

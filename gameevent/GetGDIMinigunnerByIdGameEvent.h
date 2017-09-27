@@ -1,14 +1,14 @@
 #pragma once
 
 
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
 
 class Minigunner;
 class Game;
 
 
-class GetGDIMinigunnerByIdGameEvent : public NewGameEvent {
+class GetGDIMinigunnerByIdGameEvent : public AsyncGameEvent {
 
 public:
 	GetGDIMinigunnerByIdGameEvent(Game * aGame, int id);

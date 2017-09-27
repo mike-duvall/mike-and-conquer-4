@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
 #include <mutex>
 
@@ -9,7 +9,7 @@ class Minigunner;
 class Game;
 
 
-class GetMinigunnerAtLocationGameEvent : public NewGameEvent {
+class GetMinigunnerAtLocationGameEvent : public AsyncGameEvent {
 
 public:
 	GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y);

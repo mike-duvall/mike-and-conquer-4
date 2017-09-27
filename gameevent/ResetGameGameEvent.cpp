@@ -2,7 +2,7 @@
 
 #include "../game.h"
 
-ResetGameGameEvent::ResetGameGameEvent(Game * aGame) : NewGameEvent(aGame) {
+ResetGameGameEvent::ResetGameGameEvent(Game * aGame) : AsyncGameEvent(aGame) {
 }
 
 

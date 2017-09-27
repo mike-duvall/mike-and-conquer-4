@@ -2,14 +2,14 @@
 #include "../game.h"
 
 
-CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent(Game * aGame, int anX, int aY) : NewGameEvent(aGame) {
+CreateGDIMinigunnerGameEvent::CreateGDIMinigunnerGameEvent(Game * aGame, int anX, int aY) : AsyncGameEvent(aGame) {
 	this->x = anX;
 	this->y = aY;
 }
 
 
 Minigunner * CreateGDIMinigunnerGameEvent::GetMinigunner() {
-	return (Minigunner *) GetResult();
+	return static_cast<Minigunner *>(GetResult());
 }
 
 

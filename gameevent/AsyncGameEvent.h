@@ -5,14 +5,13 @@
 class Game;
 class GameState;
 
-#include "GameEvent.h"
 #include <mutex>
 
-class NewGameEvent  {
+class AsyncGameEvent  {
 public:
 
-	NewGameEvent(Game * aGame);
-	virtual ~NewGameEvent() = default;
+	AsyncGameEvent(Game * aGame);
+	virtual ~AsyncGameEvent() = default;
 
 	GameState * Process();
 	void * GetResult();

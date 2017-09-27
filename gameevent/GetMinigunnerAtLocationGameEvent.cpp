@@ -3,7 +3,7 @@
 #include "../game.h"
 #include "../gameobject/Minigunner.h"
 
-GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : NewGameEvent(aGame) {
+GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : AsyncGameEvent(aGame) {
 	this->x = x;
 	this->y = y;
 }

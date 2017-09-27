@@ -2,13 +2,13 @@
 
 #include "../game.h"
 
-GetNODMinigunnerGameEvent::GetNODMinigunnerGameEvent(Game * aGame) : NewGameEvent(aGame) {
+GetNODMinigunnerGameEvent::GetNODMinigunnerGameEvent(Game * aGame) : AsyncGameEvent(aGame) {
 
 }
 
 
 Minigunner * GetNODMinigunnerGameEvent::GetMinigunner() {
-	return (Minigunner *)GetResult();
+	return static_cast<Minigunner *>(GetResult());
 }
 
 

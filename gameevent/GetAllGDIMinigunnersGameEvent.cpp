@@ -3,13 +3,13 @@
 #include "../game.h"
 
 
-GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunnersGameEvent(Game * aGame) : NewGameEvent(aGame) {
+GetAllGDIMinigunnersGameEvent::GetAllGDIMinigunnersGameEvent(Game * aGame) : AsyncGameEvent(aGame) {
 }
 
 
 
 std::vector<Minigunner * > * GetAllGDIMinigunnersGameEvent::GetAllGdiMinigunners() {
-	return (std::vector<Minigunner * > *) GetResult();
+	return static_cast<std::vector<Minigunner *> *>(GetResult());
 }
 
 GameState * GetAllGDIMinigunnersGameEvent::ProcessImpl() {

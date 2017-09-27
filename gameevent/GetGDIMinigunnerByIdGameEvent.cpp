@@ -4,14 +4,14 @@
 #include "../gameobject/Minigunner.h"
 
 
-GetGDIMinigunnerByIdGameEvent::GetGDIMinigunnerByIdGameEvent(Game * aGame, int id) : NewGameEvent(aGame) {
+GetGDIMinigunnerByIdGameEvent::GetGDIMinigunnerByIdGameEvent(Game * aGame, int id) : AsyncGameEvent(aGame) {
 	this->id = id;
 }
 
 
 
 Minigunner * GetGDIMinigunnerByIdGameEvent::GetMinigunner() {
-	return (Minigunner *) GetResult();
+	return static_cast<Minigunner *>(GetResult());
 }
 
 

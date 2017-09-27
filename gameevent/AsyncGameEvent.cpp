@@ -1,15 +1,15 @@
-#include "NewGameEvent.h"
+#include "AsyncGameEvent.h"
 
 
 
-NewGameEvent::NewGameEvent(Game * aGame) {
+AsyncGameEvent::AsyncGameEvent(Game * aGame) {
 	this->game = aGame;
 	this->result = nullptr;
 }
 
 
 
-GameState * NewGameEvent::Process() {
+GameState * AsyncGameEvent::Process() {
 	GameState * newGameState = ProcessImpl();
 	condition.notify_one();
 	return newGameState;
@@ -17,7 +17,7 @@ GameState * NewGameEvent::Process() {
 
 
 
-void * NewGameEvent::GetResult() {
+void * AsyncGameEvent::GetResult() {
 	std::mutex dummyMutex;
 	std::unique_lock<std::mutex> locker(dummyMutex);
 	condition.wait(locker);
