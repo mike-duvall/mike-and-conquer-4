@@ -29,7 +29,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		[this](http_request request) {return HandleGetMinigunners(request); });
 
 
-	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunner";
+	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunners";
 	nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 	nodMinigunnerListener->open().wait();
 	nodMinigunnerListener->support(
