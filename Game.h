@@ -53,7 +53,7 @@ public:
     Input* GetInput()       {return input;}
     void ExitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 	Minigunner * InitializeGDIMinigunner(int minigunnerX, int minigunnerY);
-	void InitializeNODMinigunner(int minigunnerX, int minigunnerY);
+	Minigunner * InitializeNODMinigunner(int minigunnerX, int minigunnerY);
 
 	std::vector<Minigunner * > * GetGDIMinigunners() { return &gdiMinigunners;  }
 	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
@@ -65,7 +65,7 @@ public:
 
 	// Via Event handler
 	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
-	void AddCreateNODMinigunnerEvent(int x, int y);
+	Minigunner * CreateNodMinigunnerViaEvent(int x, int y);
 	void AddResetGameEvent();
 	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerByIdViaEvent(int id);

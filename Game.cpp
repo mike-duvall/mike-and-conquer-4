@@ -191,6 +191,14 @@ Minigunner * Game::CreateGDIMinigunnerViaEvent(int x, int y) {
     return gdiMinigunner;
 }
 
+Minigunner * Game::CreateNodMinigunnerViaEvent(int x, int y) {
+	CreateNODMinigunnerGameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
 
 
 Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
@@ -236,16 +244,13 @@ Minigunner * Game::GetNODMinigunnerViaEvent() {
 
 
 
-void Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
+Minigunner * Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
 	enemyMinigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, nodShpFileColorMapper);
+	return enemyMinigunner1;
 }
 
-void Game::AddCreateNODMinigunnerEvent(int x, int y) {
-	AsyncGameEvent * gameEvent = new CreateNODMinigunnerGameEvent(this, x, y);
-	std::lock_guard<std::mutex> lock(gameEventsMutex);
-	gameEvents.push_back(gameEvent);
-}
+
 
 
 void Game::AddResetGameEvent() {

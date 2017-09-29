@@ -29,6 +29,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 		[this](http_request request) {return HandleGetMinigunners(request); });
 
 
+
 	std::wstring nodMinigunnerURL = baseUrl + L"/mac/nodMinigunners";
 	nodMinigunnerListener = new http_listener(nodMinigunnerURL);
 	nodMinigunnerListener->open().wait();
@@ -79,9 +80,9 @@ void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 
 void TestModeRestHandler::HandlePostNodMinigunner(http_request message) {
 	std::pair<int, int> xAndY = ParseMinigunnerRequest(message);
-	game->AddCreateNODMinigunnerEvent(xAndY.first, xAndY.second);
-	// TODO:  update this to return the created minigunner as JSON, instead of result message
-	message.reply(status_codes::OK, U("Initialized minigunner"));
+	Minigunner * minigunner = game->CreateNodMinigunnerViaEvent(xAndY.first, xAndY.second);
+	RenderAndReturnMinigunner(message, minigunner);
+
 }
 
 

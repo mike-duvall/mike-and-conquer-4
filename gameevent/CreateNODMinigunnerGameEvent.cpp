@@ -8,8 +8,13 @@ CreateNODMinigunnerGameEvent::CreateNODMinigunnerGameEvent(Game * aGame, int anX
 }
 
 
+Minigunner * CreateNODMinigunnerGameEvent::GetMinigunner() {
+	return static_cast<Minigunner *>(GetResult());
+}
+
+
 GameState * CreateNODMinigunnerGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
-	game->InitializeNODMinigunner(x, y);
+	result = game->InitializeNODMinigunner(x, y);
 	return newGameState;
 }
