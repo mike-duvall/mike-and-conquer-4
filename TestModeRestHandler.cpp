@@ -26,7 +26,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 	gdiAllMinigunnersURLListener->support(
 		methods::GET,
-		[this](http_request request) {return HandleGetMinigunners(request); });
+		[this](http_request request) {return HandleGetGdiMinigunners(request); });
 
 
 
@@ -74,6 +74,7 @@ void TestModeRestHandler::HandlePostGdiMinigunner(http_request message) {
 	Minigunner * minigunner = game->CreateGDIMinigunnerViaEvent(xAndY.first, xAndY.second);
 	RenderAndReturnMinigunner(message, minigunner);
 }
+
 
 
 
@@ -186,7 +187,7 @@ void TestModeRestHandler::RenderAndReturnMinigunnerList(http_request message, st
 
 
 
-int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
+int TestModeRestHandler::GetGdiMinigunnerIdFromUriIfPresent(uri theUri) {
 
 	std::wstring uri = theUri.path().c_str();
 	int minigunnerId;
@@ -200,8 +201,8 @@ int TestModeRestHandler::GetMinigunnerIdFromUriIfPresent(uri theUri) {
 }
  
 
-bool TestModeRestHandler::HandleGetMinigunnerById(http_request message) {
-	int minigunnerId = GetMinigunnerIdFromUriIfPresent(message.request_uri());
+bool TestModeRestHandler::HandleGetGdiMinigunnerById(http_request message) {
+	int minigunnerId = GetGdiMinigunnerIdFromUriIfPresent(message.request_uri());
 
 	if (minigunnerId != -1) {
 		Minigunner * minigunner = game->GetGDIMinigunnerByIdViaEvent(minigunnerId);
@@ -221,9 +222,9 @@ bool TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
 }
 
 
-void TestModeRestHandler::HandleGetMinigunners(http_request message) {
+void TestModeRestHandler::HandleGetGdiMinigunners(http_request message) {
 
-	if (!HandleGetMinigunnerById(message)) {
+	if (!HandleGetGdiMinigunnerById(message)) {
 		if(!HandleGetMinigunnerAtLocation(message)) {
 			HandleGetAllMinigunners(message);
 		}

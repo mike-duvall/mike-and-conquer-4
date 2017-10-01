@@ -25,7 +25,7 @@ private:
 	static json::value RenderMinigunnerToJson(Minigunner* minigunner);
 	static void RenderAndReturnMinigunnerList(http_request message, std::vector<Minigunner*> * allGDIMinigunnerList);
 	bool HandleGetMinigunnerAtLocation(http_request message);
-	void HandleGetMinigunners(http_request message);
+	void HandleGetGdiMinigunners(http_request message);
 	void HandleGetNodMinigunner(http_request message);
 	static void HandlePOSTLeftClick(http_request message);
 	void HandleGetGameState(http_request message);
@@ -33,8 +33,8 @@ private:
 
 
 
-	static int GetMinigunnerIdFromUriIfPresent(uri theUri);
-	bool HandleGetMinigunnerById(http_request message);
+	static int GetGdiMinigunnerIdFromUriIfPresent(uri theUri);
+	bool HandleGetGdiMinigunnerById(http_request message);
 	bool HandleGetAllMinigunners(http_request message);
 
 	std::wstring baseUrl = L"http://*:11369";

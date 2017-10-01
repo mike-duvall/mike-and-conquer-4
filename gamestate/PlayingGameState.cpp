@@ -25,6 +25,28 @@ void PlayingGameState::HandleLeftMouseDown(Input * input) {
 	
 }
 
+
+
+void PlayingGameState::UpdateMinigunners(float frameTime, std::vector<Minigunner * > * minigunners) {
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = minigunners->begin(); iter != minigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		nextMinigunner->Update(frameTime);
+	}
+}
+
+
+
+void PlayingGameState::UpdateGdiMinigunners(float frameTime) {
+	UpdateMinigunners(frameTime, game.GetGDIMinigunners());
+}
+
+
+void PlayingGameState::UpdateNodMinigunners(float frameTime) {
+	UpdateMinigunners(frameTime, game.GetNodMinigunners());
+}
+
+
 GameState * PlayingGameState::Update(float frameTime) {
 
 	game.ProcessGameEvents();
@@ -35,18 +57,8 @@ GameState * PlayingGameState::Update(float frameTime) {
 		HandleLeftMouseDown(input);
 	}
 
-	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
-
-	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
-		Minigunner * nextMinigunner = *iter;
-		nextMinigunner->Update(frameTime);
-	}
-
-	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != NULL) {
-		enemyMinigunner1->Update(frameTime);
-	}
+	UpdateGdiMinigunners(frameTime);
+	UpdateNodMinigunners(frameTime);
 
 
 	Circle * circle = game.GetCircle();
@@ -69,21 +81,44 @@ GameState * PlayingGameState::Update(float frameTime) {
 
 
 
-	if (enemyMinigunner1 != nullptr && enemyMinigunner1->GetHealth() <= 0) {
+//	if (enemyMinigunner1 != nullptr && enemyMinigunner1->GetHealth() <= 0) {
+//		return new MissionAccomplishedGameState(game);
+//	}
+	if(NodMinigunnersExistAndAreAllDead()) {
 		return new MissionAccomplishedGameState(game);
 	}
-	else if(MinigunnersExistAndAreAllDead()) {
+
+	if(GdiMinigunnersExistAndAreAllDead()) {
 		return new MissionFailedGameState(game);
-	}
-	else {
-		return this;
 	}
 
 	return this;
 
 }
 
-bool PlayingGameState::MinigunnersExistAndAreAllDead()
+
+
+// TODO: Refactor to remove duplication
+bool PlayingGameState::NodMinigunnersExistAndAreAllDead() {
+	std::vector<Minigunner * > * minigunners = game.GetNodMinigunners();
+	if (minigunners->size() == 0) {
+		return false;
+	}
+
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = minigunners->begin(); iter != minigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		if (nextMinigunner->GetHealth() > 0) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+
+bool PlayingGameState::GdiMinigunnersExistAndAreAllDead()
 {
 	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
 	if(gdiMinigunners->size() == 0) {
@@ -103,22 +138,53 @@ bool PlayingGameState::MinigunnersExistAndAreAllDead()
 
 
 
+// TODO Refactor this common code across GameStats
+void PlayingGameState::DrawMinigunners( std::vector<Minigunner * > * minigunners) {
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = minigunners->begin(); iter != minigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+
+		//nextMinigunner->Draw();
+		if (nextMinigunner->GetHealth() > 0) {
+			// TODO  Check here whether health is greater than zero for GDI?
+			nextMinigunner->Draw();
+		}
+
+	}
+}
+
+
+
+void PlayingGameState::DrawGdiMinigunners() {
+	DrawMinigunners(game.GetGDIMinigunners());
+}
+
+
+void PlayingGameState::DrawNodMinigunners() {
+	DrawMinigunners(game.GetNodMinigunners());
+}
+
+
+
 void PlayingGameState::Render() {
 
 	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
 
-	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
-		Minigunner * nextMinigunner = *iter;
-		nextMinigunner->Draw();
-	}
+//	std::vector<Minigunner *>::iterator iter;
+//	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+//		Minigunner * nextMinigunner = *iter;
+//		nextMinigunner->Draw();
+//	}
+//
+//	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
+//	if (enemyMinigunner1 != NULL) {
+//		if (enemyMinigunner1->GetHealth() > 0) {
+//			enemyMinigunner1->Draw();
+//		}
+//	}
 
-	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != NULL) {
-		if (enemyMinigunner1->GetHealth() > 0) {
-			enemyMinigunner1->Draw();
-		}
-	}
+	DrawGdiMinigunners();
+	DrawNodMinigunners();
 
 	ShpImageExplorer * shpImageExplorer = game.GetShpImageExplorer();
 	if (shpImageExplorer != NULL) {
@@ -172,26 +238,45 @@ bool PlayingGameState::CheckForAndHandleLeftClickOnEnemyUnit(Input * input) {
 	int mouseY = input->getMouseY();
 
 
-	Minigunner * enemyMinigunner = game.GetNODMinigunner();
-	if (enemyMinigunner != nullptr && enemyMinigunner->PointIsWithin(mouseX, mouseY)) {
-		std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+	std::vector<Minigunner * > * nodMinigunners = game.GetNodMinigunners();
+	std::vector<Minigunner *>::iterator nodIter;
+	for (nodIter = nodMinigunners->begin(); nodIter != nodMinigunners->end(); ++nodIter) {
+		Minigunner * nextNodMinigunner = *nodIter;
+		if(nextNodMinigunner->PointIsWithin(mouseX, mouseY)) {
 
-		std::vector<Minigunner *>::iterator iter;
-		for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
-			Minigunner * nextMinigunner = *iter;
-			if (nextMinigunner->GetIsSelected()) {
-				nextMinigunner->OrderToMoveToAttackEnemyUnit(enemyMinigunner);
+			std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+			std::vector<Minigunner *>::iterator gidIter;
+			for (gidIter = gdiMinigunners->begin(); gidIter != gdiMinigunners->end(); ++gidIter) {
+				Minigunner * nextMinigunner = *gidIter;
+				if (nextMinigunner->GetIsSelected()) {
+					nextMinigunner->OrderToMoveToAttackEnemyUnit(nextNodMinigunner);
+				}
 			}
+
+			return true;
 		}
 
-		return true;
-
 	}
+
+//	Minigunner * enemyMinigunner = game.GetNODMinigunner();
+//	if (enemyMinigunner != nullptr && enemyMinigunner->PointIsWithin(mouseX, mouseY)) {
+//		std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+//
+//		std::vector<Minigunner *>::iterator iter;
+//		for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+//			Minigunner * nextMinigunner = *iter;
+//			if (nextMinigunner->GetIsSelected()) {
+//				nextMinigunner->OrderToMoveToAttackEnemyUnit(enemyMinigunner);
+//			}
+//		}
+//
+//		return true;
+//
+//	}
 
 	return false;
 }
 
-std::string PlayingGameState::GetName()
-{
+std::string PlayingGameState::GetName() {
 	return "Playing";
 }

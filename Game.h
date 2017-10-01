@@ -38,8 +38,10 @@ public:
     LRESULT MessageHandler( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
     virtual void Initialize(HWND hwnd);
+	void DeleteAndClearGdiMinigunners();
+	void DeleteAndClearNodMinigunners();
 
-    virtual void ExecuteGameCycle();
+	virtual void ExecuteGameCycle();
 
     virtual void ReleaseAll();
     virtual void ResetAll();
@@ -56,7 +58,8 @@ public:
 	Minigunner * InitializeNODMinigunner(int minigunnerX, int minigunnerY);
 
 	std::vector<Minigunner * > * GetGDIMinigunners() { return &gdiMinigunners;  }
-	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
+	std::vector<Minigunner * > * GetNodMinigunners() { return &nodMinigunners; }
+//	Minigunner * GetNODMinigunner() { return enemyMinigunner1; }
 	Circle * GetCircle() { return circle; }
 	ShpImageExplorer * GetShpImageExplorer() { return shpImageExplorer; }
 	GameState * GetCurrentGameState() { return currentGameState; }
@@ -88,7 +91,8 @@ protected:
 	boolean testMode;
 
 	std::vector<Minigunner *> gdiMinigunners;
-	Minigunner  * enemyMinigunner1;
+	std::vector<Minigunner *> nodMinigunners;
+//	Minigunner  * enemyMinigunner1;
 	UnitSelectCursor * unitSelectCursor;
 	Circle * circle;
 	ShpImageExplorer * shpImageExplorer;

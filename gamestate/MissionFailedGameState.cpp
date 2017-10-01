@@ -8,17 +8,39 @@
 MissionFailedGameState::MissionFailedGameState(Game & game) : GameState(game) {
 	gameOverMessage = new MissionFailedMessage(game);
 
-	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+//	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+//	std::vector<Minigunner *>::iterator iter;
+//	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+//		Minigunner * nextMinigunner = *iter;
+//		nextMinigunner->SetAnimate(false);
+//	}
+//
+//	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
+//	if (enemyMinigunner1 != nullptr) {
+//		enemyMinigunner1->SetAnimate(false);
+//	}
+
+	TurnOffGdiAnimate();
+	TurnOffNodAnimate();
+}
+
+
+void MissionFailedGameState::TurnOffMinigunnerAnimate(std::vector<Minigunner * > * mnigunners) {
 	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+	for (iter = mnigunners->begin(); iter != mnigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		nextMinigunner->SetAnimate(false);
 	}
+}
 
-	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != nullptr) {
-		enemyMinigunner1->SetAnimate(false);
-	}
+
+void MissionFailedGameState::TurnOffGdiAnimate() {
+	TurnOffMinigunnerAnimate(game.GetGDIMinigunners());
+}
+
+
+void MissionFailedGameState::TurnOffNodAnimate() {
+	TurnOffMinigunnerAnimate(game.GetNodMinigunners());
 }
 
 
@@ -42,6 +64,33 @@ GameState * MissionFailedGameState::Update(float frameTime) {
 }
 
 
+void MissionFailedGameState::DrawMinigunners(std::vector<Minigunner * > * minigunners) {
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = minigunners->begin(); iter != minigunners->end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+
+		//nextMinigunner->Draw();
+		if (nextMinigunner->GetHealth() > 0) {
+			// TODO  Check here whether health is greater than zero for GDI?
+			nextMinigunner->Draw();
+		}
+
+	}
+}
+
+
+
+void MissionFailedGameState::DrawGdiMinigunners() {
+	DrawMinigunners(game.GetGDIMinigunners());
+}
+
+
+void MissionFailedGameState::DrawNodMinigunners() {
+	DrawMinigunners(game.GetNodMinigunners());
+}
+
+
+
 void MissionFailedGameState::Render() {
 	//Consider how to  handle if we want GameOver to draw different background color
 	//	Does rendering and everything go in Render?
@@ -52,22 +101,24 @@ void MissionFailedGameState::Render() {
 //		minigunner1->Draw();
 //	}
 
-	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
-
-	std::vector<Minigunner *>::iterator iter;
-	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
-		Minigunner * nextMinigunner = *iter;
-		nextMinigunner->Draw();
-	}
-
-
-
-	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
-	if (enemyMinigunner1 != NULL) {
-		if (enemyMinigunner1->GetHealth() > 0) {
-			enemyMinigunner1->Draw();
-		}
-	}
+//	std::vector<Minigunner * > * gdiMinigunners = game.GetGDIMinigunners();
+//
+//	std::vector<Minigunner *>::iterator iter;
+//	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
+//		Minigunner * nextMinigunner = *iter;
+//		nextMinigunner->Draw();
+//	}
+//
+//
+//
+//	Minigunner * enemyMinigunner1 = game.GetNODMinigunner();
+//	if (enemyMinigunner1 != NULL) {
+//		if (enemyMinigunner1->GetHealth() > 0) {
+//			enemyMinigunner1->Draw();
+//		}
+//	}
+	DrawGdiMinigunners();
+	DrawNodMinigunners();
 
 	gameOverMessage->Draw();
 

@@ -21,7 +21,7 @@
 
 Game::Game(bool testMode) {
     input = new Input();
-    graphics = NULL;
+    graphics = nullptr;
     initialized = false;
 	this->testMode = testMode;
 }
@@ -42,7 +42,6 @@ void Game::Initialize(HWND hw) {
 
 	unitSelectCursor = new UnitSelectCursor(this->GetGraphics());
 
-	enemyMinigunner1 = nullptr;
 	circle = nullptr;
 
 	gdiShpFileColorMapper = new GdiShpFileColorMapper();
@@ -50,30 +49,47 @@ void Game::Initialize(HWND hw) {
 
 	//shpImageExplorer = new ShpImageExplorer(this, 100, 100, input);
 	shpImageExplorer = nullptr;
-	enemyMinigunner1 = nullptr;
 
 	currentGameState = ResetGame();
 }
 
-GameState * Game::ResetGame() {
-	initialized = false;
 
+
+void Game::DeleteAndClearGdiMinigunners() {
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		delete nextMinigunner;
 	}
 	gdiMinigunners.clear();
+}
 
 
-	delete enemyMinigunner1;
-	enemyMinigunner1 = nullptr;
+void Game::DeleteAndClearNodMinigunners() {
+	std::vector<Minigunner *>::iterator iter;
+	for (iter = nodMinigunners.begin(); iter != nodMinigunners.end(); ++iter) {
+		Minigunner * nextMinigunner = *iter;
+		delete nextMinigunner;
+	}
+	nodMinigunners.clear();
+}
+
+
+GameState * Game::ResetGame() {
+	initialized = false;
+
+	DeleteAndClearGdiMinigunners();
+	DeleteAndClearNodMinigunners();
+
+
 	delete circle;
 
 	if (!testMode) {
-		Minigunner * minigunner = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
-		gdiMinigunners.push_back(minigunner);
-		enemyMinigunner1 = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
+		Minigunner * gdiMinigunner = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
+		gdiMinigunners.push_back(gdiMinigunner);
+
+		Minigunner * nodMinigunner = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
+		nodMinigunners.push_back(gdiMinigunner);
 	}
 
 	circle = new Circle(300, 900);
@@ -160,27 +176,21 @@ Minigunner * Game::GetGDIMinigunnerAtPoint(int x, int y) {
 
 
 
-Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
-	Minigunner * gdiMinigunnerAtPoint = GetGDIMinigunnerAtPoint(x, y);
-	if (gdiMinigunnerAtPoint != nullptr) {
-		return gdiMinigunnerAtPoint;
-	}
-	
-	if (enemyMinigunner1 != nullptr && enemyMinigunner1->PointIsWithin(x, y)) {
-		return enemyMinigunner1;
-	}
+//Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
+//	Minigunner * gdiMinigunnerAtPoint = GetGDIMinigunnerAtPoint(x, y);
+//	if (gdiMinigunnerAtPoint != nullptr) {
+//		return gdiMinigunnerAtPoint;
+//	}
+//	
+//	if (enemyMinigunner1 != nullptr && enemyMinigunner1->PointIsWithin(x, y)) {
+//		return enemyMinigunner1;
+//	}
+//
+//	return nullptr;
+//
+//}
 
-	return nullptr;
 
-}
-
-
-Minigunner * Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
-	bool isEnemy = false;
-	Minigunner * minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
-	gdiMinigunners.push_back(minigunner);
-	return minigunner;
-}
 
 Minigunner * Game::CreateGDIMinigunnerViaEvent(int x, int y) {
 	CreateGDIMinigunnerGameEvent * gameEvent = new CreateGDIMinigunnerGameEvent(this, x, y);
@@ -244,10 +254,20 @@ Minigunner * Game::GetNODMinigunnerViaEvent() {
 
 
 
+Minigunner * Game::InitializeGDIMinigunner(int minigunnerX, int minigunnerY) {
+	bool isEnemy = false;
+	Minigunner * minigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, gdiShpFileColorMapper);
+	gdiMinigunners.push_back(minigunner);
+	return minigunner;
+}
+
+
 Minigunner * Game::InitializeNODMinigunner(int minigunnerX, int minigunnerY) {
 	bool isEnemy = true;
-	enemyMinigunner1 = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, nodShpFileColorMapper);
-	return enemyMinigunner1;
+	Minigunner * nodMinigunner = new Minigunner(this, minigunnerX, minigunnerY, unitSelectCursor, input, isEnemy, nodShpFileColorMapper);
+	nodMinigunners.push_back(nodMinigunner);
+	return nodMinigunner;
+
 }
 
 

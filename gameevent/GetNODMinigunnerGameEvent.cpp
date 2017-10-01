@@ -14,6 +14,10 @@ Minigunner * GetNODMinigunnerGameEvent::GetMinigunner() {
 
 GameState * GetNODMinigunnerGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
-	result = game->GetNODMinigunner();
+//	result = game->GetNODMinigunner();
+	std::vector<Minigunner * > * nodMinigunners = game->GetNodMinigunners();
+	if(nodMinigunners->size() > 0) {
+		result = nodMinigunners->front();
+	}
 	return nullptr;
 }
