@@ -3,25 +3,22 @@
 
 #include "AsyncGameEvent.h"
 
-#include <mutex>
 
 class Minigunner;
 class Game;
 
 
-class GetMinigunnerAtLocationGameEvent : public AsyncGameEvent {
+class GetNodMinigunnerByIdGameEvent : public AsyncGameEvent {
 
 public:
-	GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y);
+	GetNodMinigunnerByIdGameEvent(Game * aGame, int id);
 	Minigunner * GetMinigunner();
-
 
 protected:
 	GameState * ProcessImpl() override;
 
-
 private:
-	int x;
-	int y;
+	int id;
+
 
 };

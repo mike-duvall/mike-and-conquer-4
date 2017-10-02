@@ -91,9 +91,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gameevent\GetAllGDIMinigunnersGameEvent.cpp" />
+    <ClCompile Include="gameevent\GetAllNodMinigunnersGameEvent.cpp" />
     <ClCompile Include="gameevent\GetGDIMinigunnerByIdGameEvent.cpp" />
-    <ClCompile Include="gameevent\GetMinigunnerAtLocationGameEvent.cpp" />
+    <ClCompile Include="gameevent\GetGdiMinigunnerAtLocationGameEvent.cpp" />
     <ClCompile Include="gameevent\AsyncGameEvent.cpp" />
+    <ClCompile Include="gameevent\GetNodMinigunnerAtLocationGameEvent.cpp" />
+    <ClCompile Include="gameevent\GetNodMinigunnerByIdGameEvent.cpp" />
     <ClCompile Include="gameobject\Circle.cpp" />
     <ClCompile Include="gameevent\CreateGDIMinigunnerGameEvent.cpp" />
     <ClCompile Include="gameevent\CreateNODMinigunnerGameEvent.cpp" />
@@ -119,9 +122,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameevent\GetAllGDIMinigunnersGameEvent.h" />
+    <ClInclude Include="gameevent\GetAllNodMinigunnersGameEvent.h" />
     <ClInclude Include="gameevent\GetGDIMinigunnerByIdGameEvent.h" />
-    <ClInclude Include="gameevent\GetMinigunnerAtLocationGameEvent.h" />
+    <ClInclude Include="gameevent\GetGdiMinigunnerAtLocationGameEvent.h" />
     <ClInclude Include="gameevent\AsyncGameEvent.h" />
+    <ClInclude Include="gameevent\GetNodMinigunnerAtLocationGameEvent.h" />
+    <ClInclude Include="gameevent\GetNodMinigunnerByIdGameEvent.h" />
     <ClInclude Include="gameobject\Circle.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="gameevent\CreateGDIMinigunnerGameEvent.h" />

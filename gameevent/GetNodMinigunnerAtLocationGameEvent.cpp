@@ -1,29 +1,29 @@
-#include "GetMinigunnerAtLocationGameEvent.h"
+#include "GetNodMinigunnerAtLocationGameEvent.h"
 
 #include "../game.h"
 #include "../gameobject/Minigunner.h"
 
-GetMinigunnerAtLocationGameEvent::GetMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : AsyncGameEvent(aGame) {
+GetNodMinigunnerAtLocationGameEvent::GetNodMinigunnerAtLocationGameEvent(Game * aGame, int x, int y) : AsyncGameEvent(aGame) {
 	this->x = x;
 	this->y = y;
 }
 
 
-Minigunner * GetMinigunnerAtLocationGameEvent::GetMinigunner() {
+Minigunner * GetNodMinigunnerAtLocationGameEvent::GetMinigunner() {
 	return static_cast<Minigunner *>(GetResult());
 
 }
 
 
-GameState * GetMinigunnerAtLocationGameEvent::ProcessImpl() {
+GameState * GetNodMinigunnerAtLocationGameEvent::ProcessImpl() {
 	GameState * newGameState = nullptr;
-	std::vector<Minigunner * > * gdiMinigunners = game->GetGDIMinigunners();
+	std::vector<Minigunner * > * gdiMinigunners = game->GetNodMinigunners();
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners->begin(); iter != gdiMinigunners->end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
 		if (nextMinigunner->PointIsWithin(x, y)) {
-			result =  nextMinigunner;
+			result = nextMinigunner;
 		}
 	}
 

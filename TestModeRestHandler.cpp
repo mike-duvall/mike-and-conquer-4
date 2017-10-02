@@ -40,7 +40,7 @@ TestModeRestHandler::TestModeRestHandler(Game * aGame) {
 
 	nodMinigunnerListener->support(
 		methods::GET,
-		[this](http_request request) {return HandleGetNodMinigunner(request); });
+		[this](http_request request) {return HandleGetNodMinigunners(request); });
 
 	std::wstring leftClickUrl = baseUrl + L"/mac/leftClick";
 	leftClickListener = new http_listener(leftClickUrl);
@@ -200,6 +200,19 @@ int TestModeRestHandler::GetGdiMinigunnerIdFromUriIfPresent(uri theUri) {
 	
 }
  
+int TestModeRestHandler::GetNodMinigunnerIdFromUriIfPresent(uri theUri) {
+
+	std::wstring uri = theUri.path().c_str();
+	int minigunnerId;
+	if (1 == swscanf_s(uri.c_str(), L"/mac/nodMinigunners/%d", &minigunnerId)) {
+		return minigunnerId;
+	}
+	else {
+		return -1;
+	}
+
+}
+
 
 bool TestModeRestHandler::HandleGetGdiMinigunnerById(http_request message) {
 	int minigunnerId = GetGdiMinigunnerIdFromUriIfPresent(message.request_uri());
@@ -211,28 +224,65 @@ bool TestModeRestHandler::HandleGetGdiMinigunnerById(http_request message) {
 	}
 
 	return false;
-	
 }
 
-bool TestModeRestHandler::HandleGetAllMinigunners(http_request message) {
+
+bool TestModeRestHandler::HandleGetNodMinigunnerById(http_request message) {
+	int minigunnerId = GetNodMinigunnerIdFromUriIfPresent(message.request_uri());
+
+	if (minigunnerId != -1) {
+		Minigunner * minigunner = game->GetNodMinigunnerByIdViaEvent(minigunnerId);
+		RenderAndReturnMinigunner(message, minigunner);
+		return true;
+	}
+
+	return false;
+}
+
+
+bool TestModeRestHandler::HandleGetAllGdiMinigunners(http_request message) {
 	std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllGDIMinigunnersViaEvent();
 	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
 
 	return true;
 }
 
+bool TestModeRestHandler::HandleGetAllNodMinigunners(http_request message) {
+	std::vector<Minigunner * > * allGDIMinigunnerList = game->GetAllNodMinigunnersViaEvent();
+	RenderAndReturnMinigunnerList(message, allGDIMinigunnerList);
+
+	return true;
+}
+
+
 
 void TestModeRestHandler::HandleGetGdiMinigunners(http_request message) {
 
 	if (!HandleGetGdiMinigunnerById(message)) {
-		if(!HandleGetMinigunnerAtLocation(message)) {
-			HandleGetAllMinigunners(message);
+		if(!HandleGetGdiMinigunnerAtLocation(message)) {
+			HandleGetAllGdiMinigunners(message);
+		}
+	}
+}
+
+void TestModeRestHandler::HandleGetNodMinigunners(http_request message) {
+
+	if (!HandleGetNodMinigunnerById(message)) {
+		if (!HandleGetNodMinigunnerAtLocation(message)) {
+			HandleGetAllNodMinigunners(message);
 		}
 	}
 }
 
 
-bool TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
+//void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {
+//	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
+//	RenderAndReturnMinigunner(message, minigunner);
+//}
+
+
+
+bool TestModeRestHandler::HandleGetGdiMinigunnerAtLocation(http_request message) {
 
 	auto http_get_vars = uri::split_query(message.request_uri().query());
 	if(http_get_vars.size() != 2) {
@@ -247,7 +297,28 @@ bool TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
 	int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
 	int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
 
-	Minigunner * minigunner = game->GetMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
+	Minigunner * minigunner = game->GetGdiMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
+	RenderAndReturnMinigunner(message, minigunner);
+	return true;
+}
+
+
+bool TestModeRestHandler::HandleGetNodMinigunnerAtLocation(http_request message) {
+
+	auto http_get_vars = uri::split_query(message.request_uri().query());
+	if (http_get_vars.size() != 2) {
+		return false;
+	}
+	utility::string_t xString = L"x";
+	utility::string_t yString = L"y";
+
+	auto xValueFromQueryParam = http_get_vars[xString];
+	auto yValueFromQueryParam = http_get_vars[yString];
+
+	int minigunnerX = _wtoi(xValueFromQueryParam.c_str());
+	int minigunnerY = _wtoi(yValueFromQueryParam.c_str());
+
+	Minigunner * minigunner = game->GetNodMinigunnerAtLocationViaEvent(minigunnerX, minigunnerY);
 	RenderAndReturnMinigunner(message, minigunner);
 	return true;
 }
@@ -255,11 +326,7 @@ bool TestModeRestHandler::HandleGetMinigunnerAtLocation(http_request message) {
 
 
 
-void TestModeRestHandler::HandleGetNodMinigunner(http_request message) {
-	Minigunner * minigunner = game->GetNODMinigunnerViaEvent();
-	RenderAndReturnMinigunner(message, minigunner);
-}
-								   
+
 								 
 void TestModeRestHandler::HandleGetGameState(http_request message) {
 	GameState * currentGameState = game->GetCurrentGameState();

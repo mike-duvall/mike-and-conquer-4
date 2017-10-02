@@ -81,9 +81,6 @@
     <ClCompile Include="util\StackTrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameevent\GetMinigunnerAtLocationGameEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gameevent\GetGDIMinigunnerByIdGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -91,6 +88,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gameevent\AsyncGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetGdiMinigunnerAtLocationGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetNodMinigunnerByIdGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetNodMinigunnerAtLocationGameEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameevent\GetAllNodMinigunnersGameEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,9 +179,6 @@
     <ClInclude Include="util\StackTrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameevent\GetMinigunnerAtLocationGameEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gameevent\GetGDIMinigunnerByIdGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -180,6 +186,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent\AsyncGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetGdiMinigunnerAtLocationGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetNodMinigunnerByIdGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetNodMinigunnerAtLocationGameEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent\GetAllNodMinigunnersGameEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

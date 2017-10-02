@@ -70,12 +70,15 @@ public:
 	Minigunner * CreateGDIMinigunnerViaEvent(int x, int y);
 	Minigunner * CreateNodMinigunnerViaEvent(int x, int y);
 	void AddResetGameEvent();
-	Minigunner * GetMinigunnerAtLocationViaEvent(int x, int y);
+	Minigunner * GetGdiMinigunnerAtLocationViaEvent(int x, int y);
+	Minigunner* GetNodMinigunnerAtLocationViaEvent(int x, int y);
 	Minigunner * GetGDIMinigunnerByIdViaEvent(int id);
+	Minigunner* GetNodMinigunnerByIdViaEvent(int id);
 
 	Minigunner * GetNODMinigunnerViaEvent();
 
 	std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent();
+	std::vector<Minigunner*>* GetAllNodMinigunnersViaEvent();
 	void SelectSingleGDIUnit(Minigunner * gdiMinigunner);
 
 

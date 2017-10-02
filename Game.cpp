@@ -6,12 +6,15 @@
 #include "gameobject/Circle.h"
 #include "gameevent/AsyncGameEvent.h"
 #include "gameevent/GetGDIMinigunnerByIdGameEvent.h"
+#include "gameevent/GetNodMinigunnerByIdGameEvent.h"
 #include "gameevent/GetNODMinigunnerGameEvent.h"
 #include "gameevent/GetAllGDIMinigunnersGameEvent.h"
+#include "gameevent/GetAllNodMinigunnersGameEvent.h"
 
 
 #include "gameevent/CreateGDIMinigunnerGameEvent.h"
-#include "gameevent/GetMinigunnerAtLocationGameEvent.h"
+#include "gameevent/GetGdiMinigunnerAtLocationGameEvent.h"
+#include "gameevent/GetNodMinigunnerAtLocationGameEvent.h"
 #include "gameevent/CreateNODMinigunnerGameEvent.h"
 #include "GdiShpFileColorMapper.h"
 #include "NodShpFileColorMapper.h"
@@ -176,20 +179,6 @@ Minigunner * Game::GetGDIMinigunnerAtPoint(int x, int y) {
 
 
 
-//Minigunner * Game::GetMinigunnerAtPoint(int x, int y) {
-//	Minigunner * gdiMinigunnerAtPoint = GetGDIMinigunnerAtPoint(x, y);
-//	if (gdiMinigunnerAtPoint != nullptr) {
-//		return gdiMinigunnerAtPoint;
-//	}
-//	
-//	if (enemyMinigunner1 != nullptr && enemyMinigunner1->PointIsWithin(x, y)) {
-//		return enemyMinigunner1;
-//	}
-//
-//	return nullptr;
-//
-//}
-
 
 
 Minigunner * Game::CreateGDIMinigunnerViaEvent(int x, int y) {
@@ -211,8 +200,18 @@ Minigunner * Game::CreateNodMinigunnerViaEvent(int x, int y) {
 }
 
 
-Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
-	GetMinigunnerAtLocationGameEvent * gameEvent = new GetMinigunnerAtLocationGameEvent(this, x, y );
+Minigunner * Game::GetGdiMinigunnerAtLocationViaEvent(int x, int y) {
+	GetGdiMinigunnerAtLocationGameEvent * gameEvent = new GetGdiMinigunnerAtLocationGameEvent(this, x, y );
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
+
+Minigunner * Game::GetNodMinigunnerAtLocationViaEvent(int x, int y) {
+	GetNodMinigunnerAtLocationGameEvent * gameEvent = new GetNodMinigunnerAtLocationGameEvent(this, x, y);
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
@@ -222,10 +221,18 @@ Minigunner * Game::GetMinigunnerAtLocationViaEvent(int x, int y) {
 
 
 
-
-
 Minigunner * Game::GetGDIMinigunnerByIdViaEvent(int id) {
 	GetGDIMinigunnerByIdGameEvent * gameEvent = new GetGDIMinigunnerByIdGameEvent(this, id);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	Minigunner * gdiMinigunner = gameEvent->GetMinigunner();
+	return gdiMinigunner;
+}
+
+
+Minigunner * Game::GetNodMinigunnerByIdViaEvent(int id) {
+	GetNodMinigunnerByIdGameEvent * gameEvent = new GetNodMinigunnerByIdGameEvent(this, id);
 	std::unique_lock<std::mutex> lock(gameEventsMutex);
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
@@ -240,6 +247,14 @@ std::vector<Minigunner * > * Game::GetAllGDIMinigunnersViaEvent() {
 	gameEvents.push_back(gameEvent);
 	lock.unlock();
 	return gameEvent->GetAllGdiMinigunners();
+}
+
+std::vector<Minigunner * > * Game::GetAllNodMinigunnersViaEvent() {
+	GetAllNodMinigunnersGameEvent * gameEvent = new GetAllNodMinigunnersGameEvent(this);
+	std::unique_lock<std::mutex> lock(gameEventsMutex);
+	gameEvents.push_back(gameEvent);
+	lock.unlock();
+	return gameEvent->GetAllNodMinigunners();
 }
 
 
