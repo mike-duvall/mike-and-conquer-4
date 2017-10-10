@@ -10,6 +10,7 @@ class PaletteFile {
 
 public:
 	PaletteFile(std::string & filename);
+	~PaletteFile();
 	std::vector<PaletteEntry *> & GetPaletteEntries();
 
 

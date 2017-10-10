@@ -10,6 +10,7 @@ class ShpFile {
 
 public:
 	ShpFile(std::string & filename);
+	~ShpFile();
 	int Width();
 	int Height();
 	long Size();

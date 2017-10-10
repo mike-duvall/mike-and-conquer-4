@@ -347,6 +347,7 @@ void Game::ExecuteGameCycle() {
 		return;
 	}
 
+//	int availableTextureMemory = this->GetGraphics()->Get3Ddevice()->GetAvailableTextureMem();
     // calculate elapsed time of last frame, save in frameTime
     QueryPerformanceCounter(&timeEnd);
     frameTime = (float)(timeEnd.QuadPart - timeStart.QuadPart ) / (float)timerFreq.QuadPart;

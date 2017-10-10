@@ -93,6 +93,17 @@ ShpFile::ShpFile(std::string & filename) {
 	}
 
 	int x = 3;
+	delete shpFileStream;
+}
+
+ShpFile::~ShpFile() {
+
+	for (std::vector<ImageHeader *>::iterator it = imageHeaders.begin(); it != imageHeaders.end(); ++it) {
+		ImageHeader * imageHeader = *it;
+		delete imageHeader;
+	}
+
+	imageHeaders.clear();
 
 }
 

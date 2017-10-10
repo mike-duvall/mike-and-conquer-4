@@ -76,8 +76,11 @@ Minigunner::Minigunner(Game * game, int x, int y, UnitSelectCursor * unitSelectC
 }
 
 
-Minigunner::~Minigunner()
-{
+Minigunner::~Minigunner() {
+	delete gameSprite;
+	gameSprite = nullptr;
+	delete shpBoundingRectangle;
+	shpBoundingRectangle = nullptr;
 }
 
 

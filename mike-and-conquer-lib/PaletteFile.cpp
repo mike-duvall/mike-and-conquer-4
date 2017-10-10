@@ -28,6 +28,16 @@ PaletteFile::PaletteFile(std::string & filename) {
 
 }
 
+PaletteFile::~PaletteFile() {
+
+	for (std::vector<PaletteEntry *>::iterator it = paletteEntryList.begin(); it != paletteEntryList.end(); ++it) {
+		PaletteEntry * paletteEntry = *it;
+		delete paletteEntry;
+	}
+
+	paletteEntryList.clear();
+
+}
 
 
 std::vector<PaletteEntry *> & PaletteFile::GetPaletteEntries() {

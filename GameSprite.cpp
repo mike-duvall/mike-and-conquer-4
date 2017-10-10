@@ -23,8 +23,20 @@ GameSprite::GameSprite(LPDIRECT3DDEVICE9 device, std::string file, D3DCOLOR tran
 	this->InitializeDirectXSpriteInterface();
 }
 
-
+ 
 GameSprite::~GameSprite() {
+	for (std::vector<LPDIRECT3DTEXTURE9>::iterator it = textureList.begin(); it != textureList.end(); ++it) {
+		LPDIRECT3DTEXTURE9 texture = *it;
+		texture->Release();
+	}
+
+	for (std::map < unsigned int, AnimationSequence * >::iterator it = animationSequenceMap.begin(); it != animationSequenceMap.end(); ++it) {
+		AnimationSequence * animationSequence = it->second;
+		delete animationSequence;
+	}
+
+	animationSequenceMap.clear();
+
 }
 
 
@@ -100,27 +112,48 @@ LPDIRECT3DTEXTURE9 GameSprite::CreateTextureForDrawing() {
 void GameSprite::DrawImageDataToTexture(LPDIRECT3DTEXTURE9 textureX, point_vertex * imageData) {
 	LPDIRECT3DSURFACE9 surfaceToRenderTo;
 	D3DSURFACE_DESC desc;
-	textureX->GetSurfaceLevel(0, &surfaceToRenderTo);
-	surfaceToRenderTo->GetDesc(&desc);
+	HRESULT result = textureX->GetSurfaceLevel(0, &surfaceToRenderTo);
+	if (FAILED(result))
+		throw("Failed calling GetSurfaceLevel()");
+
+	result = surfaceToRenderTo->GetDesc(&desc);
+	if (FAILED(result))
+		throw("Failed calling GetDesc()");
 
 
 	ID3DXRenderToSurface * renderToSurface;
-	HRESULT result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &renderToSurface);
+	result = D3DXCreateRenderToSurface(device, desc.Width, desc.Height, desc.Format, TRUE, D3DFMT_D16, &renderToSurface);
 	if (FAILED(result))
 		throw("Failed calling D3DXCreateRenderToSurface()");
 
-	renderToSurface->BeginScene(surfaceToRenderTo, NULL);
-	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-	device->SetFVF(point_fvf);
+	result = renderToSurface->BeginScene(surfaceToRenderTo, NULL);
+	if (FAILED(result))
+		throw("Failed calling BeginScene()");
 
-	device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
+	result = device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	if (FAILED(result))
+		throw("Failed calling Clear()");
+
+	result = device->SetFVF(point_fvf);
+	if (FAILED(result))
+		throw("Failed calling SetFVF()");
+
+
+	result = device->DrawPrimitiveUP(D3DPT_POINTLIST,        //PrimitiveType
 		width * height,    // Primitive count
 		imageData,                   //pVertexStreamZeroData
 		sizeof(point_vertex));  //VertexStreamZeroStride
+	if (FAILED(result))
+		throw("Failed calling DrawPrimitiveUP()");
 
-	renderToSurface->EndScene(0);
 
+	result = renderToSurface->EndScene(0);
+	if (FAILED(result))
+		throw("Failed calling EndScene()");
+
+
+	renderToSurface->Release();
 }
 
 
@@ -140,6 +173,7 @@ void GameSprite::LoadAllTexturesFromShpFile(ShpFile & shpFile) {
 		point_vertex * imageData = mapImageData(width, height, byteBuffer0, paletteEntries);
 		LPDIRECT3DTEXTURE9 texture = CreateTextureForDrawing();
 		DrawImageDataToTexture(texture, imageData);
+		delete imageData;
 
 		textureList.push_back(texture);
 		x++;
