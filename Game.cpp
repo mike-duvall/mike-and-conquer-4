@@ -30,6 +30,8 @@ Game::Game(bool testMode) {
 }
 
 
+
+
 void Game::Initialize(HWND hw) {
 	hwnd = hw;                                  // save window handle
 
@@ -88,11 +90,12 @@ GameState * Game::ResetGame() {
 	delete circle;
 
 	if (!testMode) {
-		Minigunner * gdiMinigunner = new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper);
-		gdiMinigunners.push_back(gdiMinigunner);
+		gdiMinigunners.push_back(new Minigunner(this, 300, 900, unitSelectCursor, input, false, gdiShpFileColorMapper));
+		gdiMinigunners.push_back(new Minigunner(this, 500, 900, unitSelectCursor, input, false, gdiShpFileColorMapper));
+		gdiMinigunners.push_back(new Minigunner(this, 700, 900, unitSelectCursor, input, false, gdiShpFileColorMapper));
 
-		Minigunner * nodMinigunner = new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper);
-		nodMinigunners.push_back(gdiMinigunner);
+		nodMinigunners.push_back(new Minigunner(this, 1000, 300, unitSelectCursor, input, true, nodShpFileColorMapper));
+		nodMinigunners.push_back(new Minigunner(this, 300, 300, unitSelectCursor, input, true, nodShpFileColorMapper));
 	}
 
 	circle = new Circle(300, 900);

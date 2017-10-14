@@ -191,21 +191,40 @@ void Minigunner::HandleAttackingState(float frameTime) {
 }
 
 
-Minigunner * Minigunner::FindFirstGdiMinigunner() {
+Minigunner * Minigunner::FindFirstNonDeadGdiMinigunner() {
 	std::vector<Minigunner * > gdiMinigunners = *(game->GetGDIMinigunners());
 
 	std::vector<Minigunner *>::iterator iter;
 	for (iter = gdiMinigunners.begin(); iter != gdiMinigunners.end(); ++iter) {
 		Minigunner * nextMinigunner = *iter;
-		return nextMinigunner;
+		if (nextMinigunner->GetHealth() > 0) {
+			return nextMinigunner;
+		}
 	}
 
 	return nullptr;
 
 }
 
+
+
+
+
 void Minigunner::HandleEnemyUpdate(float frameTime) {
 	if(!enemyStateIsSleeping) {
+
+
+		if (currentAttackTarget->GetHealth() <= 0) {
+			currentAttackTarget = FindFirstNonDeadGdiMinigunner();
+
+			if (currentAttackTarget == nullptr) {
+				enemyStateIsSleeping = true;
+				enemySleepCountdownTimer = 400;
+				gameSprite->SetCurrentAnimationSequenceIndex(WALKING_UP);
+				return;
+			}
+		}
+
 
 		if (IsInAttackRange()) {
 			gameSprite->SetCurrentAnimationSequenceIndex(SHOOTING_UP);
@@ -222,7 +241,7 @@ void Minigunner::HandleEnemyUpdate(float frameTime) {
 		enemySleepCountdownTimer--;
 		if (enemySleepCountdownTimer <= 0) {
 			enemyStateIsSleeping = false;
-			currentAttackTarget = FindFirstGdiMinigunner();
+			currentAttackTarget = FindFirstNonDeadGdiMinigunner();
 			if(currentAttackTarget == nullptr) {
 				enemyStateIsSleeping = true;
 				enemySleepCountdownTimer = 400;
